@@ -51,6 +51,28 @@ export default function() {
             return [x(site), y(site)];
         });
         DT = FindDelaunayTriangulation(sites.map(cartesian));
+
+        // fill in diagram.cells and diagram.edges to match the API
+        diagram.cells = DT.indices.map(function (i) {
+            var cell = {
+              site: sites[i],
+              halfedges: DT.edges.map(
+                function (j,k) {
+                  if (j.verts[0] == i || j.verts[1] == i) return k;
+                })
+              .filter(function(e){
+                return !!e;
+              })
+            };
+            cell.site.index = i;
+            return cell;
+          });
+          diagram.edges = DT.edges.map(function (i) {
+                return {
+                    left: sites[i.verts[0]],
+                    right: sites[i.verts[1]]
+                };
+            });
         return diagram;
     };
 
@@ -108,9 +130,7 @@ export default function() {
                 // check winding order
                 var b = {
                     type: "Polygon",
-                    coordinates: [[
-		sites[i], line[0], line[1], sites[i]
-	]]
+                    coordinates: [[ sites[i], line[0], line[1], sites[i] ]]
                 };
                 if (geoArea(b) > 2 * Math.PI + 1e-10) line = line.reverse();
                 return line;
@@ -168,6 +188,41 @@ export default function() {
 
     }
 
+    diagram.find = function(x, y, radius){
+        // optimization: start from most recent result
+        var i, next = diagram.find.found || 0,
+            cell = diagram.cells[next],
+            dist = geoLength({
+                type: 'LineString',
+                coordinates: [[x,y],cell.site]
+            });
+
+        do {
+            cell = diagram.cells[i=next];
+            next = null;
+            cell.halfedges.forEach(function(e) {
+                var edge = diagram.edges[e];
+                var ea = edge.left;
+                if (ea === cell.site || !ea) {
+                    ea = edge.right;
+                }
+                if (ea) {
+                    var ndist = d3.geoLength({
+                        type: 'LineString',
+                        coordinates: [[x,y], ea]
+                    });
+                    if (ndist < dist) {
+                        dist = ndist;
+                        next = ea.index;
+                        return;
+                    }
+                }
+            });
+        } while (next);
+
+        diagram.find.found = i;
+        if (!radius || dist < radius * radius) return cell.site;
+    }
 
     voro.x = function (f) {
         if (!f) return x;

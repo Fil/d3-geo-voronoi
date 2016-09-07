@@ -51,6 +51,13 @@ Returns the circumcenters of the Delaunay triangles of the specified *data* arra
 voronoi(data).circumcenters();
 ```
 
+<a name="geo_voronoi_find" href="#geo_voronoi_find">#</a> <i>voronoi</i>.<b>find</b>(<i>x,y,[angle]</i>)
+
+Finds the closest site to point *x,y*, i.e. the Voronoi polygon that contains it. Optionally, return null if the distance between the point and the site is larger than *angle* radians.
+
+[![](img/geoVoronoiFind.png)](http://bl.ocks.org/Fil/e94fc45f5ed4dbcc989be1e52b797fdd)
+
+
 
 ### Voronoi Diagrams
 
