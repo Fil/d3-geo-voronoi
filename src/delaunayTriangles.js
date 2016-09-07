@@ -72,7 +72,7 @@ function ptdist(x,y)
 function Normalize(vec)
 {
 	var vecres = new Array(3);
-	var sum = 0.0;
+	var sum = 0.0, nrmult;
 	for (var ic=0; ic<3; ic++)
 	{
 		var val = vec[ic];
@@ -576,7 +576,7 @@ function AddPointInside(TriSet, ix)
 				for (var ict=0; ict<3; ict++)
 				{
 					var newtri = newtris[ict];
-					numverts = 0;
+					var numverts = 0;
 					for (var iv=0; iv<2; iv++)
 					{
 						if (newtri.IsVertex(ed.verts[iv]))
@@ -703,7 +703,7 @@ function ImproveTriangulation(TriSet)
 
 function FindConvexHull(TriSet)
 {
-	var Positions = TriSet.positions;
+	// var Positions = TriSet.positions;
 	
 	// Find boundary loop -- use as convex hull
 	var NextVertex = new Object;
@@ -1200,10 +1200,12 @@ function FindVoronoiDiagram(TriSet)
 						NewVorBdLns.push(VorBdLn1);
 					}
 				}
+				/*
 				else if (pstat == 2)
 				{
 					// Do nothing
 				}
+				*/
 			}
 			
 			if (NewVorBdLns.length == VorBdLns.length) break;
@@ -1477,7 +1479,7 @@ function FindDelaunayTriangulationIndexed(Positions, Indices)
 	return TriSet;
 }
 
-function FindDelaunayTriangulation(Positions)
+export function FindDelaunayTriangulation(Positions)
 {
 	var Indices = new Array(Positions.length);
 	for (var i=0; i<Indices.length; i++)
