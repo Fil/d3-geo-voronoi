@@ -1,7 +1,7 @@
 {
   "name": "d3-geo-voronoi",
   "version": "0.0.1",
-  "description": "{DESCRIPTION}",
+  "description": "Spherical Voronoi Diagram and Delaunay Triangulation",
   "keywords": [
     "d3",
     "d3-module"
@@ -9,18 +9,21 @@
   "license": "MIT",
   "main": "build/d3-geo-voronoi.js",
   "jsnext:main": "index",
-  "homepage": "https://github.com/{USERNAME}/d3-geo-voronoi",
+  "homepage": "https://github.com/Fil/d3-geo-voronoi",
   "repository": {
     "type": "git",
-    "url": "https://github.com/{USERNAME}/d3-geo-voronoi.git"
+    "url": "https://github.com/Fil/d3-geo-voronoi.git"
   },
   "scripts": {
-    "pretest": "rm -rf build && mkdir build && rollup -g d3-voronoi:d3 -f umd -n d3 -o build/d3-geo-voronoi.js -- index.js",
+    "pretest": "rm -rf build && mkdir build && rollup -g d3-array:d3,d3-collection:d3,d3-geo:d3,d3-voronoi:d3 -f umd -n d3 -o build/d3-geo-voronoi.js -- index.js",
     "test": "tape 'test/**/*-test.js'",
     "prepublish": "npm run test && uglifyjs build/d3-geo-voronoi.js -c -m -o build/d3-geo-voronoi.min.js",
     "postpublish": "zip -j build/d3-geo-voronoi.zip -- LICENSE README.md build/d3-geo-voronoi.js build/d3-geo-voronoi.min.js"
   },
   "dependencies": {
+    "d3": "4.0",
+    "d3-array": "1.0",
+    "d3-geo": "1.0",
     "d3-voronoi": "1.0",
     "rollup": "^0.27.1"
   },

@@ -1,3 +1,6 @@
+import {ascending,extent} from "d3-array";
+import {map} from "d3-collection";
+import {geoArea,geoLength} from "d3-geo";
 import {voronoi} from "d3-voronoi";
 import {FindDelaunayTriangulation} from "./delaunayTriangles";
 
@@ -66,7 +69,7 @@ export default function() {
 
         return DT.triangles
             .sort(function (a, b) {
-                return d3.ascending(a.ccdsq, b.ccdsq);
+                return ascending(a.ccdsq, b.ccdsq);
             })
             .map(function (i) {
                 return i.verts.map(function (v) {
@@ -82,7 +85,7 @@ export default function() {
                     type: "Polygon",
                     coordinates: [closed]
                 };
-                if (d3.geoArea(b) > 2 * Math.PI + 1e-10) t = t.reverse();
+                if (geoArea(b) > 2 * Math.PI + 1e-10) t = t.reverse();
                 return t;
             });
     };
@@ -109,7 +112,7 @@ export default function() {
 		sites[i], line[0], line[1], sites[i]
 	]]
                 };
-                if (d3.geoArea(b) > 2 * Math.PI + 1e-10) line = line.reverse();
+                if (geoArea(b) > 2 * Math.PI + 1e-10) line = line.reverse();
                 return line;
             })
             .filter(function (p) {
@@ -121,9 +124,9 @@ export default function() {
     diagram.urquhart = voro.urquhart = function (s) {
         if (s) voro(s);
 
-        var urquhart = d3.map();
+        var urquhart = map();
         DT.edges.forEach(function (i) {
-            var v = d3.extent(i.verts);
+            var v = extent(i.verts);
             urquhart.set(v, {
                 source: spherical(DT.positions[v[0]]),
                 target: spherical(DT.positions[v[1]])
@@ -136,8 +139,8 @@ export default function() {
                     length = 0,
                     i, v;
                 for (var j = 0; j < 3; j++) {
-                    v = d3.extent([t.verts[j], t.verts[(j + 1) % 3]]);
-                    length = d3.geoLength({
+                    v = extent([t.verts[j], t.verts[(j + 1) % 3]]);
+                    length = geoLength({
                         type: 'LineString',
                         coordinates: [urquhart.get(v).source, urquhart.get(v).target]
                     });
@@ -188,4 +191,3 @@ export default function() {
     return voro;
 
 }
-
