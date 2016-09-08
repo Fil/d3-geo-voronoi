@@ -2,13 +2,15 @@
 
 This module wraps d3 around Loren Petrich's [Spherical Delaunay triangulation library](http://lpetrich.org/Science/GeometryDemo/GeometryDemo_GMap.html), following as closely as possible the API of the [d3-voronoi](https://github.com/d3/d3-voronoi/) module.
 
-Given a set of points in spherical coordinates `[lon, lat]`, it computes the Delaunay triangulation and the Voronoi diagram.
+Given a set of points in spherical coordinates `[lon, lat]`, it computes their Delaunay triangulation and its dual, the Voronoi diagram.
 
-In addition, you can retrieve the [Urquhart graph](https://en.wikipedia.org/wiki/Urquhart_graph) of the set sites, and the circumcenters of all Delaunay triangles.
+In addition, it offers convenience methods to create the [Urquhart graph](https://en.wikipedia.org/wiki/Urquhart_graph) of the set of sites, extract the circumcenters of the Delaunay triangles, and find the cell that contains any given point on the sphere.
+
 
 ## Installing
 
 If you use NPM, `npm install d3-geo-voronoi`. Otherwise, download the [latest release](https://github.com/d3/d3-geo-voronoi/releases/latest).
+
 
 ## API Reference
 
@@ -61,5 +63,4 @@ Finds the closest site to point *x,y*, i.e. the Voronoi polygon that contains it
 
 ### Voronoi Diagrams
 
-Note the the underlying Voronoi Diagram does _not_ contain the usual *cells* and *edges* elements. It might change in the future.
-
+Like in the planar version, the underlying Diagram contains *cells* and *edges*. However, they are exposed only for compatibility with d3.voronoi -- the polygons, triangles etc. are computed from a (private) data structure.
