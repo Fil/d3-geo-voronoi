@@ -1,8 +1,15 @@
+//
+// (c) 2016 Philippe Riviere
+//
+// https://github.com/Fil/
+//
+// This software is distributed under the terms of the MIT License
+
 import {ascending,extent} from "d3-array";
 import {map} from "d3-collection";
 import {geoArea,geoLength} from "d3-geo";
 import {voronoi} from "d3-voronoi";
-import {FindDelaunayTriangulation} from "./delaunayTriangles";
+import {FindDelaunayTriangulation} from "../lpetrich/delaunayTriangles";
 
 export default function() {
     var radians = Math.PI / 180;

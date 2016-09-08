@@ -1,3 +1,11 @@
+//
+//  Copyright (c) 2016, by Loren Petrich
+//
+// Distributed under the terms of the MIT License
+//
+//  http://lpetrich.org/
+//
+
 // Calculates the spherical Delaunay triangulation of a set of points
 // These points are entered as an array of arrays of coordinates: 0, 1, 2
 // Any extra members are ignored

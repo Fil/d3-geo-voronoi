@@ -31,7 +31,7 @@ The following methods are similar to [d3-voronoi](https://github.com/d3/d3-voron
 
 - <i>voronoi</i>.<b>links</b>(<i>[data]</i>)
 
-- <i>voronoi</i>.<b>extent</b>(<i>[extent]</i>) and <i>voronoi</i>.<b>size</b>(<i>[size]</i>) are not implemented
+- <i>voronoi</i>.<b>extent</b>(<i>[extent]</i>) and <i>voronoi</i>.<b>size</b>(<i>[size]</i>) are defined, but not implemented
 
 
 The following new methods are introduced:
@@ -64,3 +64,4 @@ Finds the closest site to point *x,y*, i.e. the Voronoi polygon that contains it
 ### Voronoi Diagrams
 
 Like in the planar version, the underlying Diagram contains *cells* and *edges*. However, they are exposed only for compatibility with d3.voronoi -- the polygons, triangles etc. are computed from a (private) data structure.
+
