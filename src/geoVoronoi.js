@@ -198,7 +198,7 @@ export default function() {
     diagram.hull = voro.hull = function (s) {
         if (s) voro(s);
 
-        return DT.hull.map(function(i) {
+        return !DT.hull.length ? null : DT.hull.map(function(i) {
             return sites[i];
         })
         .reverse(); // seems that DT.hull is always counter-clockwise
