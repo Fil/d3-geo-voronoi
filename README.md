@@ -4,7 +4,7 @@ This module wraps d3 around Loren Petrich's [Spherical Delaunay triangulation li
 
 Given a set of points in spherical coordinates `[lon, lat]`, it computes their Delaunay triangulation and its dual, the Voronoi diagram.
 
-In addition, it offers convenience methods to create the [Urquhart graph](https://en.wikipedia.org/wiki/Urquhart_graph) of the set of sites, extract the circumcenters of the Delaunay triangles, and find the cell that contains any given point on the sphere.
+In addition, it offers convenience methods to create the convex hull, the [Urquhart graph](https://en.wikipedia.org/wiki/Urquhart_graph) of the set of sites, to extract the circumcenters of the Delaunay triangles, and to find the cell that contains any given point on the sphere.
 
 
 ## Installing
@@ -35,6 +35,15 @@ The following methods are similar to [d3-voronoi](https://github.com/d3/d3-voron
 
 
 The following new methods are introduced:
+
+<a name="geo_voronoi_hull" href="#geo_voronoi_hull">#</a> <i>voronoi</i>.<b>hull</b>(<i>data</i>)
+
+Returns the spherical convex hull of the *data* array. Returns null if the set of points span more than 180 degrees on the sphere. Equivalent to:
+
+```js
+voronoi(data).hull();
+```
+
 
 <a name="geo_voronoi_urquhart" href="#geo_voronoi_urquhart">#</a> <i>voronoi</i>.<b>urquhart</b>(<i>data</i>)
 

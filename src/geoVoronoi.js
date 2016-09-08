@@ -195,6 +195,15 @@ export default function() {
 
     }
 
+    diagram.hull = voro.hull = function (s) {
+        if (s) voro(s);
+
+        return DT.hull.map(function(i) {
+            return sites[i];
+        })
+        .reverse(); // seems that DT.hull is always counter-clockwise
+    }
+
     diagram.find = function(x, y, radius){
         // optimization: start from most recent result
         var i, next = diagram.find.found || 0,
