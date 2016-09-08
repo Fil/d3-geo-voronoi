@@ -44,6 +44,7 @@ Returns the spherical convex hull of the *data* array. Returns null if the set o
 voronoi(data).hull();
 ```
 
+[![](img/geoVoronoiHull.png)](http://bl.ocks.org/Fil/6a1ed09f6e5648a5451cb130f2b13d20)
 
 <a name="geo_voronoi_urquhart" href="#geo_voronoi_urquhart">#</a> <i>voronoi</i>.<b>urquhart</b>(<i>data</i>)
 
