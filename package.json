@@ -4,7 +4,9 @@
   "description": "Spherical Voronoi Diagram and Delaunay Triangulation",
   "keywords": [
     "d3",
-    "d3-module"
+    "d3-module",
+    "d3-geo",
+    "d3-voronoi"
   ],
   "license": "MIT",
   "main": "build/d3-geo-voronoi.js",
@@ -14,6 +16,16 @@
     "type": "git",
     "url": "https://github.com/Fil/d3-geo-voronoi.git"
   },
+  "author": {
+    "name": "Philippe Riviere",
+    "url": "https://github.com/Fil"
+  },
+  "contributors": [
+    {
+      "name": "Loren Petrich",
+      "url": "http://lpetrich.org"
+    }
+  ],
   "scripts": {
     "pretest": "rm -rf build && mkdir build && rollup -g d3-array:d3,d3-collection:d3,d3-geo:d3,d3-voronoi:d3 -f umd -n d3 -o build/d3-geo-voronoi.js -- index.js",
     "test": "tape 'test/**/*-test.js'",
