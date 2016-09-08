@@ -1094,7 +1094,7 @@ function FindVoronoiDiagram(TriSet)
 				// 0 is lone, 1 is leading, 2 is trailing
 				// vorvtidx is the index of the Voronoi vertex
 				var pstat = 0
-				var ptitsc = ptitscs[k]
+				var ptitsc = ptitscs[k], ptitsc_next;
 				if (ptitsc != -1)
 				{
 					var ptitsc_prev = ptitscs[ky];
