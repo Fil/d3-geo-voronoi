@@ -234,7 +234,7 @@ export default function() {
                     }
                 }
             });
-        } while (next);
+        } while (next !== null);
 
         diagram.find.found = i;
         if (!radius || dist < radius * radius) return cell.site;
