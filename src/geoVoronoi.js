@@ -15,13 +15,13 @@ export default function() {
     var radians = Math.PI / 180;
 
     var cartesian = function (spherical) {
-        var λ = spherical[0] * radians,
-            φ = spherical[1] * radians,
-            cosφ = Math.cos(φ);
+        var lambda = spherical[0] * radians,
+            phi = spherical[1] * radians,
+            cosphi = Math.cos(phi);
         return [
-    cosφ * Math.cos(λ),
-    cosφ * Math.sin(λ),
-    Math.sin(φ)
+    cosphi * Math.cos(lambda),
+    cosphi * Math.sin(lambda),
+    Math.sin(phi)
   ];
     }
 
