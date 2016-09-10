@@ -62,6 +62,7 @@ Returns the Urquhart graph of the specified *data* array as an array of links. E
 voronoi(data).urquhart();
 ```
 
+[![](img/geoVoronoiMars.png)](http://bl.ocks.org/Fil/1c2f954201523af16280db018ddd90cc)
 
 <a name="geo_voronoi_circumcenters" href="#geo_voronoi_circumcenters">#</a> <i>voronoi</i>.<b>circumcenters</b>(<i>data</i>)
 
