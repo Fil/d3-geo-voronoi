@@ -33,7 +33,7 @@ Defines or returns the _y_ accessor.
 
 - <i>voronoi</i>.<b>triangles</b>(<i>[data]</i>)
 
-Returns the spherical Delaunay triangulation.
+Returns the spherical Delaunay triangulation as an array of GeoJSON polygon objects. In their properties are the three sites, the spherical area of the triangle (in steradians), the center and radius of the circumcircle.
 
 [![](img/geoVoronoiTriangles.png)](http://bl.ocks.org/Fil/955da86d6a935b26d3599ca5e344fb38)
 
@@ -63,14 +63,6 @@ voronoi(data).urquhart();
 ```
 
 [![](img/geoVoronoiMars.png)](http://bl.ocks.org/Fil/1c2f954201523af16280db018ddd90cc)
-
-<a name="geo_voronoi_circumcenters" href="#geo_voronoi_circumcenters">#</a> <i>voronoi</i>.<b>circumcenters</b>(<i>data</i>)
-
-Returns the circumcenters of the Delaunay triangles of the specified *data* array, as an array of points. Equivalent to:
-
-```js
-voronoi(data).circumcenters();
-```
 
 <a name="geo_voronoi_find" href="#geo_voronoi_find">#</a> <i>voronoi</i>.<b>find</b>(<i>x,y,[angle]</i>)
 

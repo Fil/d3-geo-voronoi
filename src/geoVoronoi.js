@@ -97,25 +97,34 @@ export default function() {
         if (s) voro(s);
 
         return DT.triangles
-            .sort(function (a, b) {
-                return ascending(a.ccdsq, b.ccdsq);
-            })
-            .map(function (i) {
-                return i.verts.map(function (v) {
+            .map(function (t) {
+                t.spherical = t.verts.map(function (v) {
                         return DT.positions[v];
                     })
                     .map(spherical);
-            })
-            .map(function (t) {
-                // check winding order
-                var closed = t.slice();
-                closed.push(t[0]);
-                var b = {
-                    type: "Polygon",
-                    coordinates: [closed]
-                };
-                if (geoArea(b) > 2 * Math.PI + 1e-10) t = t.reverse();
+
+                // correct winding order
+                if (t.ccdsq < 0) {
+                    t.spherical = t.spherical.reverse();
+                    t.ccdsq *= -1;
+                }
+
                 return t;
+            })
+            // make geojson
+            .map(function (t) {
+                return {
+                    type: "Polygon",
+                    coordinates: [t.spherical .concat( [ t.spherical[0] ] ) ],
+                    properties: {
+                        sites: t.verts.map(function(i) {
+                            return sites[i];
+                        }),
+                        area: t.vol, // steradians
+                        circumcenter: spherical(t.ccdir),
+                        circumradius: Math.sqrt(t.ccdsq)
+                    }
+                }
             });
     };
 
@@ -123,28 +132,32 @@ export default function() {
         if (s) voro(s);
 
         return DT.indices.map(function (i) {
-                var vor_poly = DT.vor_polygons[DT.indices[i]];
-                if (vor_poly == undefined) return;
+            var geojson = {};
+            var vor_poly = DT.vor_polygons[DT.indices[i]];
+            if (vor_poly == undefined) {
+                geojson.type = "Sphere";
+            } else {
                 var poly = vor_poly.boundary;
 
-                // what is this for? I don't know
-                if (poly[0] < 0) {
-                    poly = poly.slice(1, poly.length - 1);
-                } else
-                    poly.push(poly[0]);
+                poly.push(poly[0]);
                 var line = mapline(DT.vor_positions, poly);
 
-                // check winding order
+                // correct winding order
                 var b = {
                     type: "Polygon",
                     coordinates: [[ sites[i], line[0], line[1], sites[i] ]]
                 };
                 if (geoArea(b) > 2 * Math.PI + 1e-10) line = line.reverse();
-                return line;
-            })
-            .filter(function (p) {
-                return !!p;
-            });
+
+                geojson.type = "Polygon";
+                geojson.coordinates = [ line ];
+            }
+
+            geojson.properties = {
+                site: diagram.sites[i]
+            }
+            return geojson;
+        });
     };
 
 
@@ -185,15 +198,6 @@ export default function() {
         return urquhart.values();
 
     };
-
-    diagram.circumcenters = voro.circumcenters = function (s) {
-        if (s) voro(s);
-        return DT.triangles.map(function (i) {
-                return i.ccdir;
-            })
-            .map(spherical);
-
-    }
 
     diagram.hull = voro.hull = function (s) {
         if (s) voro(s);
