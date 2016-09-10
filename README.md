@@ -21,13 +21,21 @@ Creates a new *spherical* Voronoi layout.
 
 The following methods are similar to [d3-voronoi](https://github.com/d3/d3-voronoi/)'s methods:
 
-- <i>voronoi</i>.<b>x</b>([<i>x</i>]) 
+- <i>voronoi</i>.<b>x</b>([<i>x</i>])
+
+Defines or returns the _x_ accessor.
 
 - <i>voronoi</i>.<b>y</b>([<i>y</i>])
+
+Defines or returns the _y_ accessor.
 
 - <i>voronoi</i>.<b>polygons</b>(<i>[data]</i>)
 
 - <i>voronoi</i>.<b>triangles</b>(<i>[data]</i>)
+
+Returns the spherical Delaunay triangulation.
+
+[![](img/geoVoronoiTriangles.png)](http://bl.ocks.org/Fil/955da86d6a935b26d3599ca5e344fb38)
 
 - <i>voronoi</i>.<b>links</b>(<i>[data]</i>)
 
