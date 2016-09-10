@@ -137,17 +137,18 @@ export default function() {
             if (vor_poly == undefined) {
                 geojson.type = "Sphere";
             } else {
-                var poly = vor_poly.boundary;
-
-                poly.push(poly[0]);
-                var line = mapline(DT.vor_positions, poly);
+                var line = mapline(DT.vor_positions,
+                    vor_poly.boundary.concat([ vor_poly.boundary[0] ])
+                );
 
                 // correct winding order
                 var b = {
                     type: "Polygon",
                     coordinates: [[ sites[i], line[0], line[1], sites[i] ]]
                 };
-                if (geoArea(b) > 2 * Math.PI + 1e-10) line = line.reverse();
+                if (geoArea(b) > 2 * Math.PI + 1e-10) {
+                    line = line.reverse();
+                }
 
                 geojson.type = "Polygon";
                 geojson.coordinates = [ line ];
