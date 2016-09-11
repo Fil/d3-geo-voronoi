@@ -11,7 +11,7 @@ In addition, it offers convenience methods to extract the convex hull, the Urquh
 
 If you use NPM, `npm install d3-geo-voronoi`. Otherwise, download the [latest release](https://github.com/d3/d3-geo-voronoi/releases/latest).
 
-_Note: not available on npm yet. <strike>I don't know how to do it!<strike> It's alpha._
+_Note: not available on npm yet. <strike>I don't know how to do it!</strike> It's alpha._
 
 ## API Reference
 
