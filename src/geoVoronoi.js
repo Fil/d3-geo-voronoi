@@ -53,44 +53,19 @@ export default function() {
         };
 
 
-
-    var voro = function (s) {
-        sites = s;
-        pos = s.map(function (site) {
+    var voro = function (data) {
+        diagram._hull = diagram._polygons = diagram._links = diagram._triangles = null;
+        sites = data;
+        pos = data.map(function (site) {
             return [x(site), y(site)];
         });
         DT = FindDelaunayTriangulation(pos.map(cartesian));
-
-        // fill in diagram.cells and diagram.edges to match the API
-        diagram.cells = DT.indices.map(function (i) {
-            var cell = {
-              site: sites[i],
-              halfedges: DT.edges.map(
-                function (j,k) {
-                  if (j.verts[0] == i || j.verts[1] == i) return k;
-                })
-              .filter(function(e){
-                return !!e;
-              })
-            };
-            cell.site.index = i;
-            return cell;
-          });
-          
-          // this is wrong, see below left/right
-          /*
-          diagram.edges = DT.edges.map(function (i) {
-                return {
-                    left: sites[i.verts[0]],
-                    right: sites[i.verts[1]]
-                };
-            });
-           */
         return diagram;
-    };
+    }
 
     diagram.links = voro.links = function (s) {
         if (s) voro(s);
+        if (diagram._links) return diagram._links;
 
         var _index = map();
 
@@ -135,7 +110,7 @@ export default function() {
             features[remove].properties.urquhart = false;
         });
 
-        return {
+        return diagram._links = {
             type: "FeatureCollection",
             features: features
         };
@@ -143,6 +118,7 @@ export default function() {
 
     diagram.triangles = voro.triangles = function (s) {
         if (s) voro(s);
+        if (diagram._triangles) return diagram._triangles;
 
         var features = DT.triangles
             .map(function (t) {
@@ -176,7 +152,7 @@ export default function() {
                 }
             });
 
-        return {
+        return diagram._triangles = {
             type: "FeatureCollection",
             features: features
         };
@@ -185,8 +161,9 @@ export default function() {
 
     diagram.polygons = voro.polygons = function (s) {
         if (s) voro(s);
+        if (diagram._polygons) return diagram._polygons;
 
-        var features = DT.indices.map(function (i) {
+        var features = DT.indices.map(function (i,n) {
             var geojson = {};
             var vor_poly = DT.vor_polygons[DT.indices[i]];
 
@@ -211,12 +188,18 @@ export default function() {
             }
 
             geojson.properties = {
-                site: diagram.sites[i]
+                site: sites[i],
+                sitecoordinates: pos[i],
+                neighbours: vor_poly.edges.map(function(e) {
+                    return e.verts.filter(function(j) {
+                        return j!==i;
+                    })[0];
+                })
             }
             return geojson;
         });
         
-        return {
+        return diagram._polygons = {
             type: "FeatureCollection",
             features: features
         };
@@ -224,6 +207,7 @@ export default function() {
 
     diagram.hull = voro.hull = function (s) {
         if (s) voro(s);
+        if (diagram._hull) return diagram._hull;
 
         if (!DT.hull.length) {
             return null; // What is a null GeoJSON?
@@ -233,7 +217,7 @@ export default function() {
         var hull = DT.hull.reverse();
 
         // make GeoJSON
-        return {
+        return diagram._hull = {
             type: "Polygon",
             coordinates: [ hull.concat([ hull[0] ]).map(function(i) {
                 return pos[i];
@@ -246,40 +230,36 @@ export default function() {
         };
     }
 
-    diagram.find = function(x, y, radius){
+
+    diagram.find = function (x, y, radius) {
+        var features = diagram.polygons().features;
+
         // optimization: start from most recent result
-        var i, next = diagram.find.found || 0,
-            cell = diagram.cells[next],
-            dist = geoLength({
-                type: 'LineString',
-                coordinates: [[x,y],cell.site]
-            });
+        var i, next = diagram.find.found || 0;
+        var cell = features[next] || features[next = 0];
 
+        var dist = d3.geoLength({
+            type: 'LineString',
+            coordinates: [ [x, y], cell.properties.sitecoordinates ]
+        });
         do {
-            cell = diagram.cells[i=next];
+            cell = features[i = next];
             next = null;
-            cell.halfedges.forEach(function(e) {
-                var edge = diagram.edges[e];
-                var ea = edge.left;
-                if (ea === cell.site || !ea) {
-                    ea = edge.right;
-                }
-                if (ea) {
-                    var ndist = d3.geoLength({
-                        type: 'LineString',
-                        coordinates: [[x,y], ea]
-                    });
-                    if (ndist < dist) {
-                        dist = ndist;
-                        next = ea.index;
-                        return;
-                    }
+            cell.properties.neighbours.forEach(function (e) {
+                var ndist = d3.geoLength({
+                    type: 'LineString',
+                    coordinates: [[x, y], features[e].properties.sitecoordinates]
+                });
+                if (ndist < dist) {
+                    dist = ndist;
+                    next = e;
+                    return;
                 }
             });
-        } while (next !== null);
 
+        } while (next !== null);
         diagram.find.found = i;
-        if (!radius || dist < radius * radius) return cell.site;
+        if (!radius || dist < radius * radius) return cell.properties.site;
     }
 
     voro.x = function (f) {
