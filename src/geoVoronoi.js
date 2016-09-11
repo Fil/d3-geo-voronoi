@@ -220,11 +220,22 @@ export default function() {
         if (!DT.hull.length) {
             return null; // What is a null GeoJSON?
         }
-        
-        DT.hull.map(function(i) {
-            return sites[i];
-        })
-        .reverse(); // seems that DT.hull is always clockwise
+
+        // seems that DT.hull is always clockwise
+        var hull = DT.hull.reverse();
+
+        // make GeoJSON
+        return {
+            type: "Polygon",
+            coordinates: [ hull.concat([ hull[0] ]).map(function(i) {
+                return pos[i];
+            }) ],
+            properties: {
+                sites: hull.map(function(i) {
+                    return sites[i];
+                })
+            }
+        };
     }
 
     diagram.find = function(x, y, radius){
