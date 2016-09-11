@@ -2,7 +2,7 @@
 
 This module wraps d3 around Loren Petrich's [Spherical Delaunay triangulation library](http://lpetrich.org/Science/GeometryDemo/GeometryDemo_GMap.html), following as closely as possible the API of the [d3-voronoi](https://github.com/d3/d3-voronoi/) module.
 
-Given a set of points in spherical coordinates `[lon, lat]`, it computes their Delaunay triangulation and its dual, the Voronoi diagram.
+Given a set of objects in spherical coordinates, it computes their Delaunay triangulation and its dual, the Voronoi diagram.
 
 In addition, it offers convenience methods to extract the convex hull, the Urquhart graph, the circumcenters of the Delaunay triangles, and to find the cell that contains any given point on the sphere.
 
@@ -11,13 +11,14 @@ In addition, it offers convenience methods to extract the convex hull, the Urquh
 
 If you use NPM, `npm install d3-geo-voronoi`. Otherwise, download the [latest release](https://github.com/d3/d3-geo-voronoi/releases/latest).
 
+_Note: not available on npm yet. <strike>I don't know how to do it!<strike> It's alpha._
 
 ## API Reference
 
 <a href="#geo-voronoi" name="geo-voronoi">#</a> d3.<b>geoVoronoi</b>([data])
 [<>](https://github.com/d3/d3-geo-voronoi/blob/master/src/geoVoronoi.js "Source")
 
-Creates a new *spherical* Voronoi layout. `data` can be passed as an array of [lon, lat] coordinates, an array of GeoJSON features, or a GeoJSON FeatureCollection objects.
+Creates a new *spherical* Voronoi layout. _data_ can be passed as an array of [lon, lat] coordinates, an array of GeoJSON features, or a GeoJSON FeatureCollection.
 
 The following methods are similar to [d3-voronoi](https://github.com/d3/d3-voronoi/)'s methods:
 
@@ -31,17 +32,17 @@ Sets or returns the _y_ accessor.
 
 <a href="#geo_voronoi_polygons" name="geo_voronoi_polygons">#</a> <i>voronoi</i>.<b>polygons</b>(<i>[data]</i>)
 
-Returns the Voronoi tesselation as a GeoJSON collection of polygons. (If there is only one data point, it returns the Sphere). Each polygon exposes its datum in its properties.
+Returns the Voronoi tesselation of the data as a GeoJSON collection of polygons. (If there is only one data point, returns the Sphere). Each polygon exposes its datum in its properties.
 
 <a href="#geo_voronoi_triangles" name="geo_voronoi_triangles">#</a> <i>voronoi</i>.<b>triangles</b>(<i>[data]</i>)
 
-Returns the spherical Delaunay triangulation as a GeoJSON collection of polygons. Each triangle exposes the three sites, the spherical area of the triangle (in steradians), the center and radius of the circumcircle in its properties.
+Returns the spherical Delaunay triangulation of the data as a GeoJSON collection of polygons. Each triangle exposes the three sites, the spherical area of the triangle (in steradians), the center and radius of the circumcircle in its properties.
 
 [![](img/geoVoronoiTriangles.png)](http://bl.ocks.org/Fil/955da86d6a935b26d3599ca5e344fb38)
 
 <a href="#geo_voronoi_links" name="geo_voronoi_links">#</a> <i>voronoi</i>.<b>links</b>(<i>[data]</i>)
 
-Returns the Delaunay links as a GeoJSON collection of lines. Each line exposes its source and target in its properties, but also its length (in radians), and a boolean flag for links that belong to the [Urquhart graph](https://en.wikipedia.org/wiki/Urquhart_graph).
+Returns the Delaunay links of the data as a GeoJSON collection of lines. Each line exposes its source and target in its properties, but also its length (in radians), and a boolean flag for links that belong to the [Urquhart graph](https://en.wikipedia.org/wiki/Urquhart_graph).
 
 [![](img/geoVoronoiMars.png)](http://bl.ocks.org/Fil/1c2f954201523af16280db018ddd90cc)
 
@@ -68,7 +69,7 @@ voronoi(data).hull();
 
 [![](img/geoVoronoiHull.png)](http://bl.ocks.org/Fil/6a1ed09f6e5648a5451cb130f2b13d20)
 
-_Note: there might be a better way to compute the geoHull, and this should probably be part of d3-geo. This method is experimental and will maybe be removed from the API._
+_Note: there might be a better way to compute the geoHull, and this should probably be part of d3-geo. This method is experimental and may be removed from the API._
 
 
 
