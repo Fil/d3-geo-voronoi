@@ -68,8 +68,3 @@ Finds the closest site to point *x,y*, i.e. the Voronoi polygon that contains it
 [![](img/geoVoronoiFind.png)](http://bl.ocks.org/Fil/e94fc45f5ed4dbcc989be1e52b797fdd)
 
 
-
-### Voronoi Diagrams
-
-Like in the planar version, the underlying Diagram contains *cells* and *edges*. However, they are exposed only for compatibility with d3.voronoi -- the polygons, triangles etc. are computed from a (private) data structure.
-
