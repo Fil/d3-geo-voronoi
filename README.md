@@ -4,7 +4,7 @@ This module wraps d3 around Loren Petrich's [Spherical Delaunay triangulation li
 
 Given a set of points in spherical coordinates `[lon, lat]`, it computes their Delaunay triangulation and its dual, the Voronoi diagram.
 
-In addition, it offers convenience methods to create the convex hull, the [Urquhart graph](https://en.wikipedia.org/wiki/Urquhart_graph) of the set of sites, to extract the circumcenters of the Delaunay triangles, and to find the cell that contains any given point on the sphere.
+In addition, it offers convenience methods to extract the convex hull, the Urquhart graph, the circumcenters of the Delaunay triangles, and to find the cell that contains any given point on the sphere.
 
 
 ## Installing
@@ -41,6 +41,11 @@ Returns the spherical Delaunay triangulation as a GeoJSON collection of polygons
 
 - <i>voronoi</i>.<b>links</b>(<i>[data]</i>)
 
+Returns the Delaunay links as a GeoJSON collection of lines. Each line exposes its source and target in its properties, but also its length (in radians), and a boolean flag for links that belong to the [Urquhart graph](https://en.wikipedia.org/wiki/Urquhart_graph).
+
+[![](img/geoVoronoiMars.png)](http://bl.ocks.org/Fil/1c2f954201523af16280db018ddd90cc)
+
+
 - <i>voronoi</i>.<b>extent</b>(<i>[extent]</i>) and <i>voronoi</i>.<b>size</b>(<i>[size]</i>) are defined, but not implemented
 
 
@@ -55,16 +60,6 @@ voronoi(data).hull();
 ```
 
 [![](img/geoVoronoiHull.png)](http://bl.ocks.org/Fil/6a1ed09f6e5648a5451cb130f2b13d20)
-
-<a name="geo_voronoi_urquhart" href="#geo_voronoi_urquhart">#</a> <i>voronoi</i>.<b>urquhart</b>(<i>data</i>)
-
-Returns the Urquhart graph of the specified *data* array as an array of links. Each link is a `{ source: … , target: … }` object similar to <i>voronoi</i>.<b>links</b>(). Equivalent to:
-
-```js
-voronoi(data).urquhart();
-```
-
-[![](img/geoVoronoiMars.png)](http://bl.ocks.org/Fil/1c2f954201523af16280db018ddd90cc)
 
 <a name="geo_voronoi_find" href="#geo_voronoi_find">#</a> <i>voronoi</i>.<b>find</b>(<i>x,y,[angle]</i>)
 

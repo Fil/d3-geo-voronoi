@@ -76,23 +76,69 @@ export default function() {
             cell.site.index = i;
             return cell;
           });
+          
+          // this is wrong, see below left/right
+          /*
           diagram.edges = DT.edges.map(function (i) {
                 return {
                     left: sites[i.verts[0]],
                     right: sites[i.verts[1]]
                 };
             });
+           */
         return diagram;
     };
 
     diagram.links = voro.links = function (s) {
         if (s) voro(s);
-        return DT.edges.map(function (i) {
+
+        var _index = map();
+
+        var features = DT.edges.map(function (i, n) {
+
+            _index.set(extent(i.verts), n);
+
+            var properties = {
+                source: sites[i.verts[0]],
+                target: sites[i.verts[1]],
+                urquhart: true, // will be changed to false later
+                length: geoLength({
+                    type: 'LineString',
+                    coordinates: [ pos[i.verts[0]], pos[i.verts[1]] ]
+                })
+            }
+
+            // add left and right sites (?)
+            
+            // make GeoJSON
             return {
-                source: spherical(DT.positions[i.verts[0]]),
-                target: spherical(DT.positions[i.verts[1]])
+                type: 'LineString',
+                coordinates: [ spherical(DT.positions[i.verts[0]]), spherical(DT.positions[i.verts[1]]) ],
+                properties: properties
             };
         });
+        
+        // Urquhart Graph? tag longer link from each triangle
+        DT.triangles.forEach(function (t) {
+            var l = 0,
+                length = 0,
+                remove, v;
+            for (var j = 0; j < 3; j++) {
+                v = extent([t.verts[j], t.verts[(j + 1) % 3]]);
+                var n = _index.get(v);
+                length = features[n].properties.length;
+                if (length > l) {
+                    l = length;
+                    remove = n;
+                }
+            }
+            features[remove].properties.urquhart = false;
+        });
+
+        return {
+            type: "FeatureCollection",
+            features: features
+        };
     };
 
     diagram.triangles = voro.triangles = function (s) {
@@ -143,6 +189,7 @@ export default function() {
         var features = DT.indices.map(function (i) {
             var geojson = {};
             var vor_poly = DT.vor_polygons[DT.indices[i]];
+
             if (vor_poly == undefined) {
                 geojson.type = "Sphere";
             } else {
@@ -173,45 +220,6 @@ export default function() {
             type: "FeatureCollection",
             features: features
         };
-    };
-
-
-    diagram.urquhart = voro.urquhart = function (s) {
-        if (s) voro(s);
-
-        var urquhart = map();
-        DT.edges.forEach(function (i) {
-            var v = extent(i.verts);
-            urquhart.set(v, {
-                source: spherical(DT.positions[v[0]]),
-                target: spherical(DT.positions[v[1]])
-            });
-        });
-        urquhart._remove = [];
-        DT.triangles
-            .forEach(function (t) {
-                var l = 0,
-                    length = 0,
-                    i, v;
-                for (var j = 0; j < 3; j++) {
-                    v = extent([t.verts[j], t.verts[(j + 1) % 3]]);
-                    length = geoLength({
-                        type: 'LineString',
-                        coordinates: [urquhart.get(v).source, urquhart.get(v).target]
-                    });
-                    if (length > l) {
-                        l = length;
-                        i = v;
-                    }
-                }
-                urquhart._remove.push(i);
-            });
-        urquhart._remove.forEach(function (i) {
-            if (urquhart.has(i)) urquhart.remove(i);
-        });
-
-        return urquhart.values();
-
     };
 
     diagram.hull = voro.hull = function (s) {
