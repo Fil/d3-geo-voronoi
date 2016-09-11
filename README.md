@@ -2,7 +2,7 @@
 
 This module wraps d3 around Loren Petrich's [Spherical Delaunay triangulation library](http://lpetrich.org/Science/GeometryDemo/GeometryDemo_GMap.html), following as closely as possible the API of the [d3-voronoi](https://github.com/d3/d3-voronoi/) module.
 
-Given a set of objects in spherical coordinates, it computes their Delaunay triangulation and its dual, the Voronoi diagram.
+Given a set of objects in spherical coordinates, it computes their Delaunay triangulation and its dual, the Voronoi diagram ([d3 issue #1820](https://github.com/d3/d3/issues/1820)).
 
 In addition, it offers convenience methods to extract the convex hull, the Urquhart graph, the circumcenters of the Delaunay triangles, and to find the cell that contains any given point on the sphere.
 
