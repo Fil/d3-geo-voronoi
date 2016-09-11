@@ -41,7 +41,7 @@ tape("geoVoronoi.urquhart(sites) returns urquhart graph.", function(test) {
   test.end();
 });
 tape("geoVoronoi.triangles(sites) returns circumcenters.", function(test) {
-    var u = geoVoronoi.geoVoronoi().triangles(sites)[0].properties.circumcenter, v = [ 5, 4.981069 ];
+    var u = geoVoronoi.geoVoronoi().triangles(sites).features[0].properties.circumcenter, v = [ 5, 4.981069 ];
   test.ok( (Math.abs(u[0]-v[0]) < 1e-6) && (Math.abs(u[1]-v[1]) < 1e-6) );
   test.end();
 });

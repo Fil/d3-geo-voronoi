@@ -44,6 +44,7 @@ export default function() {
 
     var DT = diagram.DT = null,
         sites = diagram.sites = [],
+        pos = diagram.pos = [],
         x = function (d) {
             return d[0];
         },
@@ -54,10 +55,11 @@ export default function() {
 
 
     var voro = function (s) {
-        sites = s.map(function (site) {
+        sites = s;
+        pos = s.map(function (site) {
             return [x(site), y(site)];
         });
-        DT = FindDelaunayTriangulation(sites.map(cartesian));
+        DT = FindDelaunayTriangulation(pos.map(cartesian));
 
         // fill in diagram.cells and diagram.edges to match the API
         diagram.cells = DT.indices.map(function (i) {
@@ -96,7 +98,7 @@ export default function() {
     diagram.triangles = voro.triangles = function (s) {
         if (s) voro(s);
 
-        return DT.triangles
+        var features = DT.triangles
             .map(function (t) {
                 t.spherical = t.verts.map(function (v) {
                         return DT.positions[v];
@@ -111,6 +113,7 @@ export default function() {
 
                 return t;
             })
+
             // make geojson
             .map(function (t) {
                 return {
@@ -126,12 +129,18 @@ export default function() {
                     }
                 }
             });
+
+        return {
+            type: "FeatureCollection",
+            features: features
+        };
+
     };
 
     diagram.polygons = voro.polygons = function (s) {
         if (s) voro(s);
 
-        return DT.indices.map(function (i) {
+        var features = DT.indices.map(function (i) {
             var geojson = {};
             var vor_poly = DT.vor_polygons[DT.indices[i]];
             if (vor_poly == undefined) {
@@ -159,6 +168,11 @@ export default function() {
             }
             return geojson;
         });
+        
+        return {
+            type: "FeatureCollection",
+            features: features
+        };
     };
 
 
@@ -203,10 +217,14 @@ export default function() {
     diagram.hull = voro.hull = function (s) {
         if (s) voro(s);
 
-        return !DT.hull.length ? null : DT.hull.map(function(i) {
+        if (!DT.hull.length) {
+            return null; // What is a null GeoJSON?
+        }
+        
+        DT.hull.map(function(i) {
             return sites[i];
         })
-        .reverse(); // seems that DT.hull is always counter-clockwise
+        .reverse(); // seems that DT.hull is always clockwise
     }
 
     diagram.find = function(x, y, radius){
