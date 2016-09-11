@@ -55,7 +55,10 @@ export default function() {
 
     var voro = function (data) {
         diagram._hull = diagram._polygons = diagram._links = diagram._triangles = null;
-        sites = data;
+        sites = data.map(function(site, i) {
+            site.index = i;
+            return site;
+        });
         pos = data.map(function (site) {
             return [x(site), y(site)];
         });
