@@ -190,7 +190,7 @@ export default function() {
                 // correct winding order
                 var b = {
                     type: "Polygon",
-                    coordinates: [[ sites[i], line[0], line[1], sites[i] ]]
+                    coordinates: [[ pos[i], line[0], line[1], pos[i] ]]
                 };
                 if (geoArea(b) > 2 * Math.PI + 1e-10) {
                     line = line.reverse();
