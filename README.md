@@ -14,16 +14,16 @@ If you use NPM, `npm install d3-geo-voronoi`. Otherwise, download the [latest re
 
 ## API Reference
 
-<a href="#geo-voronoi" name="geo-voronoi">#</a> d3.<b>geoVoronoi</b>()
+<a href="#geo-voronoi" name="geo-voronoi">#</a> d3.<b>geoVoronoi</b>([data])
 [<>](https://github.com/d3/d3-geo-voronoi/blob/master/src/geoVoronoi.js "Source")
 
-Creates a new *spherical* Voronoi layout.
+Creates a new *spherical* Voronoi layout. `data` can be passed as an array of [lon, lat] coordinates, an array of GeoJSON features, or a GeoJSON FeatureCollection objects.
 
 The following methods are similar to [d3-voronoi](https://github.com/d3/d3-voronoi/)'s methods:
 
 <a href="#geo_voronoi_x" name="geo_voronoi_x">#</a> <i>voronoi</i>.<b>x</b>([<i>x</i>])
 
-Sets or returns the _x_ accessor.
+Sets or returns the _x_ accessor. The default _x_ and _y_ accessors are smart enough to recognize GeoJSON objects and return the geoCentroid of each feature.
 
 <a href="#geo_voronoi_y" name="geo_voronoi_y">#</a> <i>voronoi</i>.<b>y</b>([<i>y</i>])
 

@@ -45,16 +45,26 @@ export default function() {
     var DT = diagram.DT = null,
         sites = diagram.sites = [],
         pos = diagram.pos = [],
-        x = function (d) {
-            return d[0];
+        x = function(d) {
+            if (typeof d == 'object' && 'type' in d) {
+                return d3.geoCentroid(d)[0];
+            }
+            if (0 in d) return d[0];
         },
         y = function (d) {
-            return d[1];
+            if (typeof d == 'object' && 'type' in d) {
+                return d3.geoCentroid(d)[1];
+            }
+            if (0 in d) return d[1];
         };
 
 
     var voro = function (data) {
         diagram._hull = diagram._polygons = diagram._links = diagram._triangles = null;
+
+        if (typeof data == 'object' && data.type == 'FeatureCollection') {
+            data = data.features;
+        }
         sites = data.map(function(site, i) {
             site.index = i;
             return site;
