@@ -68,3 +68,12 @@ Finds the closest site to point *x,y*, i.e. the Voronoi polygon that contains it
 [![](img/geoVoronoiFind.png)](http://bl.ocks.org/Fil/e94fc45f5ed4dbcc989be1e52b797fdd)
 
 
+
+### Comparison with planar Voronoi Diagrams
+
+- geoVoronoi uses a different algorithm (much slower, maybe because of the GeoJSON wrapper) -- and its internal data structure is different. 
+
+- geoVoronoi returns GeoJSON objects, which are often "FeatureCollections". By consequence, you will have to change .data(voronoi.polygons()) to .data(geovoronoi.polygons().features), and so on.
+
+- geoVoronoi offers methods to compute the convex hull, the Urquhart graph^, and to find the nearest neighbour^ of (x,y). These can be achieved with planar voronoi too, but are not part of d3-voronoi.
+
