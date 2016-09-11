@@ -71,7 +71,7 @@ Finds the closest site to point *x,y*, i.e. the Voronoi polygon that contains it
 
 ### Comparison with planar Voronoi Diagrams
 
-- geoVoronoi uses a different algorithm (much slower, maybe because of the GeoJSON wrapper) -- and its internal data structure is different. 
+- geoVoronoi uses a different algorithm (in O(n^2), which is [much slower](https://github.com/Fil/d3-geo-voronoi/issues/1) as the number of sites grows past 1000) -- and its internal data structure is different. 
 
 - geoVoronoi returns GeoJSON objects, which are often "FeatureCollections". By consequence, you will have to change .data(voronoi.polygons()) to .data(geovoronoi.polygons().features), and so on.
 
