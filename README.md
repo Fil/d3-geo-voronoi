@@ -30,9 +30,16 @@ Sets or returns the _x_ accessor. The default _x_ and _y_ accessors are smart en
 
 Sets or returns the _y_ accessor.
 
+[placeholder for a .x()/.y() skeletal example]
+
+
 <a href="#geo_voronoi_polygons" name="geo_voronoi_polygons">#</a> <i>voronoi</i>.<b>polygons</b>(<i>[data]</i>)
 
 Returns the Voronoi tesselation of the data as a GeoJSON collection of polygons. (If there is only one data point, returns the Sphere). Each polygon exposes its datum in its properties.
+
+[placeholder for a .polygons() skeletal example]
+
+[placeholder for a .polygons() complete example]
 
 <a href="#geo_voronoi_triangles" name="geo_voronoi_triangles">#</a> <i>voronoi</i>.<b>triangles</b>(<i>[data]</i>)
 
@@ -40,11 +47,20 @@ Returns the spherical Delaunay triangulation of the data as a GeoJSON collection
 
 [![](img/geoVoronoiTriangles.png)](http://bl.ocks.org/Fil/955da86d6a935b26d3599ca5e344fb38)
 
+[placeholder for a .triangles() skeletal example]
+
+[placeholder for a .triangles() complete example]
+
+
 <a href="#geo_voronoi_links" name="geo_voronoi_links">#</a> <i>voronoi</i>.<b>links</b>(<i>[data]</i>)
 
 Returns the Delaunay links of the data as a GeoJSON collection of lines. Each line exposes its source and target in its properties, but also its length (in radians), and a boolean flag for links that belong to the [Urquhart graph](https://en.wikipedia.org/wiki/Urquhart_graph).
 
 [![](img/geoVoronoiMars.png)](http://bl.ocks.org/Fil/1c2f954201523af16280db018ddd90cc)
+
+[placeholder for a .links() skeletal example exposing the Urquhart graph]
+
+[placeholder for a complete .links() example]
 
 
 <i>voronoi</i>.<b>extent</b>(<i>[extent]</i>) and <i>voronoi</i>.<b>size</b>(<i>[size]</i>) are defined, but not (yet) implemented
