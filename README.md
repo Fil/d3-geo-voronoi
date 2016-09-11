@@ -31,9 +31,11 @@ Defines or returns the _y_ accessor.
 
 - <i>voronoi</i>.<b>polygons</b>(<i>[data]</i>)
 
+Returns the Voronoi tesselation as a GeoJSON collection of polygons. (If there is only one data point, it returns the Sphere). Each polygon exposes its datum in its properties.
+
 - <i>voronoi</i>.<b>triangles</b>(<i>[data]</i>)
 
-Returns the spherical Delaunay triangulation as an array of GeoJSON polygon objects. In their properties are the three sites, the spherical area of the triangle (in steradians), the center and radius of the circumcircle.
+Returns the spherical Delaunay triangulation as a GeoJSON collection of polygons. Each triangle exposes the three sites, the spherical area of the triangle (in steradians), the center and radius of the circumcircle in its properties.
 
 [![](img/geoVoronoiTriangles.png)](http://bl.ocks.org/Fil/955da86d6a935b26d3599ca5e344fb38)
 
@@ -46,7 +48,7 @@ The following new methods are introduced:
 
 <a name="geo_voronoi_hull" href="#geo_voronoi_hull">#</a> <i>voronoi</i>.<b>hull</b>(<i>data</i>)
 
-Returns the spherical convex hull of the *data* array. Returns null if the set of points span more than 180 degrees on the sphere. Equivalent to:
+Returns the spherical convex hull of the *data* array, as a GeoJSON polygon. Returns null if the dataset spans more than a hemisphere. Equivalent to:
 
 ```js
 voronoi(data).hull();
