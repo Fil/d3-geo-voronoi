@@ -30,37 +30,35 @@ Sets or returns the _x_ accessor. The default _x_ and _y_ accessors are smart en
 
 Sets or returns the _y_ accessor.
 
-[placeholder for a .x()/.y() skeletal example]
-
+[![](img/geoVoronoiXY.png)](http://bl.ocks.org/Fil/48395e8df1d4d632976f9fab52bd1102)
 
 <a href="#geo_voronoi_polygons" name="geo_voronoi_polygons">#</a> <i>voronoi</i>.<b>polygons</b>(<i>[data]</i>)
 
 Returns the Voronoi tesselation of the data as a GeoJSON collection of polygons. (If there is only one data point, returns the Sphere). Each polygon exposes its datum in its properties.
 
-[placeholder for a .polygons() skeletal example]
-
-[placeholder for a .polygons() complete example]
+[![](img/geoVoronoiPolygons.png)](http://bl.ocks.org/Fil/a9ba8d0d023752aa580bd95480b7de60)
 
 <a href="#geo_voronoi_triangles" name="geo_voronoi_triangles">#</a> <i>voronoi</i>.<b>triangles</b>(<i>[data]</i>)
 
-Returns the spherical Delaunay triangulation of the data as a GeoJSON collection of polygons. Each triangle exposes the three sites, the spherical area of the triangle (in steradians), the center of the circumcircle in its properties.
+Returns the spherical Delaunay triangulation of the data as a GeoJSON collection of polygons. Each triangle exposes in its properties the three sites, its spherical area (in steradians), and the its circumcenter.
 
-[![](img/geoVoronoiTriangles.png)](http://bl.ocks.org/Fil/955da86d6a935b26d3599ca5e344fb38)
 
-[placeholder for a .triangles() skeletal example]
+[![](img/geoVoronoiTriangles.png)](http://bl.ocks.org/Fil/b1ef96e4bc991eb274f8d3a0a08932f9)
 
-[placeholder for a .triangles() complete example]
+[![](img/geoVoronoiRadome.png)](http://bl.ocks.org/Fil/955da86d6a935b26d3599ca5e344fb38)
 
 
 <a href="#geo_voronoi_links" name="geo_voronoi_links">#</a> <i>voronoi</i>.<b>links</b>(<i>[data]</i>)
 
 Returns the Delaunay links of the data as a GeoJSON collection of lines. Each line exposes its source and target in its properties, but also its length (in radians), and a boolean flag for links that belong to the [Urquhart graph](https://en.wikipedia.org/wiki/Urquhart_graph).
 
+[![](img/geoVoronoiUrquhart.png)](http://bl.ocks.org/Fil/1a78acf8b9b40fe8ecbae7b5035acf2b)
+
+
+[![](img/geoVoronoiCircumcircles.png)](http://bl.ocks.org/Fil/79b9f17979c4070dee3cbba1c5283502)
+
+
 [![](img/geoVoronoiMars.png)](http://bl.ocks.org/Fil/1c2f954201523af16280db018ddd90cc)
-
-[placeholder for a .links() skeletal example exposing the Urquhart graph]
-
-[placeholder for a complete .links() example]
 
 
 <i>voronoi</i>.<b>extent</b>(<i>[extent]</i>) and <i>voronoi</i>.<b>size</b>(<i>[size]</i>) are defined, but not (yet) implemented
