@@ -160,7 +160,8 @@ export default function() {
                         }),
                         area: t.vol, // steradians
                         circumcenter: spherical(t.ccdir),
-                        circumradius: Math.sqrt(t.ccdsq)
+                        // ccdsq is *not* the geodesic distance
+                        /* circumradius: (2-t.ccdsq) * 53 */
                     }
                 }
             });

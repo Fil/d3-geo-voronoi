@@ -43,7 +43,7 @@ Returns the Voronoi tesselation of the data as a GeoJSON collection of polygons.
 
 <a href="#geo_voronoi_triangles" name="geo_voronoi_triangles">#</a> <i>voronoi</i>.<b>triangles</b>(<i>[data]</i>)
 
-Returns the spherical Delaunay triangulation of the data as a GeoJSON collection of polygons. Each triangle exposes the three sites, the spherical area of the triangle (in steradians), the center and radius of the circumcircle in its properties.
+Returns the spherical Delaunay triangulation of the data as a GeoJSON collection of polygons. Each triangle exposes the three sites, the spherical area of the triangle (in steradians), the center of the circumcircle in its properties.
 
 [![](img/geoVoronoiTriangles.png)](http://bl.ocks.org/Fil/955da86d6a935b26d3599ca5e344fb38)
 
