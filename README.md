@@ -96,7 +96,7 @@ There is no reason to limit the display of Voronoi cells to the orthographic pro
 
 ### Comparison with planar Voronoi Diagrams
 
-- geoVoronoi is for points on the sphere, Voronoi is for points on a plane (or possibly a [torus](http://bl.ocks.org/Fil/c1b10942f61483d739dd601d09c30deb) or a [cylinder](http://bl.ocks.org/Fil/4639744e8be5428e7a8e7b3efd9a80dc)).    
+- geoVoronoi is for points on the sphere, `d3-voronoi` is for points on a plane (or possibly a [torus](http://bl.ocks.org/Fil/c1b10942f61483d739dd601d09c30deb) or a [cylinder](http://bl.ocks.org/Fil/4639744e8be5428e7a8e7b3efd9a80dc)).    
 
 - geoVoronoi uses a different algorithm (in `O(n^2)`, which is [much slower](https://github.com/Fil/d3-geo-voronoi/issues/1) as the number of sites grows past 1000) -- and its internal data structure is different. 
 
