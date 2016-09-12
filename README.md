@@ -100,5 +100,5 @@ There is no reason to limit the display of Voronoi cells to the orthographic pro
 
 - geoVoronoi returns GeoJSON objects, which are often `FeatureCollections`. By consequence, you will have to change `.data(voronoi.polygons())` to `.data(geovoronoi.polygons().features)`, and so on.
 
-- geoVoronoi offers methods to compute the [convex hull](#geo_voronoi_hull), the [Urquhart graph](#geo_voronoi_links), and to find the [nearest neighbour](#geo_voronoi_find) of a point. These can be achieved with the planar Voronoi ([Urquhart](http://bl.ocks.org/Fil/df20827f817abd161c768fa18dcafcf5), [find](http://bl.ocks.org/Fil/1b7ddbcd71454d685d1259781968aefc)), but are not part of d3-voronoi.
+- geoVoronoi offers methods to compute the [convex hull](#geo_voronoi_hull), the [Urquhart graph](#geo_voronoi_links), and to find the [nearest neighbour](#geo_voronoi_find) of a point. These can be achieved with the planar Voronoi ([hull](http://bl.ocks.org/mbostock/6f14f7b7f267a85f7cdc), [Urquhart](http://bl.ocks.org/Fil/df20827f817abd161c768fa18dcafcf5), [find](http://bl.ocks.org/Fil/1b7ddbcd71454d685d1259781968aefc)), but are not part of d3-voronoi.
 
