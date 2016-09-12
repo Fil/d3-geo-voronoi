@@ -30,7 +30,7 @@ Sets or returns the _x_ accessor. The default _x_ and _y_ accessors are smart en
 
 Sets or returns the _y_ accessor.
 
-[![](img/geoVoronoiXY.png)](http://bl.ocks.org/Fil/48395e8df1d4d632976f9fab52bd1102)
+[![](img/geoVoronoiXY.png)](http://bl.ocks.org/Fil/74295d9ffe097ae4e3c93d7d00377d45)
 
 <a href="#geo_voronoi_polygons" name="geo_voronoi_polygons">#</a> <i>voronoi</i>.<b>polygons</b>(<i>[data]</i>)
 
