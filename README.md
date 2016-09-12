@@ -88,7 +88,7 @@ _Note: there might be a better way to compute the geoHull, and this should proba
 
 ### Other projections
 
-There is no reason to limit the display of Voronoi cells to the orthographic projection. The example below displays the Urquhart graph of top container ports on a Winkel-Tripel map.
+There is no reason to limit the display of Voronoi cells to the orthographic projection. The example below displays the Urquhart graph of top container ports on a Winkel tripel map.
 
 [![](img/geoVoronoiPorts.png)](http://bl.ocks.org/Fil/24d5ee71f09ba72893323d803242c38a)
 
