@@ -9,14 +9,13 @@ In addition, it offers convenience methods to extract the convex hull, the Urquh
 
 ## Installing
 
-If you use NPM, `npm install d3-geo-voronoi`. Otherwise, download the [latest release](https://github.com/d3/d3-geo-voronoi/releases/latest).
+If you use NPM, `npm install d3-geo-voronoi`. Otherwise, download the [latest release](https://github.com/Fil/d3-geo-voronoi/releases/latest).
 
-_Note: not available on npm yet. <strike>I don't know how to do it!</strike> It's alpha._
 
 ## API Reference
 
 <a href="#geo-voronoi" name="geo-voronoi">#</a> d3.<b>geoVoronoi</b>([data])
-[<>](https://github.com/d3/d3-geo-voronoi/blob/master/src/geoVoronoi.js "Source")
+[<>](https://github.com/Fil/d3-geo-voronoi/blob/master/src/geoVoronoi.js "Source")
 
 Creates a new *spherical* Voronoi layout. _data_ can be passed as an array of [lon, lat] coordinates, an array of GeoJSON features, or a GeoJSON FeatureCollection.
 
