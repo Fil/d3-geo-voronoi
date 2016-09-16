@@ -7,7 +7,7 @@
 
 import {ascending,extent} from "d3-array";
 import {map} from "d3-collection";
-import {geoArea,geoLength} from "d3-geo";
+import {geoArea,geoCentroid,geoDistance} from "d3-geo";
 import {voronoi} from "d3-voronoi";
 import {FindDelaunayTriangulation} from "../lpetrich/delaunayTriangles";
 
@@ -47,13 +47,13 @@ export default function() {
         pos = diagram.pos = [],
         x = function(d) {
             if (typeof d == 'object' && 'type' in d) {
-                return d3.geoCentroid(d)[0];
+                return geoCentroid(d)[0];
             }
             if (0 in d) return d[0];
         },
         y = function (d) {
             if (typeof d == 'object' && 'type' in d) {
-                return d3.geoCentroid(d)[1];
+                return geoCentroid(d)[1];
             }
             if (0 in d) return d[1];
         };
@@ -90,10 +90,7 @@ export default function() {
                 source: sites[i.verts[0]],
                 target: sites[i.verts[1]],
                 urquhart: true, // will be changed to false later
-                length: geoLength({
-                    type: 'LineString',
-                    coordinates: [ pos[i.verts[0]], pos[i.verts[1]] ]
-                })
+                length: geoDistance(pos[i.verts[0]], pos[i.verts[1]])
             }
 
             // add left and right sites (?)
@@ -252,18 +249,12 @@ export default function() {
         var i, next = diagram.find.found || 0;
         var cell = features[next] || features[next = 0];
 
-        var dist = d3.geoLength({
-            type: 'LineString',
-            coordinates: [ [x, y], cell.properties.sitecoordinates ]
-        });
+        var dist = geoDistance([x, y], cell.properties.sitecoordinates);
         do {
             cell = features[i = next];
             next = null;
             cell.properties.neighbours.forEach(function (e) {
-                var ndist = d3.geoLength({
-                    type: 'LineString',
-                    coordinates: [[x, y], features[e].properties.sitecoordinates]
-                });
+                var ndist = geoDistance([x, y], features[e].properties.sitecoordinates);
                 if (ndist < dist) {
                     dist = ndist;
                     next = e;
