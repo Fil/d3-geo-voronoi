@@ -60,7 +60,7 @@ Returns the Delaunay links of the data as a GeoJSON collection of lines. Each li
 [![](img/geoVoronoiMars.png)](http://bl.ocks.org/Fil/1c2f954201523af16280db018ddd90cc)
 
 
-<i>voronoi</i>.<b>extent</b>(<i>[extent]</i>) and <i>voronoi</i>.<b>size</b>(<i>[size]</i>) are defined, but not (yet) implemented
+<i>voronoi</i>.<b>extent</b>(<i>[extent]</i>) and <i>voronoi</i>.<b>size</b>(<i>[size]</i>) are not implemented. Defining the “paper extent” of the Diagram can be quite tricky, [as this block shows](http://blockbuilder.org/Fil/6128aae082c04eef06422f953d0f593f).
 
 
 The following new methods are introduced:
