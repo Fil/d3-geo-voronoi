@@ -9,7 +9,7 @@ In addition, it offers convenience methods to extract the convex hull, the Urquh
 
 ## Installing
 
-If you use NPM, `npm install d3-geo-voronoi`. Otherwise, download the [latest release](https://github.com/Fil/d3-geo-voronoi/releases/latest).
+If you use NPM, `npm install d3-geo-voronoi`. Otherwise, download the [latest release](https://unpkg.com/d3-geo-voronoi).
 
 
 ## API Reference
