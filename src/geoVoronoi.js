@@ -5,13 +5,13 @@
 //
 // This software is distributed under the terms of the MIT License
 
-import {ascending,extent} from "d3-array";
-import {map} from "d3-collection";
-import {geoArea,geoCentroid,geoDistance} from "d3-geo";
-import {voronoi} from "d3-voronoi";
-import {FindDelaunayTriangulation} from "../lpetrich/delaunayTriangles";
+import { ascending, extent } from "d3-array";
+import { map } from "d3-collection";
+import { geoArea, geoCentroid, geoDistance } from "d3-geo";
+import { voronoi } from "d3-voronoi";
+import { FindDelaunayTriangulation } from "../lpetrich/delaunayTriangles";
 
-export default function() {
+export default function () {
     var radians = Math.PI / 180;
 
     var cartesian = function (spherical) {
@@ -19,10 +19,10 @@ export default function() {
             phi = spherical[1] * radians,
             cosphi = Math.cos(phi);
         return [
-    cosphi * Math.cos(lambda),
-    cosphi * Math.sin(lambda),
-    Math.sin(phi)
-  ];
+            cosphi * Math.cos(lambda),
+            cosphi * Math.sin(lambda),
+            Math.sin(phi)
+        ];
     }
 
     var spherical = function (cartesian) {
@@ -45,7 +45,7 @@ export default function() {
     var DT = diagram.DT = null,
         sites = diagram.sites = [],
         pos = diagram.pos = [],
-        x = function(d) {
+        x = function (d) {
             if (typeof d == 'object' && 'type' in d) {
                 return geoCentroid(d)[0];
             }
@@ -65,7 +65,7 @@ export default function() {
         if (typeof data == 'object' && data.type == 'FeatureCollection') {
             data = data.features;
         }
-        sites = data.map(function(site, i) {
+        sites = data.map(function (site, i) {
             site.index = i;
             return site;
         });
@@ -94,15 +94,15 @@ export default function() {
             }
 
             // add left and right sites (?)
-            
+
             // make GeoJSON
             return {
                 type: 'LineString',
-                coordinates: [ spherical(DT.positions[i.verts[0]]), spherical(DT.positions[i.verts[1]]) ],
+                coordinates: [spherical(DT.positions[i.verts[0]]), spherical(DT.positions[i.verts[1]])],
                 properties: properties
             };
         });
-        
+
         // Urquhart Graph? tag longer link from each triangle
         DT.triangles.forEach(function (t) {
             var l = 0,
@@ -133,8 +133,8 @@ export default function() {
         var features = DT.triangles
             .map(function (t) {
                 t.spherical = t.verts.map(function (v) {
-                        return DT.positions[v];
-                    })
+                    return DT.positions[v];
+                })
                     .map(spherical);
 
                 // correct winding order
@@ -150,9 +150,9 @@ export default function() {
             .map(function (t) {
                 return {
                     type: "Polygon",
-                    coordinates: [t.spherical .concat( [ t.spherical[0] ] ) ],
+                    coordinates: [t.spherical.concat([t.spherical[0]])],
                     properties: {
-                        sites: t.verts.map(function(i) {
+                        sites: t.verts.map(function (i) {
                             return sites[i];
                         }),
                         area: t.vol, // steradians
@@ -174,7 +174,7 @@ export default function() {
         if (s) voro(s);
         if (diagram._polygons) return diagram._polygons;
 
-        var features = DT.indices.map(function (i,n) {
+        var features = DT.indices.map(function (i, n) {
             var geojson = {};
             var vor_poly = DT.vor_polygons[DT.indices[i]];
 
@@ -182,34 +182,34 @@ export default function() {
                 geojson.type = "Sphere";
             } else {
                 var line = mapline(DT.vor_positions,
-                    vor_poly.boundary.concat([ vor_poly.boundary[0] ])
+                    vor_poly.boundary.concat([vor_poly.boundary[0]])
                 );
 
                 // correct winding order
                 var b = {
                     type: "Polygon",
-                    coordinates: [[ pos[i], line[0], line[1], pos[i] ]]
+                    coordinates: [[pos[i], line[0], line[1], pos[i]]]
                 };
                 if (geoArea(b) > 2 * Math.PI + 1e-10) {
                     line = line.reverse();
                 }
 
                 geojson.type = "Polygon";
-                geojson.coordinates = [ line ];
+                geojson.coordinates = [line];
             }
 
             geojson.properties = {
                 site: sites[i],
                 sitecoordinates: pos[i],
-                neighbours: vor_poly.edges.map(function(e) {
-                    return e.verts.filter(function(j) {
-                        return j!==i;
+                neighbours: vor_poly.edges.map(function (e) {
+                    return e.verts.filter(function (j) {
+                        return j !== i;
                     })[0];
                 })
             }
             return geojson;
         });
-        
+
         return diagram._polygons = {
             type: "FeatureCollection",
             features: features
@@ -230,11 +230,11 @@ export default function() {
         // make GeoJSON
         return diagram._hull = {
             type: "Polygon",
-            coordinates: [ hull.concat([ hull[0] ]).map(function(i) {
+            coordinates: [hull.concat([hull[0]]).map(function (i) {
                 return pos[i];
-            }) ],
+            })],
             properties: {
-                sites: hull.map(function(i) {
+                sites: hull.map(function (i) {
                     return sites[i];
                 })
             }
