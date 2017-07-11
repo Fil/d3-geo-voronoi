@@ -97,8 +97,11 @@ export default function () {
 
             // make GeoJSON
             return {
-                type: 'LineString',
-                coordinates: [spherical(DT.positions[i.verts[0]]), spherical(DT.positions[i.verts[1]])],
+                type: "Feature",
+                geometry: {
+                    type: 'LineString',
+                    coordinates: [spherical(DT.positions[i.verts[0]]), spherical(DT.positions[i.verts[1]])]
+                },
                 properties: properties
             };
         });
@@ -149,8 +152,11 @@ export default function () {
             // make geojson
             .map(function (t) {
                 return {
-                    type: "Polygon",
-                    coordinates: [t.spherical.concat([t.spherical[0]])],
+                    type: "Feature",
+                    geometry: {
+                        type: "Polygon",
+                        coordinates: [t.spherical.concat([t.spherical[0]])]
+                    },
                     properties: {
                         sites: t.verts.map(function (i) {
                             return sites[i];
@@ -175,11 +181,11 @@ export default function () {
         if (diagram._polygons) return diagram._polygons;
 
         var features = DT.indices.map(function (i, n) {
-            var geojson = {};
             var vor_poly = DT.vor_polygons[DT.indices[i]];
+            var geometry = {}
 
             if (vor_poly == undefined) {
-                geojson.type = "Sphere";
+                geometry.type = "Sphere";
             } else {
                 var line = mapline(DT.vor_positions,
                     vor_poly.boundary.concat([vor_poly.boundary[0]])
@@ -194,20 +200,23 @@ export default function () {
                     line = line.reverse();
                 }
 
-                geojson.type = "Polygon";
-                geojson.coordinates = [line];
+                geometry.type = "Polygon";
+                geometry.coordinates = [line];
             }
 
-            geojson.properties = {
-                site: sites[i],
-                sitecoordinates: pos[i],
-                neighbours: vor_poly.edges.map(function (e) {
-                    return e.verts.filter(function (j) {
-                        return j !== i;
-                    })[0];
-                })
-            }
-            return geojson;
+            return {
+                type: "Feature",
+                geometry: geometry,
+                properties: {
+                    site: sites[i],
+                    sitecoordinates: pos[i],
+                    neighbours: vor_poly.edges.map(function (e) {
+                        return e.verts.filter(function (j) {
+                            return j !== i;
+                        })[0];
+                    })
+                }
+            };
         });
 
         return diagram._polygons = {
@@ -229,10 +238,13 @@ export default function () {
 
         // make GeoJSON
         return diagram._hull = {
-            type: "Polygon",
-            coordinates: [hull.concat([hull[0]]).map(function (i) {
-                return pos[i];
-            })],
+            type: "Feature",
+            geometry: {
+                type: "Polygon",
+                coordinates: [hull.concat([hull[0]]).map(function (i) {
+                    return pos[i];
+                })]
+            },
             properties: {
                 sites: hull.map(function (i) {
                     return sites[i];
