@@ -5,7 +5,7 @@
 //
 // This software is distributed under the terms of the MIT License
 
-import { ascending, extent } from "d3-array";
+import { extent } from "d3-array";
 import { map } from "d3-collection";
 import { geoArea, geoCentroid, geoDistance } from "d3-geo";
 import { voronoi } from "d3-voronoi";
