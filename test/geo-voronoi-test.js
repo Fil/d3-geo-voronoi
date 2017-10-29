@@ -51,9 +51,13 @@ tape('geoVoronoi.polygons(points) saves geojson', function(test) {
   var result = geoVoronoi.geoVoronoi().polygons(points)
 
   // Save result to GeoJSON
-  result.features = result.features.concat(points.features)
-  var out = path.join(__dirname, 'out', 'points.json')
-  if (process.env.REGEN) fs.writeFileSync(out, JSON.stringify(result, null, 2))
-  test.deepEqual(JSON.parse(fs.readFileSync(out)), result)
+  result.features = result.features.concat(points.features);
+  var out = path.join(__dirname, 'out', 'points.json');
+  result = JSON.stringify(result, null, 2);
+  if (process.env.REGEN) fs.writeFileSync(out, result);
+  test.equal(
+    fs.readFileSync(out).toString().replace(/(\.\d{5})\d+/g, '$1'),
+    result.replace(/(\.\d{5})\d+/g, '$1')
+  );
   test.end();
 });
