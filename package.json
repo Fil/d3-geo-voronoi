@@ -45,6 +45,6 @@
     "package-preamble": "0.1",
     "rollup": "0.49",
     "tape": "4",
-    "uglify-js": "32"
+    "uglify-js": "*"
   }
 }

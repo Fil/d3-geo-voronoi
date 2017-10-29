@@ -1,5 +1,7 @@
-var tape = require("tape"),
-    geoVoronoi = require("../");
+var fs = require('fs');
+var path = require('path');
+var tape = require("tape");
+var geoVoronoi = require("../");
 
 tape("geoVoronoi() returns a Diagram.", function(test) {
   test.equal(typeof geoVoronoi, 'object');
@@ -41,5 +43,17 @@ tape("geoVoronoi.links(sites) returns urquhart graph.", function(test) {
 tape("geoVoronoi.triangles(sites) returns circumcenters.", function(test) {
     var u = geoVoronoi.geoVoronoi().triangles(sites).features[0].properties.circumcenter, v = [ 5, 4.981069 ];
   test.ok( (Math.abs(u[0]-v[0]) < 1e-6) && (Math.abs(u[1]-v[1]) < 1e-6) );
+  test.end();
+});
+
+tape('geoVoronoi.polygons(points) saves geojson', function(test) {
+  var points = require('./in/points')
+  var result = geoVoronoi.geoVoronoi().polygons(points)
+
+  // Save result to GeoJSON
+  result.features = result.features.concat(points.features)
+  var out = path.join(__dirname, 'out', 'points.json')
+  if (process.env.REGEN) fs.writeFileSync(out, JSON.stringify(result, null, 2))
+  test.deepEqual(JSON.parse(fs.readFileSync(out)), result)
   test.end();
 });
