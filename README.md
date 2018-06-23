@@ -87,12 +87,13 @@ voronoi(data).hull();
 _Note: there might be a better way to compute the geoHull, and this should probably be part of d3-geo. This method is experimental and may be removed from the API._
 
 
-### Other projections
+### Other tools & projections
 
 There is no reason to limit the display of Voronoi cells to the orthographic projection. The example below displays the Urquhart graph of top container ports on a Winkel tripel map.
 
 [![](img/geoVoronoiPorts.png)](http://bl.ocks.org/Fil/24d5ee71f09ba72893323d803242c38a)
 
+[Geo_triangulate](https://jessihamel.github.io/geo_triangulate/) converts GeoJSON to triangles for 3d rendering.
 
 
 ### Comparison with planar Voronoi Diagrams
