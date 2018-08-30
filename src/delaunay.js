@@ -8,7 +8,7 @@
 import { Delaunay } from "d3-delaunay";
 import { geoArea, geoDistance, geoRotation, geoStereographic } from "d3-geo";
 import { extent } from "d3-array";
-import { cos, degrees, pi, radians, sign, sin, sqrt, tau } from "./math.js";
+import { asin, atan2, cos, degrees, max, min, pi, radians, sign, sin, sqrt, tau } from "./math.js";
 import {
   cartesianNormalize as normalize,
   cartesianCross as cross,
@@ -19,8 +19,8 @@ import {
 // Converts 3D Cartesian to spherical coordinates (degrees).
 function spherical(cartesian) {
   return [
-    Math.atan2(cartesian[1], cartesian[0]) * degrees,
-    Math.asin(Math.max(-1, Math.min(1, cartesian[2]))) * degrees
+    atan2(cartesian[1], cartesian[0]) * degrees,
+    asin(max(-1, min(1, cartesian[2]))) * degrees
   ];
 }
 
@@ -28,8 +28,8 @@ function spherical(cartesian) {
 function cartesian(coordinates) {
   var lambda = coordinates[0] * radians,
     phi = coordinates[1] * radians,
-    cosphi = Math.cos(phi);
-  return [cosphi * Math.cos(lambda), cosphi * Math.sin(lambda), Math.sin(phi)];
+    cosphi = cos(phi);
+  return [cosphi * cos(lambda), cosphi * sin(lambda), sin(phi)];
 }
 
 export function geoDelaunay(points) {
