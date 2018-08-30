@@ -71,7 +71,7 @@ Returns the Voronoi tesselation of the data as a GeoJSON collection of polygons.
 
 <a href="#geo_voronoi_mesh" name="geo_voronoi_mesh">#</a> <i>voronoi</i>.<b>mesh</b>(<i>[data]</i>)
 
-Returns the Voronoi tessellation of the data [as a GeoJSON mesh](https://bl.ocks.org/Fil/a9ba8d0d023752aa580bd95480b7de60) (MultiLineString).
+Returns the Voronoi tessellation of the data [as a GeoJSON mesh](https://bl.ocks.org/Fil/fbaf391e1ae252461741ccf401af5a10) (MultiLineString).
 
 <a href="#geo_voronoi_triangles" name="geo_voronoi_triangles">#</a> <i>voronoi</i>.<b>triangles</b>(<i>[data]</i>)
 
