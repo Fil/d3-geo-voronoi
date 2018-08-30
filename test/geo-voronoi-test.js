@@ -46,11 +46,20 @@ tape("geoVoronoi.x() changes accessor.", function(test) {
   test.end();
 });
 
-tape("geoVoronoi.hull() compute the hull.", function(test) {
+tape("geoVoronoi.hull() computes the hull.", function(test) {
   var sites = [[10,0],[10,10],[3,5],[-2,5],[0,0]];
   test.deepEqual(
   	geoVoronoi.geoVoronoi().hull(sites),
   	{ type: 'Polygon', coordinates: [ [ [ 10, 10 ], [ 10, 0 ], [ 0, 0 ], [ -2, 5 ], [ 10, 10 ] ] ] }
+  );
+  test.end();
+});
+
+tape("geoVoronoi.mesh() computes the mesh.", function(test) {
+  var sites = [[10,0],[10,10],[3,5],[-2,5],[0,0]];
+  test.deepEqual(
+  	geoVoronoi.geoVoronoi().mesh(sites),
+  	{ type: 'MultiLineString', coordinates: [ [ [ -2, 5 ], [ 0, 0 ] ], [ [ 3, 5 ], [ 0, 0 ] ], [ [ 3, 5 ], [ -2, 5 ] ], [ [ 10, 10 ], [ 3, 5 ] ], [ [ 10, 10 ], [ -2, 5 ] ], [ [ 10, 10 ], [ 0, 0 ] ], [ [ 10, 0 ], [ 0, 0 ] ], [ [ 10, 0 ], [ 3, 5 ] ], [ [ 10, 0 ], [ 10, 10 ] ] ] }
   );
   test.end();
 });

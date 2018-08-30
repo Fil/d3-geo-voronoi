@@ -132,6 +132,17 @@ export function geoVoronoi(data) {
     };
   };
 
+  v.mesh = function(data) {
+    if (data !== undefined) {
+      v(data);
+    }
+    if (!v.delaunay) return false;
+    return {
+      type: "MultiLineString",
+      coordinates: v.delaunay.edges.map(e => [v.points[e[0]], v.points[e[1]]])
+    };
+  };
+
   v._found = undefined;
   v.find = function(x, y, radius) {
     v._found = v.delaunay.find(x, y, v._found);
