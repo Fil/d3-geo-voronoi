@@ -1,2 +1,6 @@
+*.sublime-*
 build/*.zip
 test/
+dev/
+img/
+tmp/

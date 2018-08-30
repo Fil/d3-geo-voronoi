@@ -61,39 +61,39 @@ Sets or returns the _x_ accessor. The default _x_ and _y_ accessors are smart en
 
 Sets or returns the _y_ accessor.
 
-[![](img/geoVoronoiXY.png)](http://bl.ocks.org/Fil/74295d9ffe097ae4e3c93d7d00377d45)
+[![](img/geoVoronoiXY.png)](https://bl.ocks.org/Fil/74295d9ffe097ae4e3c93d7d00377d45)
 
 <a href="#geo_voronoi_polygons" name="geo_voronoi_polygons">#</a> <i>voronoi</i>.<b>polygons</b>(<i>[data]</i>)
 
 Returns the Voronoi tesselation of the data as a GeoJSON collection of polygons. (If there is only one data point, returns the Sphere). Each polygon exposes its datum in its properties.
 
-[![](img/geoVoronoiPolygons.png)](http://bl.ocks.org/Fil/a9ba8d0d023752aa580bd95480b7de60)
+[![](img/geoVoronoiPolygons.png)](https://bl.ocks.org/Fil/a9ba8d0d023752aa580bd95480b7de60)
 
 <a href="#geo_voronoi_mesh" name="geo_voronoi_mesh">#</a> <i>voronoi</i>.<b>mesh</b>(<i>[data]</i>)
 
-Returns the Voronoi tessellation of the data as a GeoJSON mesh (MultiLineString).
+Returns the Voronoi tessellation of the data [as a GeoJSON mesh](https://bl.ocks.org/Fil/a9ba8d0d023752aa580bd95480b7de60) (MultiLineString).
 
 <a href="#geo_voronoi_triangles" name="geo_voronoi_triangles">#</a> <i>voronoi</i>.<b>triangles</b>(<i>[data]</i>)
 
 Returns the spherical Delaunay triangulation of the data as a GeoJSON collection of polygons. Each triangle exposes in its properties the three sites, its spherical area (in steradians), and its circumcenter.
 
 
-[![](img/geoVoronoiTriangles.png)](http://bl.ocks.org/Fil/b1ef96e4bc991eb274f8d3a0a08932f9)
+[![](img/geoVoronoiTriangles.png)](https://bl.ocks.org/Fil/b1ef96e4bc991eb274f8d3a0a08932f9)
 
-[![](img/geoVoronoiRadome.png)](http://bl.ocks.org/Fil/955da86d6a935b26d3599ca5e344fb38)
+[![](img/geoVoronoiRadome.png)](https://bl.ocks.org/Fil/955da86d6a935b26d3599ca5e344fb38)
 
 
 <a href="#geo_voronoi_links" name="geo_voronoi_links">#</a> <i>voronoi</i>.<b>links</b>(<i>[data]</i>)
 
 Returns the Delaunay links of the data as a GeoJSON collection of lines. Each line exposes its source and target in its properties, but also its length (in radians), and a boolean flag for links that belong to the [Urquhart graph](https://en.wikipedia.org/wiki/Urquhart_graph).
 
-[![](img/geoVoronoiUrquhart.png)](http://bl.ocks.org/Fil/1a78acf8b9b40fe8ecbae7b5035acf2b)
+[![](img/geoVoronoiUrquhart.png)](https://bl.ocks.org/Fil/1a78acf8b9b40fe8ecbae7b5035acf2b)
 
 
-[![](img/geoVoronoiCircumcircles.png)](http://bl.ocks.org/Fil/79b9f17979c4070dee3cbba1c5283502)
+[![](img/geoVoronoiCircumcircles.png)](https://bl.ocks.org/Fil/79b9f17979c4070dee3cbba1c5283502)
 
 
-[![](img/geoVoronoiMars.png)](http://bl.ocks.org/Fil/1c2f954201523af16280db018ddd90cc)
+[![](img/geoVoronoiMars.png)](https://bl.ocks.org/Fil/1c2f954201523af16280db018ddd90cc)
 
 
 <i>voronoi</i>.<b>extent</b>(<i>[extent]</i>) and <i>voronoi</i>.<b>size</b>(<i>[size]</i>) are not implemented.
@@ -105,7 +105,7 @@ Indeed, defining the “paper extent” of the geoVoronoi polygons can be quite 
 
 Finds the closest site to point *x,y*, i.e. the Voronoi polygon that contains it. Optionally, return null if the distance between the point and the site is larger than *angle* degrees.
 
-[![](img/geoVoronoiFind.png)](http://bl.ocks.org/Fil/e94fc45f5ed4dbcc989be1e52b797fdd)
+[![](img/geoVoronoiFind.png)](https://bl.ocks.org/Fil/e94fc45f5ed4dbcc989be1e52b797fdd)
 
 
 <a name="geo_voronoi_hull" href="#geo_voronoi_hull">#</a> <i>voronoi</i>.<b>hull</b>(<i>data</i>)
@@ -116,14 +116,14 @@ Returns the spherical convex hull of the *data* array, as a GeoJSON polygon. Ret
 voronoi(data).hull();
 ```
 
-[![](img/geoVoronoiHull.png)](http://bl.ocks.org/Fil/6a1ed09f6e5648a5451cb130f2b13d20)
+[![](img/geoVoronoiHull.png)](https://bl.ocks.org/Fil/6a1ed09f6e5648a5451cb130f2b13d20)
 
 
 ### Other tools & projections
 
 There is no reason to limit the display of Voronoi cells to the orthographic projection. The example below displays the Urquhart graph of top container ports on a Winkel tripel map.
 
-[![](img/geoVoronoiPorts.png)](http://bl.ocks.org/Fil/24d5ee71f09ba72893323d803242c38a)
+[![](img/geoVoronoiPorts.png)](https://bl.ocks.org/Fil/24d5ee71f09ba72893323d803242c38a)
 
 [Geo_triangulate](https://jessihamel.github.io/geo_triangulate/) converts GeoJSON to triangles for 3d rendering.
 
@@ -136,7 +136,7 @@ There is no reason to limit the display of Voronoi cells to the orthographic pro
 
 - geoVoronoi is built on [d3-delaunay](https://github.com/d3/d3-delaunay), which is also exposed as d3.geoDelunay in this library. If you want to have the fastest results, you should try to use d3.geoDelaunay directly (see the examples).
 
-- geoVoronoi and geoDelaunay offer methods to compute the spherical [convex hull](#geo_voronoi_hull) and the [Urquhart graph](#geo_voronoi_links) of the data set. These can be achieved with the planar Voronoi ([hull](http://bl.ocks.org/mbostock/6f14f7b7f267a85f7cdc), [Urquhart](http://bl.ocks.org/Fil/df20827f817abd161c768fa18dcafcf5), but are not part of d3-voronoi or d3-delaunay.
+- geoVoronoi and geoDelaunay offer methods to compute the spherical [convex hull](#geo_voronoi_hull) and the [Urquhart graph](#geo_voronoi_links) of the data set. These can be achieved with the planar Voronoi ([hull](https://bl.ocks.org/mbostock/6f14f7b7f267a85f7cdc), [Urquhart](https://bl.ocks.org/Fil/df20827f817abd161c768fa18dcafcf5), but are not part of d3-voronoi or d3-delaunay.
 
 
 ### Changes
