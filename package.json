@@ -1,6 +1,6 @@
 {
   "name": "d3-geo-voronoi",
-  "version": "0.0.6",
+  "version": "0.1.0",
   "description": "Spherical Voronoi Diagram and Delaunay Triangulation",
   "keywords": [
     "d3",
@@ -23,23 +23,16 @@
     "name": "Philippe Riviere",
     "url": "https://github.com/Fil"
   },
-  "contributors": [
-    {
-      "name": "Loren Petrich",
-      "url": "http://lpetrich.org"
-    }
-  ],
   "scripts": {
-    "pretest": "rm -rf build && mkdir build && rollup --banner \"$(preamble)\" -g d3-array:d3,d3-collection:d3,d3-geo:d3,d3-voronoi:d3 -f umd -n d3 --extend d3 -o build/d3-geo-voronoi.js -- index.js",
+    "pretest": "rm -rf build && mkdir build && rollup --banner \"$(preamble)\" -g d3-array:d3,d3-geo:d3,d3-delaunay:d3 -f umd -n d3 --extend d3 -o build/d3-geo-voronoi.js -- index.js",
     "test": "tape 'test/**/*-test.js'",
     "prepublishOnly": "npm run test && uglifyjs --preamble \"$(preamble)\" build/d3-geo-voronoi.js -c negate_iife=false -m -o build/d3-geo-voronoi.min.js",
     "postpublish": "zip -j build/d3-geo-voronoi.zip -- LICENSE README.md build/d3-geo-voronoi.js build/d3-geo-voronoi.min.js"
   },
   "dependencies": {
-    "d3": "^4.0",
     "d3-array": "^1.0",
     "d3-geo": "^1.0",
-    "d3-voronoi": "^1.0"
+    "d3-delaunay": "^4.1.2"
   },
   "devDependencies": {
     "package-preamble": "0.1",

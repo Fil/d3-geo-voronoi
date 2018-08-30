@@ -1,10 +1,13 @@
 # d3-geo-voronoi
 
-This module wraps d3 around Loren Petrich's [Spherical Delaunay triangulation library](http://lpetrich.org/Science/GeometryDemo/GeometryDemo_GMap.html), following as closely as possible the API of the [d3-voronoi](https://github.com/d3/d3-voronoi/) module.
-
-Given a set of objects in spherical coordinates, it computes their Delaunay triangulation and its dual, the Voronoi diagram ([d3 issue #1820](https://github.com/d3/d3/issues/1820)).
+This module adapts d3-delaunay for spherical data. Given a set of objects in spherical coordinates, it computes their Delaunay triangulation and its dual, the Voronoi diagram.
 
 In addition, it offers convenience methods to extract the convex hull, the Urquhart graph, the circumcenters of the Delaunay triangles, and to find the cell that contains any given point on the sphere.
+
+The module offers two APIs. The legacy API is based on GeoJSON and follows as closely as possible the API of the [d3-voronoi](https://github.com/d3/d3-voronoi/) module. It is available with *d3.geoVoronoi()*.
+
+A lighter API is available with *d3.geoDelaunay()*. It offers the same contents, but with a different presentation, where every vertex, edge, polygon… is referenced by an id rather than by its coordinates. This allows a more compact representation in memory and eases topology computations, but is a bit less convenient for drawing the results on a map.
+
 
 
 ## Installing
@@ -14,12 +17,25 @@ If you use NPM, `npm install d3-geo-voronoi`. Otherwise, download the [latest re
 
 ## API Reference
 
+<a href="#geo-delaunay" name="geo-delaunay">#</a> d3.<b>geoDelaunay</b>([data])
+[<>](https://github.com/Fil/d3-geo-voronoi/blob/master/src/delaunay.js "Source")
+
+Creates a new *spherical* Voronoi layout. _data_ must be passed as an array of [lon, lat] coordinates.
+
+
+**TODO: document delaunay.methods**
+
+
 <a href="#geo-voronoi" name="geo-voronoi">#</a> d3.<b>geoVoronoi</b>([data])
-[<>](https://github.com/Fil/d3-geo-voronoi/blob/master/src/geoVoronoi.js "Source")
+[<>](https://github.com/Fil/d3-geo-voronoi/blob/master/src/voronoi.js "Source")
 
 Creates a new *spherical* Voronoi layout. _data_ can be passed as an array of [lon, lat] coordinates, an array of GeoJSON features, or a GeoJSON FeatureCollection.
 
 The following methods are similar to [d3-voronoi](https://github.com/d3/d3-voronoi/)'s methods:
+
+<a href="#geo_voronoi_delaunay" name="geo_voronoi_delaunay">#</a> <i>voronoi</i>.<b>delaunay</b>
+
+The raw d3.geoDelaunay() object used to compute this diagram. 
 
 <a href="#geo_voronoi_x" name="geo_voronoi_x">#</a> <i>voronoi</i>.<b>x</b>([<i>x</i>])
 
@@ -65,11 +81,9 @@ Returns the Delaunay links of the data as a GeoJSON collection of lines. Each li
 Indeed, defining the “paper extent” of the geoVoronoi polygons can be quite tricky, [as this block demonstrates](https://bl.ocks.org/Fil/6128aae082c04eef06422f953d0f593f).
 
 
-The following new methods are introduced:
-
 <a name="geo_voronoi_find" href="#geo_voronoi_find">#</a> <i>voronoi</i>.<b>find</b>(<i>x,y,[angle]</i>)
 
-Finds the closest site to point *x,y*, i.e. the Voronoi polygon that contains it. Optionally, return null if the distance between the point and the site is larger than *angle* radians.
+Finds the closest site to point *x,y*, i.e. the Voronoi polygon that contains it. Optionally, return null if the distance between the point and the site is larger than *angle* degrees.
 
 [![](img/geoVoronoiFind.png)](http://bl.ocks.org/Fil/e94fc45f5ed4dbcc989be1e52b797fdd)
 
@@ -84,6 +98,8 @@ voronoi(data).hull();
 
 [![](img/geoVoronoiHull.png)](http://bl.ocks.org/Fil/6a1ed09f6e5648a5451cb130f2b13d20)
 
+**TODO: fix or deprecate**
+
 _Note: there might be a better way to compute the geoHull, and this should probably be part of d3-geo. This method is experimental and may be removed from the API._
 
 
@@ -97,6 +113,8 @@ There is no reason to limit the display of Voronoi cells to the orthographic pro
 
 ### Comparison with planar Voronoi Diagrams
 
+**TODO: fix this part**
+
 - geoVoronoi is for points on the sphere, `d3-voronoi` is for points on a plane (or possibly a [torus](http://bl.ocks.org/Fil/c1b10942f61483d739dd601d09c30deb) or a [cylinder](http://bl.ocks.org/Fil/4639744e8be5428e7a8e7b3efd9a80dc)).    
 
 - geoVoronoi uses a different algorithm (in `O(n^2)`, which is [much slower](https://github.com/Fil/d3-geo-voronoi/issues/1) as the number of sites grows past 1000) -- and its internal data structure is different. 
@@ -104,4 +122,19 @@ There is no reason to limit the display of Voronoi cells to the orthographic pro
 - geoVoronoi returns GeoJSON objects, which are often `FeatureCollections`. By consequence, you will have to change `.data(voronoi.polygons())` to `.data(geovoronoi.polygons().features)`, and so on.
 
 - geoVoronoi offers methods to compute the [convex hull](#geo_voronoi_hull), the [Urquhart graph](#geo_voronoi_links). These can be achieved with the planar Voronoi ([hull](http://bl.ocks.org/mbostock/6f14f7b7f267a85f7cdc), [Urquhart](http://bl.ocks.org/Fil/df20827f817abd161c768fa18dcafcf5), but are not part of d3-voronoi.
+
+
+### Changes
+
+- find(x,y,radius): the radius is in degrees, not radians.
+
+- the module needs d3-delaunay and doesn't embed it.
+
+&lk;script src="https://unpkg.com/d3-delaunay@4></script>
+&lk;script src="https://unpkg.com/d3-geo-voronoi@1"></script>
+
+For the older version, use &lk;script src="https://unpkg.com/d3-geo-voronoi@0"></script>
+
+
+
 

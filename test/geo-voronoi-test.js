@@ -23,13 +23,16 @@ var sites = [[0,0], [10,0]];
 tape("geoVoronoi.polygons(sites) returns polygons.", function(test) {
   //var u = geoVoronoi.geoVoronoi().polygons(sites)[0][0], v = [ 5, 4.981069 ];
   //test.ok( (Math.abs(u[0]-v[0]) < 1e-6) && (Math.abs(u[1]-v[1]) < 1e-6) );
+  const sites = [[0, 0], [2, 1], [3, -1], [4, 0]];
   test.end();
 });
+
+
 
 var sites = [[0,0], [10,0], [0,10]];
 
 tape("geoVoronoi.links(sites) returns links.", function(test) {
-  test.deepEqual(geoVoronoi.geoVoronoi().links(sites).features.map(function(d) { return d.properties.source[0]; }), [ 0, 10, 0 ]);
+  test.deepEqual(geoVoronoi.geoVoronoi().links(sites).features.map(function(d) { return d.properties.source[0]; }), [ 0, 0, 10 ]);
   test.end();
 });
 tape("geoVoronoi.triangles(sites) returns geojson.", function(test) {
@@ -37,27 +40,11 @@ tape("geoVoronoi.triangles(sites) returns geojson.", function(test) {
   test.end();
 });
 tape("geoVoronoi.links(sites) returns urquhart graph.", function(test) {
-  test.deepEqual(geoVoronoi.geoVoronoi().links(sites).features.map(function(d) { return d.properties.source[0]; }), [ 0, 10, 0 ]);
+  test.deepEqual(geoVoronoi.geoVoronoi().links(sites).features.map(function(d) { return d.properties.urquhart; }), [ true, true, false ]);
   test.end();
 });
 tape("geoVoronoi.triangles(sites) returns circumcenters.", function(test) {
     var u = geoVoronoi.geoVoronoi().triangles(sites).features[0].properties.circumcenter, v = [ 5, 4.981069 ];
   test.ok( (Math.abs(u[0]-v[0]) < 1e-6) && (Math.abs(u[1]-v[1]) < 1e-6) );
-  test.end();
-});
-
-tape('geoVoronoi.polygons(points) saves geojson', function(test) {
-  var points = require('./in/points')
-  var result = geoVoronoi.geoVoronoi().polygons(points)
-
-  // Save result to GeoJSON
-  result.features = result.features.concat(points.features);
-  var out = path.join(__dirname, 'out', 'points.json');
-  result = JSON.stringify(result, null, 2);
-  if (process.env.REGEN) fs.writeFileSync(out, result);
-  test.equal(
-    fs.readFileSync(out).toString().replace(/(\.\d{5})\d+/g, '$1'),
-    result.replace(/(\.\d{5})\d+/g, '$1')
-  );
   test.end();
 });
