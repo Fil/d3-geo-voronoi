@@ -69,10 +69,6 @@ Returns the Voronoi tesselation of the data as a GeoJSON collection of polygons.
 
 [![](img/geoVoronoiPolygons.png)](https://bl.ocks.org/Fil/a9ba8d0d023752aa580bd95480b7de60)
 
-<a href="#geo_voronoi_mesh" name="geo_voronoi_mesh">#</a> <i>voronoi</i>.<b>mesh</b>(<i>[data]</i>)
-
-Returns the Voronoi tessellation of the data [as a GeoJSON mesh](https://bl.ocks.org/Fil/fbaf391e1ae252461741ccf401af5a10) (MultiLineString).
-
 <a href="#geo_voronoi_triangles" name="geo_voronoi_triangles">#</a> <i>voronoi</i>.<b>triangles</b>(<i>[data]</i>)
 
 Returns the spherical Delaunay triangulation of the data as a GeoJSON collection of polygons. Each triangle exposes in its properties the three sites, its spherical area (in steradians), and its circumcenter.
@@ -81,6 +77,10 @@ Returns the spherical Delaunay triangulation of the data as a GeoJSON collection
 [![](img/geoVoronoiTriangles.png)](https://bl.ocks.org/Fil/b1ef96e4bc991eb274f8d3a0a08932f9)
 
 [![](img/geoVoronoiRadome.png)](https://bl.ocks.org/Fil/955da86d6a935b26d3599ca5e344fb38)
+
+<a href="#geo_voronoi_mesh" name="geo_voronoi_mesh">#</a> <i>voronoi</i>.<b>mesh</b>(<i>[data]</i>)
+
+Returns the Delaunay edges [as a GeoJSON mesh](https://bl.ocks.org/Fil/fbaf391e1ae252461741ccf401af5a10) (MultiLineString).
 
 
 <a href="#geo_voronoi_links" name="geo_voronoi_links">#</a> <i>voronoi</i>.<b>links</b>(<i>[data]</i>)
@@ -134,7 +134,7 @@ There is no reason to limit the display of Voronoi cells to the orthographic pro
 
 - geoVoronoi returns GeoJSON objects, which are often `FeatureCollections`. By consequence, you will have to change `.data(voronoi.polygons())` to `.data(geovoronoi.polygons().features)`, and so on.
 
-- geoVoronoi is built on [d3-delaunay](https://github.com/d3/d3-delaunay), which is also exposed as d3.geoDelunay in this library. If you want to have the fastest results, you should try to use d3.geoDelaunay directly (see the examples).
+- geoVoronoi is built on [d3-delaunay](https://github.com/d3/d3-delaunay), which is also exposed as d3.geoDelaunay in this library. If you want to have the fastest results, you should try to use d3.geoDelaunay directly (see the examples).
 
 - geoVoronoi and geoDelaunay offer methods to compute the spherical [convex hull](#geo_voronoi_hull) and the [Urquhart graph](#geo_voronoi_links) of the data set. These can be achieved with the planar Voronoi ([hull](https://bl.ocks.org/mbostock/6f14f7b7f267a85f7cdc), [Urquhart](https://bl.ocks.org/Fil/df20827f817abd161c768fa18dcafcf5), but are not part of d3-voronoi or d3-delaunay.
 
