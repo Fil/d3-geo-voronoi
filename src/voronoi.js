@@ -140,7 +140,16 @@ export function geoVoronoi(data) {
   };
 
   v.hull = function(data) {
-    throw "hull not implemented";
+    if (data !== undefined) {
+      v(data);
+    }
+    const hull = v.delaunay.hull, points = v.points;
+    return hull.length === 0
+      ? null
+      : {
+          type: "Polygon",
+          coordinates: [[...hull.map(i => points[i]), points[hull[0]]]]
+        };
   };
 
   return data ? v(data) : v;

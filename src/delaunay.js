@@ -6,9 +6,9 @@
 // This software is distributed under the terms of the MIT License
 
 import { Delaunay } from "d3-delaunay";
-import { geoDistance, geoRotation, geoStereographic } from "d3-geo";
+import { geoArea, geoDistance, geoRotation, geoStereographic } from "d3-geo";
 import { extent } from "d3-array";
-import { cos, degrees, pi, radians, sign, sin, sqrt } from "./math.js";
+import { cos, degrees, pi, radians, sign, sin, sqrt, tau } from "./math.js";
 import {
   cartesianNormalize as normalize,
   cartesianCross as cross,
@@ -42,6 +42,7 @@ export function geoDelaunay(points) {
     circumcenters = geo_circumcenters(triangles, points),
     { polygons, centers } = geo_polygons(circumcenters, triangles, points),
     mesh = geo_mesh(polygons),
+    hull = geo_hull(triangles,points),
     // Urquhart … could take a distance function as an argument.
     urquhart = geo_urquhart(edges, triangles);
   return {
@@ -52,6 +53,7 @@ export function geoDelaunay(points) {
     neighbors,
     polygons,
     mesh,
+    hull,
     urquhart,
     find
   };
@@ -329,4 +331,44 @@ function geo_urquhart(edges, triangles) {
 
     return edges.map(edge => _urquhart[edge.join("-")]);
   };
+}
+
+
+function geo_hull(triangles, points) {
+  const _hull = {},
+    hull = [];
+  triangles.map(tri => {
+    const p = {
+      type: "Polygon",
+      coordinates: [
+        [points[tri[0]], points[tri[1]], points[tri[2]], points[tri[0]]]
+      ]
+    };
+
+    if (geoArea(p) > tau) return;
+    for (let i = 0; i < 3; i++) {
+      let e = [tri[i], tri[(i + 1) % 3]],
+        code = `${e[1]}-${e[0]}`;
+      if (_hull[code]) delete _hull[code];
+      else _hull[e.join("-")] = true;
+    }
+  });
+
+  const _index = {};
+  let start;
+  Object.keys(_hull).forEach(e => {
+    e = e.split("-").map(Number);
+    _index[e[0]] = e[1];
+    start = e[0];
+  });
+
+  if (start === undefined) return hull;
+
+  let next = start;
+  do {
+    hull.push(next);
+    next = _index[next];
+  } while (next !== start);
+
+  return hull;
 }

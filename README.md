@@ -29,6 +29,8 @@ Creates a new *spherical* Voronoi layout. _data_ must be passed as an array of [
 
 - delaunay.urquhart(*distances*): retrieve a vector of urquhart edges indices.
 
+- delaunay.hull(): list of indices of points on the hull (empty if the points cover more than a hemisphere).
+
 
 <a href="#geo-voronoi" name="geo-voronoi">#</a> d3.<b>geoVoronoi</b>([data])
 [<>](https://github.com/Fil/d3-geo-voronoi/blob/master/src/voronoi.js "Source")
@@ -101,10 +103,6 @@ voronoi(data).hull();
 ```
 
 [![](img/geoVoronoiHull.png)](http://bl.ocks.org/Fil/6a1ed09f6e5648a5451cb130f2b13d20)
-
-**TODO: fix or deprecate**
-
-_Note: there might be a better way to compute the geoHull, and this should probably be part of d3-geo. This method is experimental and may be removed from the API._
 
 
 ### Other projections

@@ -46,6 +46,15 @@ tape("geoVoronoi.x() changes accessor.", function(test) {
   test.end();
 });
 
+tape("geoVoronoi.hull() compute the hull.", function(test) {
+  var sites = [[10,0],[10,10],[3,5],[-2,5],[0,0]];
+  test.deepEqual(
+  	geoVoronoi.geoVoronoi().hull(sites),
+  	{ type: 'Polygon', coordinates: [ [ [ 10, 10 ], [ 10, 0 ], [ 0, 0 ], [ -2, 5 ], [ 10, 10 ] ] ] }
+  );
+  test.end();
+});
+
 
 tape("geoVoronoi.links(sites) returns links.", function(test) {
   test.deepEqual(geoVoronoi.geoVoronoi().links(sites).features.map(function(d) { return d.properties.source[0]; }), [ 0, 0, 10 ]);
