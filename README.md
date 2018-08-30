@@ -1,6 +1,6 @@
 # d3-geo-voronoi
 
-This module adapts d3-delaunay for spherical data. Given a set of objects in spherical coordinates, it computes their Delaunay triangulation and its dual, the Voronoi diagram.
+This module adapts [d3-delaunay](https://github.com/d3/d3-delaunay) for spherical data. Given a set of objects in spherical coordinates, it computes their Delaunay triangulation and its dual, the Voronoi diagram.
 
 In addition, it offers convenience methods to extract the convex hull, the Urquhart graph, the circumcenters of the Delaunay triangles, and to find the cell that contains any given point on the sphere.
 
@@ -139,10 +139,13 @@ There is no reason to limit the display of Voronoi cells to the orthographic pro
 
 - the module needs d3-delaunay and doesn't embed it.
 
-&lk;script src="https://unpkg.com/d3-delaunay@4></script>
-&lk;script src="https://unpkg.com/d3-geo-voronoi@1"></script>
+```
+<script src="https://unpkg.com/d3-delaunay@4></script>
+<script src="https://unpkg.com/d3-geo-voronoi@1"></script>
+```
 
-To access the previous (slow) version, please use &lk;script src="https://unpkg.com/d3-geo-voronoi@0"></script>
+(To access the previous (slow) version, please use  `https://unpkg.com/d3-geo-voronoi@0`.)
+
 
 
 
