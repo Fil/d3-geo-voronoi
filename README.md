@@ -25,6 +25,10 @@ Creates a new *spherical* Voronoi layout. _data_ must be passed as an array of [
 
 **TODO: document delaunay.methods**
 
+- delaunay.find(x,y,node): pass a starting node (_not_ a radius).
+
+- delaunay.urquhart(*distances*): retrieve a vector of urquhart edges indices.
+
 
 <a href="#geo-voronoi" name="geo-voronoi">#</a> d3.<b>geoVoronoi</b>([data])
 [<>](https://github.com/Fil/d3-geo-voronoi/blob/master/src/voronoi.js "Source")
@@ -126,7 +130,7 @@ There is no reason to limit the display of Voronoi cells to the orthographic pro
 
 ### Changes
 
-- find(x,y,radius): the radius is in degrees, not radians.
+- voronoi.find(x,y,radius): the radius is in degrees, not radians.
 
 - the module needs d3-delaunay and doesn't embed it.
 

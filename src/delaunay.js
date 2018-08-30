@@ -36,13 +36,14 @@ export function geoDelaunay(points) {
   const delaunay = geo_delaunay_from(points),
     edges = geo_edges(delaunay, points.length),
     triangles = geo_triangles(delaunay, points.length),
-    circumcenters = geo_circumcenters(triangles, points),
     neighbors = geo_neighbors(triangles, points.length),
+    find = geo_find(neighbors, points),
+    // Voronoi ; could take a center function as an argument
+    circumcenters = geo_circumcenters(triangles, points),
     { polygons, centers } = geo_polygons(circumcenters, triangles, points),
     mesh = geo_mesh(polygons),
-    distances = geo_distances(edges, points),
-    urquhart = geo_urquhart(edges, triangles, distances),
-    find = geo_find(neighbors, points);
+    // Urquhart … could take a distance function as an argument.
+    urquhart = geo_urquhart(edges, triangles);
   return {
     delaunay,
     edges,
@@ -52,19 +53,17 @@ export function geoDelaunay(points) {
     polygons,
     mesh,
     urquhart,
-    distances,
     find
   };
 }
 
 function geo_find(neighbors, points) {
-  return function find(x, y, radius) {
+  return function find(x, y, next) {
     let cell,
       dist,
-      found = 0,
-      next = 0;
+      found = 0;
+    if (next === undefined) next = 0;
 
-    radius *= radians;
     do {
       cell = next;
       next = null;
@@ -80,7 +79,7 @@ function geo_find(neighbors, points) {
       });
     } while (next !== null);
 
-    if (radius == null || dist < radius) return found;
+    return found;
   };
 }
 
@@ -305,31 +304,29 @@ function geo_mesh(polygons) {
   return mesh;
 }
 
-function geo_distances(edges, points) {
-  return edges.map(edge => geoDistance(points[edge[0]], points[edge[1]]));
-}
+function geo_urquhart(edges, triangles) {
+  return function(distances) {
+    const _lengths = {},
+      _urquhart = {};
+    edges.forEach((edge, i) => {
+      const u = edge.join("-");
+      _lengths[u] = distances[i];
+      _urquhart[u] = true;
+    });
 
-function geo_urquhart(edges, triangles, distances) {
-  const _lengths = {},
-    _urquhart = {};
-  edges.forEach((edge, i) => {
-    const u = edge.join("-");
-    _lengths[u] = distances[i];
-    _urquhart[u] = true;
-  });
-
-  triangles.forEach(tri => {
-    let l = 0,
-      remove = -1;
-    for (var j = 0; j < 3; j++) {
-      let u = extent([tri[j], tri[(j + 1) % 3]]).join("-");
-      if (_lengths[u] > l) {
-        l = _lengths[u];
-        remove = u;
+    triangles.forEach(tri => {
+      let l = 0,
+        remove = -1;
+      for (var j = 0; j < 3; j++) {
+        let u = extent([tri[j], tri[(j + 1) % 3]]).join("-");
+        if (_lengths[u] > l) {
+          l = _lengths[u];
+          remove = u;
+        }
       }
-    }
-    _urquhart[remove] = false;
-  });
+      _urquhart[remove] = false;
+    });
 
-  return edges.filter(edge => _urquhart[edge.join("-")]);
+    return edges.map(edge => _urquhart[edge.join("-")]);
+  };
 }

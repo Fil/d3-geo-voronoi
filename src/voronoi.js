@@ -12,30 +12,30 @@ import { tau } from "./math.js";
 
 export function geoVoronoi(data) {
   const v = function(data) {
-    v._vx = function(d) {
-      if (typeof d == "object" && "type" in d) {
-        return geoCentroid(d)[0];
-      }
-      if (0 in d) return d[0];
-    };
-    v._vy = function(d) {
-      if (typeof d == "object" && "type" in d) {
-        return geoCentroid(d)[1];
-      }
-      if (1 in d) return d[1];
-    };
-
     v.delaunay = null;
     v._data = data;
-    if (typeof v._data == "object" && v._data.type == "FeatureCollection") {
+
+    if (typeof v._data === "object" && v._data.type === "FeaturesCollection") {
       v._data = v._data.features;
     }
-    if (typeof v._data == "object") {
+    if (typeof v._data === "object") {
       v.points = v._data.map(i => [v._vx(i), v._vy(i)]);
       v.delaunay = geoDelaunay(v.points);
-      v.find = v.delaunay.find;
     }
     return v;
+  };
+
+  v._vx = function(d) {
+    if (typeof d == "object" && "type" in d) {
+      return geoCentroid(d)[0];
+    }
+    if (0 in d) return d[0];
+  };
+  v._vy = function(d) {
+    if (typeof d == "object" && "type" in d) {
+      return geoCentroid(d)[1];
+    }
+    if (1 in d) return d[1];
   };
 
   v.x = function(f) {
@@ -110,17 +110,19 @@ export function geoVoronoi(data) {
       v(data);
     }
     if (!v.delaunay) return false;
-    const _urquart = {};
-    v.delaunay.urquhart.forEach(edge => (_urquart[edge.join("-")] = true));
+    const _distances = v.delaunay.edges.map(e =>
+        geoDistance(v.points[e[0]], v.points[e[1]])
+      ),
+      _urquart = v.delaunay.urquhart(_distances);
     return {
       type: "FeaturesCollection",
-      features: v.delaunay.edges.map(e => ({
+      features: v.delaunay.edges.map((e, i) => ({
         type: "Feature",
         properties: {
           source: v._data[e[0]],
           target: v._data[e[1]],
-          length: geoDistance(v.points[e[0]], v.points[e[1]]),
-          urquhart: !!_urquart[e.join("-")]
+          length: _distances[i],
+          urquhart: !!_urquart[i]
         },
         geometry: {
           type: "LineString",
@@ -128,6 +130,13 @@ export function geoVoronoi(data) {
         }
       }))
     };
+  };
+
+  v._found = undefined;
+  v.find = function(x, y, radius) {
+    v._found = v.delaunay.find(x, y, v._found);
+    if (!radius || geoDistance([x, y], v.points[v._found]) < radius)
+      return v._found;
   };
 
   v.hull = function(data) {
