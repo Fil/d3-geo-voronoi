@@ -15,7 +15,7 @@ export function geoVoronoi(data) {
     v.delaunay = null;
     v._data = data;
 
-    if (typeof v._data === "object" && v._data.type === "FeaturesCollection") {
+    if (typeof v._data === "object" && v._data.type === "FeatureCollection") {
       v._data = v._data.features;
     }
     if (typeof v._data === "object") {
@@ -57,7 +57,7 @@ export function geoVoronoi(data) {
     if (v._data.length === 0) return null;
     if (v._data.length === 1) return { type: "Sphere" };
     return {
-      type: "FeaturesCollection",
+      type: "FeatureCollection",
       features: v.delaunay.polygons.map((poly, i) => ({
         type: "Feature",
         geometry: !poly
@@ -82,7 +82,7 @@ export function geoVoronoi(data) {
     if (!v.delaunay) return false;
 
     return {
-      type: "FeaturesCollection",
+      type: "FeatureCollection",
       features: v.delaunay.triangles
         .map((tri, i) => ({
           type: "Feature",
@@ -115,7 +115,7 @@ export function geoVoronoi(data) {
       ),
       _urquart = v.delaunay.urquhart(_distances);
     return {
-      type: "FeaturesCollection",
+      type: "FeatureCollection",
       features: v.delaunay.edges.map((e, i) => ({
         type: "Feature",
         properties: {
