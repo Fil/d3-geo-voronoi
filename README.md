@@ -23,13 +23,23 @@ If you use NPM, `npm install d3-geo-voronoi`. Otherwise, download the [latest re
 Creates a new *spherical* Voronoi layout. _data_ must be passed as an array of [lon, lat] coordinates.
 
 
-**TODO: document delaunay.methods**
-
 - delaunay.find(x,y,node): pass a starting node (_not_ a radius).
 
 - delaunay.urquhart(*distances*): retrieve a vector of urquhart edges indices.
 
 - delaunay.hull(): list of indices of points on the hull (empty if the points cover more than a hemisphere).
+
+- delaunay.edges: list of edges as indices of points [from, to] (might change to a typed in the future)
+
+- delaunay.triangles: list of edges as indices of points [a, b, c] (might change to a typed in the future)
+
+- delaunay.centers: list of centers in spherical coordinates; the first *t* centers are the *t* triangles’s circumcenters. More centers might be listed in order to build the voronoi diagram for degenerate cases such as n=1,2,3 points.
+
+- delaunay.neighbors, an array of neighbors indices for each vertex.
+
+- delaunay.polygons, an array of centers for each vertex, order in a clockwise manner.
+
+- delaunay.mesh, a list of all the edges of the voronoi polygons
 
 
 <a href="#geo-voronoi" name="geo-voronoi">#</a> d3.<b>geoVoronoi</b>([data])
@@ -115,27 +125,23 @@ There is no reason to limit the display of Voronoi cells to the orthographic pro
 
 ### Comparison with planar Voronoi Diagrams
 
-**TODO: fix this part**
-
-- geoVoronoi is for points on the sphere, `d3-voronoi` is for points on a plane (or possibly a [torus](http://bl.ocks.org/Fil/c1b10942f61483d739dd601d09c30deb) or a [cylinder](http://bl.ocks.org/Fil/4639744e8be5428e7a8e7b3efd9a80dc)).    
-
-- geoVoronoi uses a different algorithm (in `O(n^2)`, which is [much slower](https://github.com/Fil/d3-geo-voronoi/issues/1) as the number of sites grows past 1000) -- and its internal data structure is different. 
+- the Delaunay/Voronoi topology is quite different on the sphere and on the plane. This module deals with these differences by first projecting the points with a stereographic projection, then stitching the geometries that are near the singularity of the projection (the “infinite horizon” on the plane is one point on the sphere).
 
 - geoVoronoi returns GeoJSON objects, which are often `FeatureCollections`. By consequence, you will have to change `.data(voronoi.polygons())` to `.data(geovoronoi.polygons().features)`, and so on.
 
-- geoVoronoi offers methods to compute the [convex hull](#geo_voronoi_hull), the [Urquhart graph](#geo_voronoi_links). These can be achieved with the planar Voronoi ([hull](http://bl.ocks.org/mbostock/6f14f7b7f267a85f7cdc), [Urquhart](http://bl.ocks.org/Fil/df20827f817abd161c768fa18dcafcf5), but are not part of d3-voronoi.
+- geoVoronoi is built on [d3-delaunay](https://github.com/d3/d3-delaunay), which is also exposed as d3.geoDelunay in this library. If you want to have the fastest results, you should try to use d3.geoDelaunay directly (see the examples).
+
+- geoVoronoi and geoDelaunay offer methods to compute the spherical [convex hull](#geo_voronoi_hull) and the [Urquhart graph](#geo_voronoi_links) of the data set. These can be achieved with the planar Voronoi ([hull](http://bl.ocks.org/mbostock/6f14f7b7f267a85f7cdc), [Urquhart](http://bl.ocks.org/Fil/df20827f817abd161c768fa18dcafcf5), but are not part of d3-voronoi or d3-delaunay.
 
 
 ### Changes
-
-- voronoi.find(x,y,radius): the radius is in degrees, not radians.
 
 - the module needs d3-delaunay and doesn't embed it.
 
 &lk;script src="https://unpkg.com/d3-delaunay@4></script>
 &lk;script src="https://unpkg.com/d3-geo-voronoi@1"></script>
 
-For the older version, use &lk;script src="https://unpkg.com/d3-geo-voronoi@0"></script>
+To access the previous (slow) version, please use &lk;script src="https://unpkg.com/d3-geo-voronoi@0"></script>
 
 
 

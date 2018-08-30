@@ -43,7 +43,7 @@ export function geoDelaunay(points) {
     { polygons, centers } = geo_polygons(circumcenters, triangles, points),
     mesh = geo_mesh(polygons),
     hull = geo_hull(triangles,points),
-    // Urquhart … could take a distance function as an argument.
+    // Urquhart ; returns a function that takes a distance array as argument.
     urquhart = geo_urquhart(edges, triangles);
   return {
     delaunay,
