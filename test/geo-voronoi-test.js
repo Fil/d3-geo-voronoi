@@ -55,11 +55,22 @@ tape("geoVoronoi.hull() computes the hull.", function(test) {
   test.end();
 });
 
-tape("geoVoronoi.mesh() computes the mesh.", function(test) {
+tape("geoVoronoi.mesh() computes the Delauney mesh.", function(test) {
   var sites = [[10,0],[10,10],[3,5],[-2,5],[0,0]];
   test.deepEqual(
   	geoVoronoi.geoVoronoi().mesh(sites),
   	{ type: 'MultiLineString', coordinates: [ [ [ -2, 5 ], [ 0, 0 ] ], [ [ 3, 5 ], [ 0, 0 ] ], [ [ 3, 5 ], [ -2, 5 ] ], [ [ 10, 10 ], [ 3, 5 ] ], [ [ 10, 10 ], [ -2, 5 ] ], [ [ 10, 10 ], [ 0, 0 ] ], [ [ 10, 0 ], [ 0, 0 ] ], [ [ 10, 0 ], [ 3, 5 ] ], [ [ 10, 0 ], [ 10, 10 ] ] ] }
+  );
+  test.end();
+});
+
+tape("geoVoronoi.cellMesh() computes the Polygons mesh.", function(test) {
+  var sites = [[10,0],[10,10],[3,5],[-2,5],[0,0]];
+  var cellMesh = geoVoronoi.geoVoronoi().cellMesh(sites);
+  cellMesh.coordinates = cellMesh.coordinates.map(d => d.map(e => e.map(n => n|0)));
+  test.deepEqual(
+  	cellMesh,
+  	{ type: 'MultiLineString', coordinates: [ [ [ 5, 0 ], [ 8, 4 ] ], [ [ 8, 4 ], [ -174, -4 ] ], [ [ 0, 15 ], [ -174, -4 ] ], [ [ -174, -4 ], [ -174, -4 ] ], [ [ 0, 3 ], [ 0, 15 ] ], [ [ 0, 15 ], [ 8, 4 ] ], [ [ 0, 3 ], [ -174, -4 ] ], [ [ 0, 3 ], [ 5, 0 ] ], [ [ 5, 0 ], [ -174, -4 ] ] ] }
   );
   test.end();
 });

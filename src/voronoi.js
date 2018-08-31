@@ -143,6 +143,31 @@ export function geoVoronoi(data) {
     };
   };
 
+  v.cellMesh = function(data) {
+    if (data !== undefined) {
+      v(data);
+    }
+    if (!v.delaunay) return false;
+    const { centers, polygons } = v.delaunay;
+    const coordinates = [];
+    for (const p of polygons) {
+      if (!p) continue;
+      for (
+        let n = p.length, p0 = p[n - 1], p1 = p[0], i = 0;
+        i < n;
+        p0 = p1, p1 = p[++i]
+      ) {
+        if (p1 > p0) {
+          coordinates.push([centers[p0], centers[p1]]);
+        }
+      }
+    }
+    return {
+      type: "MultiLineString",
+      coordinates
+    };
+  };
+
   v._found = undefined;
   v.find = function(x, y, radius) {
     v._found = v.delaunay.find(x, y, v._found);
@@ -154,7 +179,8 @@ export function geoVoronoi(data) {
     if (data !== undefined) {
       v(data);
     }
-    const hull = v.delaunay.hull, points = v.points;
+    const hull = v.delaunay.hull,
+      points = v.points;
     return hull.length === 0
       ? null
       : {
