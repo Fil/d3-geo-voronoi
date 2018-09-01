@@ -6,8 +6,8 @@
 // This software is distributed under the terms of the MIT License
 
 import { extent } from "d3-array";
-import { geoArea, geoCentroid, geoDistance } from "d3-geo";
-import { geoDelaunay } from "./delaunay.js";
+import { geoCentroid, geoDistance } from "d3-geo";
+import { geoDelaunay, excess } from "./delaunay.js";
 import { tau } from "./math.js";
 
 export function geoVoronoi(data) {
@@ -84,24 +84,22 @@ export function geoVoronoi(data) {
     return {
       type: "FeatureCollection",
       features: v.delaunay.triangles
-        .map((tri, i) => ({
+        .map((tri, index) => {
+          tri = tri.map(i => v.points[i]);
+          tri.center = v.delaunay.centers[index];
+          return tri;
+        })
+        .filter(tri => excess(tri) > 0)
+        .map(tri => ({
           type: "Feature",
           properties: {
-            circumcenter: v.delaunay.centers[i]
+            circumcenter: tri.center
           },
           geometry: {
             type: "Polygon",
-            coordinates: [
-              [
-                v.points[tri[0]],
-                v.points[tri[1]],
-                v.points[tri[2]],
-                v.points[tri[0]]
-              ]
-            ]
+            coordinates: [[...tri, tri[0]]]
           }
         }))
-        .filter(d => geoArea(d) <= tau)
     };
   };
 

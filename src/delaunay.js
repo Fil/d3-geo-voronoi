@@ -6,9 +6,21 @@
 // This software is distributed under the terms of the MIT License
 
 import { Delaunay } from "d3-delaunay";
-import { geoArea, geoDistance, geoRotation, geoStereographic } from "d3-geo";
+import { geoDistance, geoRotation, geoStereographic } from "d3-geo";
 import { extent } from "d3-array";
-import { asin, atan2, cos, degrees, max, min, pi, radians, sign, sin, sqrt, tau } from "./math.js";
+import {
+  asin,
+  atan2,
+  cos,
+  degrees,
+  max,
+  min,
+  pi,
+  radians,
+  sign,
+  sin,
+  sqrt
+} from "./math.js";
 import {
   cartesianNormalize as normalize,
   cartesianCross as cross,
@@ -32,17 +44,23 @@ function cartesian(coordinates) {
   return [cosphi * cos(lambda), cosphi * sin(lambda), sin(phi)];
 }
 
+// Spherical excess of a triangle (in spherical coordinates)
+export function excess(triangle) {
+  triangle = triangle.map(p => cartesian(p));
+  return dot(triangle[0], cross(triangle[2], triangle[1]));
+}
+
 export function geoDelaunay(points) {
   const delaunay = geo_delaunay_from(points),
-    edges = geo_edges(delaunay, points.length),
     triangles = geo_triangles(delaunay, points.length),
+    edges = geo_edges(triangles, points),
     neighbors = geo_neighbors(triangles, points.length),
     find = geo_find(neighbors, points),
     // Voronoi ; could take a center function as an argument
     circumcenters = geo_circumcenters(triangles, points),
     { polygons, centers } = geo_polygons(circumcenters, triangles, points),
     mesh = geo_mesh(polygons),
-    hull = geo_hull(triangles,points),
+    hull = geo_hull(triangles, points),
     // Urquhart ; returns a function that takes a distance array as argument.
     urquhart = geo_urquhart(edges, triangles);
   return {
@@ -117,23 +135,17 @@ function geo_delaunay_from(points) {
   return delaunay;
 }
 
-function geo_edges(delaunay, npoints) {
-  const geo_edges = [],
-    halfedges = delaunay.halfedges,
-    triangles = delaunay.triangles,
-    seen = {};
-
-  if (!halfedges) return geo_edges;
-
-  for (let i = 0, n = halfedges.length; i < n; ++i) {
-    const j = halfedges[i];
-    if (j < i) continue;
-    let [a, b] = extent([triangles[i], triangles[j]]);
-    if (b >= npoints && a < npoints) (b = a), (a = 0);
-    if (b > 0 && b < npoints && (a > 0 || (!seen[b]++ && (seen[b] = true))))
-      geo_edges.push([a, b]);
-  }
-  return geo_edges;
+function geo_edges(triangles, points) {
+  const _index = {};
+  if (points.length === 2) return [[0, 1]];
+  triangles.forEach(tri => {
+    if (excess(tri.map(i => points[i])) < 0) return;
+    for (let i = 0, j; i < 3; i++) {
+      j = (i + 1) % 3;
+      _index[extent([tri[i], tri[j]]).join("-")] = true;
+    }
+  });
+  return Object.keys(_index).map(d => d.split("-").map(Number));
 }
 
 function geo_triangles(delaunay, npoints) {
@@ -333,19 +345,11 @@ function geo_urquhart(edges, triangles) {
   };
 }
 
-
 function geo_hull(triangles, points) {
   const _hull = {},
     hull = [];
   triangles.map(tri => {
-    const p = {
-      type: "Polygon",
-      coordinates: [
-        [points[tri[0]], points[tri[1]], points[tri[2]], points[tri[0]]]
-      ]
-    };
-
-    if (geoArea(p) > tau) return;
+    if (excess(tri.map(i => points[i > points.length ? 0 : i])) < 0) return;
     for (let i = 0; i < 3; i++) {
       let e = [tri[i], tri[(i + 1) % 3]],
         code = `${e[1]}-${e[0]}`;

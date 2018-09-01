@@ -32,7 +32,7 @@ tape("geoVoronoi.polygons(sites) returns polygons.", function(test) {
 var sites = [[0,0], [10,0], [0,10]];
 
 tape("geoVoronoi.links() returns urquhart.", function(test) {
-  test.deepEqual(geoVoronoi.geoVoronoi().links(sites).features.map(function(d) { return d.properties.urquhart; }), [ true, true, false ]);
+  test.deepEqual(geoVoronoi.geoVoronoi().links(sites).features.map(function(d) { return d.properties.urquhart; }), [ false, true, true ]);
   test.end();
 });
 
@@ -59,7 +59,7 @@ tape("geoVoronoi.mesh() computes the Delauney mesh.", function(test) {
   var sites = [[10,0],[10,10],[3,5],[-2,5],[0,0]];
   test.deepEqual(
   	geoVoronoi.geoVoronoi().mesh(sites),
-  	{ type: 'MultiLineString', coordinates: [ [ [ -2, 5 ], [ 0, 0 ] ], [ [ 3, 5 ], [ 0, 0 ] ], [ [ 3, 5 ], [ -2, 5 ] ], [ [ 10, 10 ], [ 3, 5 ] ], [ [ 10, 10 ], [ -2, 5 ] ], [ [ 10, 10 ], [ 0, 0 ] ], [ [ 10, 0 ], [ 0, 0 ] ], [ [ 10, 0 ], [ 3, 5 ] ], [ [ 10, 0 ], [ 10, 10 ] ] ] }
+  	{ type: 'MultiLineString', coordinates: [ [ [ 3, 5 ], [ -2, 5 ] ], [ [ 3, 5 ], [ 0, 0 ] ], [ [ -2, 5 ], [ 0, 0 ] ], [ [ 10, 10 ], [ -2, 5 ] ], [ [ 10, 10 ], [ 3, 5 ] ], [ [ 10, 0 ], [ 3, 5 ] ], [ [ 10, 0 ], [ 0, 0 ] ], [ [ 10, 0 ], [ 10, 10 ] ] ] }
   );
   test.end();
 });
@@ -77,7 +77,7 @@ tape("geoVoronoi.cellMesh() computes the Polygons mesh.", function(test) {
 
 
 tape("geoVoronoi.links(sites) returns links.", function(test) {
-  test.deepEqual(geoVoronoi.geoVoronoi().links(sites).features.map(function(d) { return d.properties.source[0]; }), [ 0, 0, 10 ]);
+  test.deepEqual(geoVoronoi.geoVoronoi().links(sites).features.map(function(d) { return d.properties.source[0]; }), [ 10, 0, 0 ]);
   test.end();
 });
 tape("geoVoronoi.triangles(sites) returns geojson.", function(test) {
@@ -85,7 +85,7 @@ tape("geoVoronoi.triangles(sites) returns geojson.", function(test) {
   test.end();
 });
 tape("geoVoronoi.links(sites) returns urquhart graph.", function(test) {
-  test.deepEqual(geoVoronoi.geoVoronoi().links(sites).features.map(function(d) { return d.properties.urquhart; }), [ true, true, false ]);
+  test.deepEqual(geoVoronoi.geoVoronoi().links(sites).features.map(function(d) { return d.properties.urquhart; }), [ false, true, true ]);
   test.end();
 });
 tape("geoVoronoi.triangles(sites) returns circumcenters.", function(test) {
