@@ -20,13 +20,13 @@
     "url": "https://github.com/Fil/d3-geo-voronoi.git"
   },
   "author": {
-    "name": "Philippe Riviere",
+    "name": "Philippe Rivière",
     "url": "https://github.com/Fil"
   },
   "scripts": {
     "pretest": "rm -rf build && mkdir build && rollup --banner \"$(preamble)\" -g d3-array:d3,d3-geo:d3,d3-delaunay:d3 -f umd -n d3 --extend d3 -o build/d3-geo-voronoi.js -- index.js",
     "test": "tape 'test/**/*-test.js'",
-    "prepublishOnly": "npm run test && uglifyjs --preamble \"$(preamble)\" build/d3-geo-voronoi.js -c negate_iife=false -m -o build/d3-geo-voronoi.min.js",
+    "prepublishOnly": "npm run test && terser --preamble \"$(preamble)\" build/d3-geo-voronoi.js -c passes=2 -c negate_iife=false -m -o build/d3-geo-voronoi.min.js",
     "postpublish": "zip -j build/d3-geo-voronoi.zip -- LICENSE README.md build/d3-geo-voronoi.js build/d3-geo-voronoi.min.js"
   },
   "dependencies": {
@@ -38,6 +38,6 @@
     "package-preamble": "0.1",
     "rollup": "0.49",
     "tape": "4",
-    "uglify-es": "*"
+    "terser": "^3.8.2"
   }
 }
