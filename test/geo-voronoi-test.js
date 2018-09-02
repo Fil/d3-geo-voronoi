@@ -75,6 +75,13 @@ tape("geoVoronoi.cellMesh() computes the Polygons mesh.", function(test) {
   test.end();
 });
 
+tape("geoVoronoi.find() finds p", function(test) {
+  var sites = [[10,0],[10,10],[3,5],[-2,5],[0,0]],
+      voro = geoVoronoi.geoVoronoi(sites);
+  test.equal(voro.find(1,1),4);
+  test.equal(voro.find(1,1,4),4);
+  test.end();
+});
 
 tape("geoVoronoi.links(sites) returns links.", function(test) {
   test.deepEqual(geoVoronoi.geoVoronoi().links(sites).features.map(function(d) { return d.properties.source[0]; }), [ 10, 0, 0 ]);

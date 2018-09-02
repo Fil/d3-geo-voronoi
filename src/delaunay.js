@@ -79,11 +79,10 @@ export function geoDelaunay(points) {
 
 function geo_find(neighbors, points) {
   return function find(x, y, next) {
+    if (next === undefined) next = 0;
     let cell,
       dist,
-      found = 0;
-    if (next === undefined) next = 0;
-
+      found = next;
     do {
       cell = next;
       next = null;
