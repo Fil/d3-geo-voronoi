@@ -4,9 +4,11 @@ This module adapts [d3-delaunay](https://github.com/d3/d3-delaunay) for spherica
 
 In addition, it offers convenience methods to extract the convex hull, the Urquhart graph, the circumcenters of the Delaunay triangles, and to find the cell that contains any given point on the sphere.
 
-The module offers two APIs. The legacy API is based on GeoJSON and follows as closely as possible the API of the [d3-voronoi](https://github.com/d3/d3-voronoi/) module. It is available with *d3.geoVoronoi()*.
+The module offers two APIs.
 
-A lighter API is available with *d3.geoDelaunay()*. It offers the same contents, but with a different presentation, where every vertex, edge, polygon… is referenced by an id rather than by its coordinates. This allows a more compact representation in memory and eases topology computations, but is a bit less convenient for drawing the results on a map.
+The GeoJSON API is the most convenient for drawing the results on a map. It follows as closely as possible the API of the [d3-voronoi](https://github.com/d3/d3-voronoi/) module. It is available with *d3.geoVoronoi()*.
+
+A lighter API is available with *d3.geoDelaunay()*. It offers the same contents, but with a different presentation, where every vertex, edge, polygon… is referenced by an id rather than by its coordinates. This allows a more compact representation in memory and eases topology computations.
 
 
 
