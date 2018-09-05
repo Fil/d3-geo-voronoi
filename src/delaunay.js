@@ -6,7 +6,7 @@
 // This software is distributed under the terms of the MIT License
 
 import { Delaunay } from "d3-delaunay";
-import { geoDistance, geoRotation, geoStereographic } from "d3-geo";
+import { geoRotation, geoStereographic } from "d3-geo";
 import { extent } from "d3-array";
 import {
   asin,
@@ -78,17 +78,25 @@ export function geoDelaunay(points) {
 }
 
 function geo_find(neighbors, points) {
+  function distance2(a,b) {
+    let x = a[0] - b[0],
+        y = a[1] - b[1],
+        z = a[2] - b[2];
+    return x * x + y * y + z * z;
+  }
+
   return function find(x, y, next) {
     if (next === undefined) next = 0;
     let cell,
       dist,
       found = next;
+    const xyz = cartesian([x, y]);
     do {
       cell = next;
       next = null;
-      dist = geoDistance([x, y], points[cell]);
+      dist = distance2(xyz, cartesian(points[cell]));
       neighbors[cell].forEach(i => {
-        let ndist = geoDistance([x, y], points[i]);
+        let ndist = distance2(xyz, cartesian(points[i]));
         if (ndist < dist) {
           dist = ndist;
           next = i;
