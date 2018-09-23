@@ -150,7 +150,7 @@ There is no reason to limit the display of Voronoi cells to the orthographic pro
 - the module needs d3-delaunay and doesn't embed it.
 
 ```
-<script src="https://unpkg.com/d3-delaunay@4></script>
+<script src="https://unpkg.com/d3-delaunay@4"></script>
 <script src="https://unpkg.com/d3-geo-voronoi@1"></script>
 ```
 
