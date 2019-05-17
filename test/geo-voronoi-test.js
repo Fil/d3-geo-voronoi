@@ -21,12 +21,20 @@ tape("geoVoronoi() returns a Diagram.", function(test) {
 var sites = [[0,0], [10,0]];
 
 tape("geoVoronoi.polygons(sites) returns polygons.", function(test) {
-  //var u = geoVoronoi.geoVoronoi().polygons(sites)[0][0], v = [ 5, 4.981069 ];
-  //test.ok( (Math.abs(u[0]-v[0]) < 1e-6) && (Math.abs(u[1]-v[1]) < 1e-6) );
-  const sites = [[0, 0], [2, 1], [3, -1], [4, 0]];
+  var u = geoVoronoi.geoVoronoi(sites).polygons()
+            .features[0].geometry.coordinates[0][0],
+      v = [ -175, -4.981069 ];
+  test.ok( (Math.abs(u[0]-v[0]) < 1e-6) && (Math.abs(u[1]-v[1]) < 1e-6) );
   test.end();
 });
 
+tape("geoVoronoi.polygons(sites) tolerates NaN.", function(test) {
+  //var u = geoVoronoi.geoVoronoi().polygons(sites)[0][0], v = [ 5, 4.981069 ];
+  //test.ok( (Math.abs(u[0]-v[0]) < 1e-6) && (Math.abs(u[1]-v[1]) < 1e-6) );
+  const sites = [[0, 0], [2, 1], [NaN, -1], [4, NaN], [5,10]];
+  var u = geoVoronoi.geoVoronoi(sites).polygons()
+  test.end();
+});
 
 
 var sites = [[0,0], [10,0], [0,10]];

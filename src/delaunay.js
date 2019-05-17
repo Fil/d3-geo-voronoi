@@ -129,14 +129,15 @@ function geo_delaunay_from(points) {
   }
   const FAR = 1e6 * sqrt(max2);
 
-  zeros.forEach((_, i) => (points[i] = [FAR / 2, 0]));
+  zeros.forEach(i => (points[i] = [FAR / 2, i]));
 
-  // infinite horizon points
+  // Add infinite horizon points
   for (let i = 0; i < 4; i++) {
     points.push([FAR * cos((i / 2) * pi), FAR * sin((i / 2) * pi)]);
   }
 
   const delaunay = Delaunay.from(points);
+
   delaunay.projection = projection;
 
   return delaunay;
