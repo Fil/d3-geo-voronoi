@@ -4,3 +4,4 @@ test/
 dev/
 img/
 tmp/
+*~
