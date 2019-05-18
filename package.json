@@ -1,6 +1,6 @@
 {
   "name": "d3-geo-voronoi",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Spherical Voronoi Diagram and Delaunay Triangulation",
   "keywords": [
     "d3",
