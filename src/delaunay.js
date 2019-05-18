@@ -379,8 +379,10 @@ function geo_hull(triangles, points) {
   let next = start;
   do {
     hull.push(next);
-    next = _index[next];
-  } while (next !== start);
+    let n = _index[next];
+    _index[next] = -1;
+    next = n;
+  } while (next > -1 && next !== start);
 
   return hull;
 }
