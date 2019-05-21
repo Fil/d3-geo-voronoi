@@ -19,7 +19,11 @@ export function geoVoronoi(data) {
       v._data = v._data.features;
     }
     if (typeof v._data === "object") {
-      v.points = v._data.map(i => [v._vx(i), v._vy(i)]);
+      const temp = v._data
+        .map(d => [v._vx(d), v._vy(d), d])
+        .filter(d => isFinite(d[0] + d[1]));
+      v.points = temp.map(d => [d[0], d[1]]);
+      v.valid = temp.map(d => d[2]);
       v.delaunay = geoDelaunay(v.points);
     }
     return v;
@@ -53,12 +57,15 @@ export function geoVoronoi(data) {
     if (data !== undefined) {
       v(data);
     }
+
     if (!v.delaunay) return false;
-    if (v._data.length === 0) return null;
-    if (v._data.length === 1) return { type: "Sphere" };
-    return {
+    const coll = {
       type: "FeatureCollection",
-      features: v.delaunay.polygons.map((poly, i) => ({
+      features: []
+    };
+    if (v.valid.length === 0) return coll;
+    v.delaunay.polygons.forEach((poly, i) =>
+      coll.features.push({
         type: "Feature",
         geometry: !poly
           ? null
@@ -67,12 +74,23 @@ export function geoVoronoi(data) {
               coordinates: [[...poly, poly[0]].map(i => v.delaunay.centers[i])]
             },
         properties: {
-          site: v._data[i],
+          site: v.valid[i],
           sitecoordinates: v.points[i],
           neighbours: v.delaunay.neighbors[i] // not part of the public API
         }
-      }))
-    };
+      })
+    );
+    if (v.valid.length === 1)
+      coll.features.push({
+        type: "Feature",
+        geometry: { type: "Sphere" },
+        properties: {
+          site: v.valid[0],
+          sitecoordinates: v.points[0],
+          neighbours: []
+        }
+      });
+    return coll;
   };
 
   v.triangles = function(data) {
@@ -117,8 +135,8 @@ export function geoVoronoi(data) {
       features: v.delaunay.edges.map((e, i) => ({
         type: "Feature",
         properties: {
-          source: v._data[e[0]],
-          target: v._data[e[1]],
+          source: v.valid[e[0]],
+          target: v.valid[e[1]],
           length: _distances[i],
           urquhart: !!_urquart[i]
         },

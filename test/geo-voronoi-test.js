@@ -32,10 +32,24 @@ tape("geoVoronoi.polygons(sites) tolerates NaN.", function(test) {
   //var u = geoVoronoi.geoVoronoi().polygons(sites)[0][0], v = [ 5, 4.981069 ];
   //test.ok( (Math.abs(u[0]-v[0]) < 1e-6) && (Math.abs(u[1]-v[1]) < 1e-6) );
   const sites = [[0, 0], [2, 1], [NaN, -1], [4, NaN], [5,10]];
-  var u = geoVoronoi.geoVoronoi(sites).polygons()
+  var u = geoVoronoi.geoVoronoi(sites).polygons();
   test.end();
 });
 
+tape("geoVoronoi.polygons([no valid site]) returns an empty collection.", function(test) {
+  const sites = [[NaN, -1], [4, NaN], [Infinity,10]];
+  var u = geoVoronoi.geoVoronoi(sites).polygons();
+  test.deepEqual(u.features, []);
+  test.end();
+});
+
+tape("geoVoronoi.polygons([1 site]) returns a Sphere.", function(test) {
+  const sites = [[NaN, -1], [4, NaN], [5,10]];
+  var u = geoVoronoi.geoVoronoi(sites).polygons();
+  test.equal(u.features[0].type, "Feature");
+  test.equal(u.features[0].geometry.type, "Sphere");
+  test.end();
+});
 
 var sites = [[0,0], [10,0], [0,10]];
 

@@ -113,20 +113,25 @@ function geo_find(neighbors, points) {
 function geo_delaunay_from(points) {
   if (points.length < 2) return {};
 
-  const r = geoRotation(points[0]),
+  // find a valid point to send to infinity
+  let pivot = 0;
+  while (isNaN(points[pivot][0]+points[pivot][1]) && pivot++ < points.length) {}
+
+  const r = geoRotation(points[pivot]),
     projection = geoStereographic()
       .translate([0, 0])
       .scale(1)
       .rotate(r.invert([180, 0]));
   points = points.map(projection);
 
-  const zeros = [0];
+  const zeros = [];
   let max2 = 1;
-  for (let i = 1, n = points.length; i < n; i++) {
-    let m = points[i][0] * points[i][0] + points[i][1] * points[i][1];
-    if (isNaN(m)) zeros.push(i);
-    if (m > max2) max2 = m;
+  for (let i = 0, n = points.length; i < n; i++) {
+    let m = points[i][0] ** 2 + points[i][1] ** 2;
+    if (!isFinite(m)) zeros.push(i);
+    else if (m > max2) max2 = m;
   }
+
   const FAR = 1e6 * sqrt(max2);
 
   zeros.forEach(i => (points[i] = [FAR / 2, i]));

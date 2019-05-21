@@ -1,6 +1,6 @@
 {
   "name": "d3-geo-voronoi",
-  "version": "1.2.1",
+  "version": "1.3.0",
   "description": "Spherical Voronoi Diagram and Delaunay Triangulation",
   "keywords": [
     "d3",
@@ -9,9 +9,9 @@
     "d3-delaunay"
   ],
   "license": "MIT",
-  "main": "build/d3-geo-voronoi.js",
-  "unpkg": "build/d3-geo-voronoi.min.js",
-  "jsdelivr": "build/d3-geo-voronoi.min.js",
+  "main": "dist/d3-geo-voronoi.js",
+  "unpkg": "dist/d3-geo-voronoi.min.js",
+  "jsdelivr": "dist/d3-geo-voronoi.min.js",
   "module": "index",
   "jsnext:main": "index",
   "homepage": "https://github.com/Fil/d3-geo-voronoi",
@@ -24,10 +24,10 @@
     "url": "https://github.com/Fil"
   },
   "scripts": {
-    "pretest": "rm -rf build && mkdir build && rollup --banner \"$(preamble)\" -g d3-array:d3,d3-geo:d3,d3-delaunay:d3 -f umd -n d3 --extend d3 -o build/d3-geo-voronoi.js -- index.js",
+    "pretest": "rm -rf dist && mkdir dist && rollup --banner \"$(preamble)\" -g d3-array:d3,d3-geo:d3,d3-delaunay:d3 -f umd -n d3 --extend d3 -o dist/d3-geo-voronoi.js -- index.js",
     "test": "tape 'test/**/*-test.js'",
-    "prepublishOnly": "npm run test && terser --preamble \"$(preamble)\" build/d3-geo-voronoi.js -c passes=2 -c negate_iife=false -m -o build/d3-geo-voronoi.min.js",
-    "postpublish": "zip -j build/d3-geo-voronoi.zip -- LICENSE README.md build/d3-geo-voronoi.js build/d3-geo-voronoi.min.js"
+    "prepublishOnly": "npm run test && terser --preamble \"$(preamble)\" dist/d3-geo-voronoi.js -c passes=2 -c negate_iife=false -m -o dist/d3-geo-voronoi.min.js",
+    "postpublish": "zip -j dist/d3-geo-voronoi.zip -- LICENSE README.md dist/d3-geo-voronoi.js dist/d3-geo-voronoi.min.js"
   },
   "dependencies": {
     "d3-array": "^2.0",
