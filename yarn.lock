@@ -40,12 +40,12 @@ d3-array@^2.0:
   resolved "https://registry.yarnpkg.com/d3-array/-/d3-array-2.0.3.tgz#9c0531eda701e416f28a030e3d4e6179ba74f19f"
   integrity sha512-C7g4aCOoJa+/K5hPVqZLG8wjYHsTUROTk7Z1Ep9F4P5l+WVrvV0+6nAZ1wKTRLMhFWpGbozxUpyjIPZYAaLi+g==
 
-d3-delaunay@^4.1.5:
-  version "4.1.5"
-  resolved "https://registry.yarnpkg.com/d3-delaunay/-/d3-delaunay-4.1.5.tgz#4318c6d28b22988d88d11650eda440318afe419a"
-  integrity sha512-rBKVohmXT9+BrDicH8umAVUwtkfLIydVlWnpIEDUZ4l2e1vXCaKbypByF8tkN8TUUKnzJY0s8ldQEroeBRMO9Q==
+d3-delaunay@5:
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/d3-delaunay/-/d3-delaunay-5.0.1.tgz#3de4101fbdcc95dbba03f6c14ea18b98a27ec518"
+  integrity sha512-jZqypw7l2uUa2CQfl96WldXBW7wYj6EynMAiv5M1rBydMVL1l7R5bNdTxGmL+1O+bgLb8qjB5Oc85d7IIkQhcg==
   dependencies:
-    delaunator "^2.0.0"
+    delaunator "4"
 
 d3-geo@^1.0:
   version "1.11.3"
@@ -71,10 +71,10 @@ defined@~1.0.0:
   resolved "https://registry.yarnpkg.com/defined/-/defined-1.0.0.tgz#c98d9bcef75674188e110969151199e39b1fa693"
   integrity sha1-yY2bzvdWdBiOEQlpFRGZ45sfppM=
 
-delaunator@^2.0.0:
-  version "2.0.5"
-  resolved "https://registry.yarnpkg.com/delaunator/-/delaunator-2.0.5.tgz#c2a9ba2cf3d5aaab8fa0aa3ae82426d3fc0aeaf5"
-  integrity sha512-GSYmkITO56erpQzv5Pw+8Vg769kurM16IVUq/AcMb5ZCJCtV7Z2agx9lJ7EbbLno8L099iH2d+hvAK34ZnsvIQ==
+delaunator@4:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/delaunator/-/delaunator-4.0.0.tgz#3630f477b4923f472f534c62a028aeca6fe22d96"
+  integrity sha512-KzVgOHix5xaIVzZSfbv3Uzw9aI7mQNDet4Yd2p+tBNkfNHMFJbjbVa3q0nC7q7TjWZLX49QbzcT+pXazXX3Qmg==
 
 es-abstract@^1.5.0:
   version "1.13.0"
