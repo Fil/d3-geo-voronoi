@@ -88,11 +88,12 @@ tape("geoVoronoi.mesh() computes the Delaunay mesh.", function(test) {
 
 tape("geoVoronoi.cellMesh() computes the Polygons mesh.", function(test) {
   var sites = [[10,0],[10,10],[3,5],[-2,5],[0,0]];
-  var cellMesh = geoVoronoi.geoVoronoi().cellMesh(sites);
-  cellMesh.coordinates = cellMesh.coordinates.map(d => d.map(e => e.map(n => n|0)));
+  var cellMesh = geoVoronoi.geoVoronoi().cellMesh(sites),
+    coords = cellMesh.coordinates
+      .map(d => d.map(e => e.map(Math.round).join(" ")).sort().join("/")).sort();
   test.deepEqual(
-  	cellMesh,
-  	{ type: 'MultiLineString', coordinates: [ [ [ 5, 0 ], [ 8, 4 ] ], [ [ 8, 4 ], [ -174, -4 ] ], [ [ 0, 15 ], [ -174, -4 ] ], [ [ -174, -4 ], [ -174, -4 ] ], [ [ 0, 3 ], [ 0, 15 ] ], [ [ 0, 15 ], [ 8, 4 ] ], [ [ 0, 3 ], [ -174, -4 ] ], [ [ 0, 3 ], [ 5, 0 ] ], [ [ 5, 0 ], [ -174, -4 ] ] ] }
+  	coords,
+  	[ '-175 -5/-175 -5', '-175 -5/0 3', '-175 -5/1 15', '-175 -5/5 0', '-175 -5/8 5', '0 3/1 15', '0 3/5 0', '1 15/8 5', '5 0/8 5' ]
   );
   test.end();
 });
