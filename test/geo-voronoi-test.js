@@ -77,7 +77,7 @@ tape("geoVoronoi.hull() computes the hull.", function(test) {
   test.end();
 });
 
-tape("geoVoronoi.mesh() computes the Delauney mesh.", function(test) {
+tape("geoVoronoi.mesh() computes the Delaunay mesh.", function(test) {
   var sites = [[10,0],[10,10],[3,5],[-2,5],[0,0]];
   test.deepEqual(
   	geoVoronoi.geoVoronoi().mesh(sites),
