@@ -1,25 +1,27 @@
 //
-// (c) 2018 Philippe Riviere
+// (c) 2019 Philippe Riviere
 //
 // https://github.com/Fil/
 //
 // This software is distributed under the terms of the MIT License
 
 import { Delaunay } from "d3-delaunay";
-import { geoRotation, geoStereographic } from "d3-geo";
+import { geoRotation, geoProjection } from "d3-geo";
 import { extent } from "d3-array";
 import {
   asin,
   atan2,
   cos,
   degrees,
+  halfPi,
   max,
   min,
   pi,
   radians,
   sign,
   sin,
-  sqrt
+  sqrt,
+  tan
 } from "./math.js";
 import {
   cartesianNormalize as normalize,
@@ -110,6 +112,11 @@ function geo_find(neighbors, points) {
   };
 }
 
+function stereo(lambda, phi) {
+  var r = tan(0.5 * (halfPi + phi));
+  return [cos(lambda) * r, -sin(lambda) * r];
+}
+
 function geo_delaunay_from(points) {
   if (points.length < 2) return {};
 
@@ -118,17 +125,17 @@ function geo_delaunay_from(points) {
   while (isNaN(points[pivot][0]+points[pivot][1]) && pivot++ < points.length) {}
 
   const r = geoRotation(points[pivot]),
-    projection = geoStereographic()
+    projection = geoProjection(stereo)
       .translate([0, 0])
       .scale(1)
-      .rotate(r.invert([180, 0]));
+      .rotate(r.invert([0, 90]));
   points = points.map(projection);
 
   const zeros = [];
   let max2 = 1;
   for (let i = 0, n = points.length; i < n; i++) {
     let m = points[i][0] ** 2 + points[i][1] ** 2;
-    if (!isFinite(m)) zeros.push(i);
+    if (m > 1e32) zeros.push(i);
     else if (m > max2) max2 = m;
   }
 
