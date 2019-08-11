@@ -1,4 +1,4 @@
-import { asin, atan2, cos, sin, sqrt } from "./math";
+import { asin, atan2, cos, sin, sqrt } from "./math.js";
 
 export function spherical(cartesian) {
   return [atan2(cartesian[1], cartesian[0]), asin(cartesian[2])];
