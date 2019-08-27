@@ -110,16 +110,27 @@ tape("geoVoronoi.links(sites) returns links.", function(test) {
   test.deepEqual(geoVoronoi.geoVoronoi().links(sites).features.map(function(d) { return d.properties.source[0]; }), [ 10, 0, 0 ]);
   test.end();
 });
+
 tape("geoVoronoi.triangles(sites) returns geojson.", function(test) {
-  //test.deepEqual(geoVoronoi.geoVoronoi().triangles(sites), [ [ [ 0, 10 ], [ 10, 0 ], [ 0, 0 ] ] ]);
+  const tri = geoVoronoi.geoVoronoi().triangles(sites);
+  test.equal(tri.type, "FeatureCollection");
+  test.equal(tri.features.length, 1);
   test.end();
 });
+
 tape("geoVoronoi.links(sites) returns urquhart graph.", function(test) {
   test.deepEqual(geoVoronoi.geoVoronoi().links(sites).features.map(function(d) { return d.properties.urquhart; }), [ false, true, true ]);
   test.end();
 });
+
 tape("geoVoronoi.triangles(sites) returns circumcenters.", function(test) {
     var u = geoVoronoi.geoVoronoi().triangles(sites).features[0].properties.circumcenter, v = [ 5, 4.981069 ];
   test.ok( (Math.abs(u[0]-v[0]) < 1e-6) && (Math.abs(u[1]-v[1]) < 1e-6) );
+  test.end();
+});
+
+tape("geoVoronoi’s delaunay does not list fake points in its triangles", function(test) {
+  const u = geoVoronoi.geoVoronoi()(sites);
+  test.equal(Math.max(...u.delaunay.delaunay.triangles), sites.length);
   test.end();
 });
