@@ -54,7 +54,7 @@ export function excess(triangle) {
 
 export function geoDelaunay(points) {
   const delaunay = geo_delaunay_from(points),
-    triangles = geo_triangles(delaunay, points.length),
+    triangles = geo_triangles(delaunay),
     edges = geo_edges(triangles, points),
     neighbors = geo_neighbors(triangles, points.length),
     find = geo_find(neighbors, points),
@@ -152,6 +152,13 @@ function geo_delaunay_from(points) {
 
   delaunay.projection = projection;
 
+  // clean up the triangulation
+  const {triangles} = delaunay;
+  for (let i = 0, l = triangles.length; i < l; i++) {
+    if (triangles[i] > points.length - 4)
+      triangles[i] = 0;
+  }
+
   return delaunay;
 }
 
@@ -168,10 +175,10 @@ function geo_edges(triangles, points) {
   return Object.keys(_index).map(d => d.split("-").map(Number));
 }
 
-function geo_triangles(delaunay, npoints) {
-  if (!delaunay.triangles) return [];
+function geo_triangles(delaunay) {
+  const {triangles} = delaunay;
+  if (!triangles) return [];
 
-  const triangles = delaunay.triangles.slice().map(d => (d >= npoints ? 0 : d));
   const geo_triangles = [];
   for (let i = 0, n = triangles.length / 3; i < n; i++) {
     const a = triangles[3 * i],
