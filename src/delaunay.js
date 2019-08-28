@@ -155,7 +155,7 @@ function geo_delaunay_from(points) {
   // clean up the triangulation
   const {triangles} = delaunay;
   for (let i = 0, l = triangles.length; i < l; i++) {
-    if (triangles[i] > points.length - 4)
+    if (triangles[i] > points.length - 4 - 1)
       triangles[i] = 0;
   }
 

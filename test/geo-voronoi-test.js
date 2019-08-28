@@ -131,6 +131,6 @@ tape("geoVoronoi.triangles(sites) returns circumcenters.", function(test) {
 
 tape("geoVoronoi’s delaunay does not list fake points in its triangles", function(test) {
   const u = geoVoronoi.geoVoronoi()(sites);
-  test.equal(Math.max(...u.delaunay.delaunay.triangles), sites.length);
+  test.equal(Math.max(...u.delaunay.delaunay.triangles), sites.length - 1);
   test.end();
 });
