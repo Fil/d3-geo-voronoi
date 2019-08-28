@@ -44,6 +44,15 @@ Creates a new *spherical* Voronoi layout. _data_ must be passed as an array of [
 - delaunay.mesh, a list of all the edges of the voronoi polygons
 
 
+<a href="#geo-contour" name="geo-contour">#</a> d3.<b>geoContour</b>()
+ · [Source](https://github.com/Fil/d3-geo-voronoi/blob/master/src/contour.js)
+
+Using [d3-tricontour](https://github.com/Fil/d3-tricontour), creates *spherical* contours for non-gridded data.
+
+**Documentation TBD.**
+
+
+
 <a href="#geo-voronoi" name="geo-voronoi">#</a> d3.<b>geoVoronoi</b>([data])
  · [Source](https://github.com/Fil/d3-geo-voronoi/blob/master/src/voronoi.js), [Examples](https://bl.ocks.org/Fil/74295d9ffe097ae4e3c93d7d00377d45)
 
