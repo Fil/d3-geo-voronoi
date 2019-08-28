@@ -24,7 +24,7 @@
     "url": "https://github.com/Fil"
   },
   "scripts": {
-    "pretest": "rm -rf dist && mkdir dist && rollup --banner \"$(preamble)\" -g d3-array:d3,d3-geo:d3,d3-delaunay:d3 -f umd -n d3 --extend d3 -o dist/d3-geo-voronoi.js -- index.js",
+    "pretest": "rm -rf dist && mkdir dist && rollup --banner \"$(preamble)\" -g d3-array:d3,d3-geo:d3,d3-delaunay:d3,d3-tricontour:d3 -f umd -n d3 --extend d3 -o dist/d3-geo-voronoi.js -- index.js",
     "test": "tape 'test/**/*-test.js'",
     "prepublishOnly": "npm run test && terser --preamble \"$(preamble)\" dist/d3-geo-voronoi.js -c passes=2 -c negate_iife=false -m -o dist/d3-geo-voronoi.min.js",
     "postpublish": "zip -j dist/d3-geo-voronoi.zip -- LICENSE README.md dist/d3-geo-voronoi.js dist/d3-geo-voronoi.min.js"
@@ -32,7 +32,8 @@
   "dependencies": {
     "d3-array": "^2.0",
     "d3-delaunay": "5",
-    "d3-geo": "^1.0"
+    "d3-geo": "^1.0",
+    "d3-tricontour": "0.1.0"
   },
   "devDependencies": {
     "package-preamble": "0.1",
