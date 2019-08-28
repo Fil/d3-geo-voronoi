@@ -10,6 +10,7 @@ import { geoRotation, geoProjection } from "d3-geo";
 import { extent } from "d3-array";
 import {
   asin,
+  atan,
   atan2,
   cos,
   degrees,
@@ -112,10 +113,16 @@ function geo_find(neighbors, points) {
   };
 }
 
-function stereo(lambda, phi) {
-  var r = tan(0.5 * (halfPi + phi));
+const stereo = function(lambda, phi) {
+  const r = tan(0.5 * (halfPi + phi));
   return [cos(lambda) * r, -sin(lambda) * r];
 }
+
+const hypot = Math.hypot;
+
+stereo.invert = function(x, y) {
+  return [atan2(y, x), 2 * atan(hypot(x, y)) - halfPi];
+};
 
 function geo_delaunay_from(points) {
   if (points.length < 2) return {};
