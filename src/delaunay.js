@@ -6,7 +6,7 @@
 // This software is distributed under the terms of the MIT License
 
 import { Delaunay } from "d3-delaunay";
-import { geoRotation, geoProjection } from "d3-geo";
+import { geoRotation, geoStereographic } from "d3-geo";
 import { extent } from "d3-array";
 import {
   asin,
@@ -113,17 +113,6 @@ function geo_find(neighbors, points) {
   };
 }
 
-const stereo = function(lambda, phi) {
-  const r = tan(0.5 * (halfPi + phi));
-  return [cos(lambda) * r, -sin(lambda) * r];
-}
-
-const hypot = Math.hypot;
-
-stereo.invert = function(x, y) {
-  return [-atan2(y, x), 2 * atan(hypot(x, y)) - halfPi];
-};
-
 function geo_delaunay_from(points) {
   if (points.length < 2) return {};
 
@@ -132,17 +121,17 @@ function geo_delaunay_from(points) {
   while (isNaN(points[pivot][0]+points[pivot][1]) && pivot++ < points.length) {}
 
   const r = geoRotation(points[pivot]),
-    projection = geoProjection(stereo)
+    projection = geoStereographic()
       .translate([0, 0])
       .scale(1)
-      .rotate(r.invert([0, 90]));
+      .rotate(r.invert([180, 0]));
   points = points.map(projection);
 
   const zeros = [];
   let max2 = 1;
   for (let i = 0, n = points.length; i < n; i++) {
     let m = points[i][0] ** 2 + points[i][1] ** 2;
-    if (m > 1e32) zeros.push(i);
+    if (!isFinite(m) || m > 1e32) zeros.push(i);
     else if (m > max2) max2 = m;
   }
 
@@ -163,7 +152,7 @@ function geo_delaunay_from(points) {
   const {triangles} = delaunay;
   for (let i = 0, l = triangles.length; i < l; i++) {
     if (triangles[i] > points.length - 4 - 1)
-      triangles[i] = 0;
+      triangles[i] = pivot;
   }
 
   return delaunay;
