@@ -121,7 +121,7 @@ const stereo = function(lambda, phi) {
 const hypot = Math.hypot;
 
 stereo.invert = function(x, y) {
-  return [atan2(y, x), 2 * atan(hypot(x, y)) - halfPi];
+  return [-atan2(y, x), 2 * atan(hypot(x, y)) - halfPi];
 };
 
 function geo_delaunay_from(points) {
@@ -313,9 +313,6 @@ function geo_polygons(circumcenters, triangles, points) {
       const i0 = supplement(R0),
         i1 = supplement(R1);
       return [p[0], i1, p[1], i0];
-    } else {
-      // I don't think we'll ever reach this(?)
-      console && console.warn({ here: "unreachable", poly });
     }
   });
 
