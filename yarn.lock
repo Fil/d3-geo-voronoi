@@ -51,9 +51,9 @@ d3-color@1:
   integrity sha512-NHODMBlj59xPAwl2BDiO2Mog6V+PrGRtBfWKqKRrs9MCqlSkIEb0Z/SfY7jW29ReHTDC/j+vwXhnZcXI3+3fbg==
 
 d3-delaunay@5:
-  version "5.1.3"
-  resolved "https://registry.yarnpkg.com/d3-delaunay/-/d3-delaunay-5.1.3.tgz#7b383da0c5d8565640b1e4fdec98c1d5755746fd"
-  integrity sha512-7CGeikb+VGHdX9NHLM4GOqJ64earIbuXgsKml/iQFTR7s3rZCzfVMSO6iH+nZnhkpgWuz3OWpN4M9cawe+sasQ==
+  version "5.1.4"
+  resolved "https://registry.yarnpkg.com/d3-delaunay/-/d3-delaunay-5.1.4.tgz#ae4a706f73210ceee7b3069019ee832ca954a26f"
+  integrity sha512-I31cUy4zZ+lhj36z+y371P7WTeh9c090wGW9SfXHaNMUc5chrLaXtYyWIWrK9xoWSckrLDT6loLLEHLByiYPSw==
   dependencies:
     delaunator "4"
 
@@ -127,9 +127,9 @@ defined@~1.0.0:
   integrity sha1-yY2bzvdWdBiOEQlpFRGZ45sfppM=
 
 delaunator@4:
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/delaunator/-/delaunator-4.0.0.tgz#3630f477b4923f472f534c62a028aeca6fe22d96"
-  integrity sha512-KzVgOHix5xaIVzZSfbv3Uzw9aI7mQNDet4Yd2p+tBNkfNHMFJbjbVa3q0nC7q7TjWZLX49QbzcT+pXazXX3Qmg==
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/delaunator/-/delaunator-4.0.1.tgz#3d779687f57919a7a418f8ab947d3bddb6846957"
+  integrity sha512-WNPWi1IRKZfCt/qIDMfERkDp93+iZEmOxN2yy4Jg+Xhv8SLk2UTqqbe1sfiipn0and9QrE914/ihdx82Y/Giag==
 
 es-abstract@^1.5.0:
   version "1.13.0"
