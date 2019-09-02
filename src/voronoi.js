@@ -107,7 +107,7 @@ export function geoVoronoi(data) {
           tri.center = v.delaunay.centers[index];
           return tri;
         })
-        //.filter(tri => excess(tri) > 0)
+        .filter(tri => excess(tri) > 0)
         .map(tri => ({
           type: "Feature",
           properties: {

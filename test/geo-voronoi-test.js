@@ -114,7 +114,7 @@ tape("geoVoronoi.links(sites) returns links.", function(test) {
 tape("geoVoronoi.triangles(sites) returns geojson.", function(test) {
   const tri = geoVoronoi.geoVoronoi().triangles(sites);
   test.equal(tri.type, "FeatureCollection");
-  test.equal(tri.features.length, 2);
+  test.equal(tri.features.length, 1);
   test.end();
 });
 
