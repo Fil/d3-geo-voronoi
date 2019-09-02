@@ -137,12 +137,12 @@ function geo_delaunay_from(points) {
 
   const FAR = 1e6 * sqrt(max2);
 
-  zeros.forEach(i => (points[i] = [FAR / 2, i]));
+  zeros.forEach(i => (points[i] = [FAR, 0]));
 
   // Add infinite horizon points
-  for (let i = 0; i < 4; i++) {
-    points.push([FAR * cos((i / 2) * pi), FAR * sin((i / 2) * pi)]);
-  }
+  points.push([0,FAR]);
+  points.push([-FAR,0]);
+  points.push([0,-FAR]);
 
   const delaunay = Delaunay.from(points);
 
