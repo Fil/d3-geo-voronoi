@@ -149,7 +149,7 @@ function geo_delaunay_from(points) {
   delaunay.projection = projection;
 
   // clean up the triangulation
-  const {triangles, halfedges} = delaunay;
+  const {triangles, halfedges, inedges} = delaunay;
   const degenerate = [];
   for (let i = 0, l = halfedges.length; i < l; i++) {
     if (halfedges[i] < 0) {
@@ -161,7 +161,9 @@ function geo_delaunay_from(points) {
       halfedges[b] = a;
       halfedges[j] = halfedges[k] = -1;
       triangles[i] = triangles[j] = triangles[k] = pivot;
-      degenerate.push([i,j,k]);
+      inedges[triangles[a]] = a % 3 == 0 ? a + 2 : a - 1;
+      inedges[triangles[b]] = b % 3 == 0 ? b + 2 : b - 1;
+      degenerate.push(Math.min(i,j,k));
       i += 2 - i % 3;
     } else if (triangles[i] > points.length - 3 - 1) {
       triangles[i] = pivot;
