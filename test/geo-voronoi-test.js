@@ -114,7 +114,7 @@ tape("geoVoronoi.links(sites) returns links.", function(test) {
 tape("geoVoronoi.triangles(sites) returns geojson.", function(test) {
   const tri = geoVoronoi.geoVoronoi().triangles(sites);
   test.equal(tri.type, "FeatureCollection");
-  test.equal(tri.features.length, 1);
+  test.equal(tri.features.length, 2);
   test.end();
 });
 
@@ -124,8 +124,9 @@ tape("geoVoronoi.links(sites) returns urquhart graph.", function(test) {
 });
 
 tape("geoVoronoi.triangles(sites) returns circumcenters.", function(test) {
-    var u = geoVoronoi.geoVoronoi().triangles(sites).features[0].properties.circumcenter, v = [ 5, 4.981069 ];
-  test.ok( (Math.abs(u[0]-v[0]) < 1e-6) && (Math.abs(u[1]-v[1]) < 1e-6) );
+    var u = geoVoronoi.geoVoronoi().triangles(sites).features[0].properties.circumcenter, v = [ 5, 4.981069 ], w = [ -180 + v[0], -v[1] ];
+  test.ok( (Math.abs(u[0]-v[0]) < 1e-6 && Math.abs(u[1]-v[1]) < 1e-6)
+   || (Math.abs(u[0]-w[0]) < 1e-6 && Math.abs(u[1]-w[1]) < 1e-6) );
   test.end();
 });
 
