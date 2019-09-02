@@ -19,6 +19,13 @@ If you use NPM, `npm install d3-geo-voronoi`. Otherwise, download the [latest re
 
 ## API Reference
 
+* [Delaunay](#delaunay)
+* [Voronoi](#voronoi)
+* [Contours](#contours)
+
+
+### Delaunay
+
 <a href="#geo-delaunay" name="geo-delaunay">#</a> d3.<b>geoDelaunay</b>([data])
  · [Source](https://github.com/Fil/d3-geo-voronoi/blob/master/src/delaunay.js)
 
@@ -44,14 +51,8 @@ Creates a new *spherical* Voronoi layout. _data_ must be passed as an array of [
 - delaunay.mesh, a list of all the edges of the voronoi polygons
 
 
-<a href="#geo-contour" name="geo-contour">#</a> d3.<b>geoContour</b>()
- · [Source](https://github.com/Fil/d3-geo-voronoi/blob/master/src/contour.js)
 
-Using [d3-tricontour](https://github.com/Fil/d3-tricontour), creates *spherical* contours for non-gridded data.
-
-**Documentation TBD.**
-
-
+### Voronoi
 
 <a href="#geo-voronoi" name="geo-voronoi">#</a> d3.<b>geoVoronoi</b>([data])
  · [Source](https://github.com/Fil/d3-geo-voronoi/blob/master/src/voronoi.js), [Examples](https://bl.ocks.org/Fil/74295d9ffe097ae4e3c93d7d00377d45)
@@ -135,6 +136,57 @@ voronoi(data).hull();
 [![](img/geoVoronoiHull.png)](https://bl.ocks.org/Fil/6a1ed09f6e5648a5451cb130f2b13d20)
 
 
+
+### Contours
+
+Create *spherical* contours for non-gridded data.
+
+The API of geoContour is similar to that of [d3-contour](https://github.com/d3/d3-contour) and [d3-tricontour](https://github.com/Fil/d3-tricontour):
+
+<a href="#geocontour" name="geocontour">#</a> d3.<b>geoContour</b>()
+ · [Source](https://github.com/Fil/d3-geo-voronoi/blob/master/src/contour.js), [Examples](https://observablehq.com/collection/@fil/tricontours)
+
+Constructs a new geocontour generator with the default settings.
+
+<a href="#_geocontour" name="_geocontour">#</a> _geocontour_(_data_) · [Examples](https://observablehq.com/@fil/tricontours)
+
+Returns an array of contours, one for each threshold. The contours are MultiPolygons in GeoJSON format, that contain all the points with a value larger than the threshold. The value is indicated as _geometry_.value.
+
+The _data_ is passed as an array of points, by default with the format [lon, lat, value].
+
+<a href="#contour" name="contour">#</a> _geocontour_.<b>contour</b>(_data_[, _threshold_])
+
+Returns a contour, as a MultiPolygon in GeoJSON format, containing all points with a value larger or equal to _threshold_. The threshold is indicated as _geometry_.value 
+
+<a href="#contours" name="contours">#</a> _geocontour_.<b>contours</b>(_data_)
+
+Returns an iterable over the contours.
+
+<a href="#isobands" name="isobands">#</a> _geocontour_.<b>isobands</b>(_data_)
+
+Returns an iterable over the isobands: contours between pairs of consecutive threshold values _v0_ (inclusive) and _v1_ (exclusive). _geometry_.value is equal to _v0_, _geometry_.valueMax to _v1_.
+
+<a href="#x" name="x">#</a> _geocontour_.<b>x</b>([_x_])
+
+Sets the *x* (longitude) accessor. Defaults to \`d => d[0]\`. If _x_ is not given, returns the current x accessor.
+
+<a href="#y" name="y">#</a> _geocontour_.<b>y</b>([_y_])
+
+Sets the *y* (latitude) accessor. Defaults to \`d => d[1]\`. If _y_ is not given, returns the current y accessor.
+
+<a href="#value" name="value">#</a> _geocontour_.<b>value</b>([_value_])
+
+Sets the *value* accessor. Defaults to \`d => d[2]\`. Values must be defined and finite. If _value_ is not given, returns the current value accessor.
+
+<a href="#thresholds" name="thresholds">#</a>  _geocontour_.<b>thresholds</b>([_thresholds_])
+
+Sets the thresholds, either explicitly as an array of values, or as a count that will be passed to d3.ticks. If empty, returns the current thresholds.
+
+
+_Note:_ d3.geoContour uses the experimental API of d3-tricontour: [triangulate](https://github.com/Fil/d3-tricontour/blob/master/README.md#triangulate), [pointInterpolate](https://github.com/Fil/d3-tricontour/blob/master/README.md#pointInterpolate) and [ringsort](https://github.com/Fil/d3-tricontour/blob/master/README.md#ringsort).
+
+
+
 ### Other tools & projections
 
 There is no reason to limit the display of Voronoi cells to the orthographic projection. The example below displays the Urquhart graph of top container ports on a Winkel tripel map.
@@ -153,20 +205,5 @@ There is no reason to limit the display of Voronoi cells to the orthographic pro
 - geoVoronoi is built on [d3-delaunay](https://github.com/d3/d3-delaunay), which is also exposed as d3.geoDelaunay in this library. If you want to have the fastest results, you should try to use d3.geoDelaunay directly (see the examples).
 
 - geoVoronoi and geoDelaunay offer methods to compute the spherical [convex hull](#geo_voronoi_hull) and the [Urquhart graph](#geo_voronoi_links) of the data set. These can be achieved with the planar Voronoi ([hull](https://bl.ocks.org/mbostock/6f14f7b7f267a85f7cdc), [Urquhart](https://bl.ocks.org/Fil/df20827f817abd161c768fa18dcafcf5), but are not part of d3-voronoi or d3-delaunay.
-
-
-### Changes
-
-- the module needs d3-delaunay and doesn't embed it.
-
-```
-<script src="https://unpkg.com/d3-delaunay@5"></script>
-<script src="https://unpkg.com/d3-geo-voronoi@1"></script>
-```
-
-(To access the previous (slow) version, please use  `https://unpkg.com/d3-geo-voronoi@0`.)
-
-
-
 
 
