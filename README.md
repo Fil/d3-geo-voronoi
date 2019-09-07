@@ -29,7 +29,7 @@ If you use NPM, `npm install d3-geo-voronoi`. Otherwise, download the [latest re
 <a href="#geo-delaunay" name="geo-delaunay">#</a> d3.<b>geoDelaunay</b>([data])
  · [Source](https://github.com/Fil/d3-geo-voronoi/blob/master/src/delaunay.js)
 
-Creates a new *spherical* Voronoi layout. _data_ must be passed as an array of [lon, lat] coordinates.
+Creates a new *spherical* Delaunay layout. _data_ must be passed as an array of [lon, lat] coordinates.
 
 
 - delaunay.find(x,y,node): pass a starting node (_not_ a radius).
@@ -39,6 +39,9 @@ Creates a new *spherical* Voronoi layout. _data_ must be passed as an array of [
 - delaunay.hull(): list of indices of points on the hull (empty if the points cover more than a hemisphere).
 
 - delaunay.edges: list of edges as indices of points [from, to] (might change to a typed in the future)
+
+[<img src="https://raw.githubusercontent.com/Fil/d3-geo-voronoi/master/img/geodelaunay-edges.png" alt="Blurry geoContours" width="320">](https://observablehq.com/@manzt/world-airports-voronoi-in-vega-lite)
+
 
 - delaunay.triangles: list of edges as indices of points [a, b, c] (might change to a typed in the future)
 
@@ -54,6 +57,8 @@ Creates a new *spherical* Voronoi layout. _data_ must be passed as an array of [
 
 ### Voronoi
 
+This API is a wrapper around <a href="#geo-delaunay">geoDelaunay</a>, with inputs and outputs in GeoJSON.
+
 <a href="#geo-voronoi" name="geo-voronoi">#</a> d3.<b>geoVoronoi</b>([data])
  · [Source](https://github.com/Fil/d3-geo-voronoi/blob/master/src/voronoi.js), [Examples](https://bl.ocks.org/Fil/74295d9ffe097ae4e3c93d7d00377d45)
 
@@ -63,7 +68,7 @@ The following methods are similar to [d3-voronoi](https://github.com/d3/d3-voron
 
 <a href="#geo_voronoi_delaunay" name="geo_voronoi_delaunay">#</a> <i>voronoi</i>.<b>delaunay</b>
 
-The raw d3.geoDelaunay() object used to compute this diagram. 
+The geoDelaunay object used to compute this diagram. 
 
 <a href="#geo_voronoi_x" name="geo_voronoi_x">#</a> <i>voronoi</i>.<b>x</b>([<i>x</i>])
 
