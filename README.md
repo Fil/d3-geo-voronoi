@@ -32,15 +32,22 @@ If you use NPM, `npm install d3-geo-voronoi`. Otherwise, download the [latest re
 Creates a new *spherical* Delaunay layout. _data_ must be passed as an array of [lon, lat] coordinates.
 
 
-- delaunay.find(x,y,node): pass a starting node (_not_ a radius).
+<a href="#geo_delaunay_find" name="geo_delaunay_find">#</a> <i>delaunay</i>.<b>find</b>(*lon*, *lat*[, *node*])
 
-- delaunay.urquhart(*distances*): retrieve a vector of urquhart edges indices.
+Returns the closest point to [lon, lat]; optionally starting the search at *node* to boost the performance.
+
+<a href="#geo_delaunay_find" name="geo_delaunay_find">#</a> <i>delaunay</i>.<b>urquhart</b>([*distances*])
+
+Given a vector of distances (in the same order as the <a href="#geo_delaunay_edges">edges</a> list), returns a vector of boolean values: true if the edge belongs to the Urquhart graph, false otherwise.
+
+[<img src="https://raw.githubusercontent.com/Fil/d3-geo-voronoi/master/img/geodelaunay-urquhart.png" alt="urquhart" width="320">](https://observablehq.com/@fil/world-cities-urquhart)
+
 
 - delaunay.hull(): list of indices of points on the hull (empty if the points cover more than a hemisphere).
 
 - delaunay.edges: list of edges as indices of points [from, to] (might change to a typed in the future)
 
-[<img src="https://raw.githubusercontent.com/Fil/d3-geo-voronoi/master/img/geodelaunay-edges.png" alt="Blurry geoContours" width="320">](https://observablehq.com/@manzt/world-airports-voronoi-in-vega-lite)
+[<img src="https://raw.githubusercontent.com/Fil/d3-geo-voronoi/master/img/geodelaunay-edges.png" alt="edges" width="320">](https://observablehq.com/@manzt/world-airports-voronoi-in-vega-lite)
 
 
 - delaunay.triangles: list of edges as indices of points [a, b, c] (might change to a typed in the future)
@@ -49,7 +56,7 @@ Creates a new *spherical* Delaunay layout. _data_ must be passed as an array of 
 
 - delaunay.neighbors, an array of neighbors indices for each vertex.
 
-- delaunay.polygons, an array of centers for each vertex, order in a clockwise manner.
+- delaunay.polygons, an array of centers for each vertex, ordered in a clockwise manner.
 
 - delaunay.mesh, a list of all the edges of the voronoi polygons
 
