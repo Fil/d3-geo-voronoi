@@ -148,6 +148,9 @@ The API of geoContour is similar to that of [d3-contour](https://github.com/d3/d
 
 Constructs a new geocontour generator with the default settings.
 
+[<img src="https://raw.githubusercontent.com/Fil/d3-geo-voronoi/master/img/geocontour.jpg" alt="geoContour" width="320">](https://observablehq.com/@fil/spherical-contours)
+
+
 <a href="#_geocontour" name="_geocontour">#</a> _geocontour_(_data_) · [Examples](https://observablehq.com/@fil/tricontours)
 
 Returns an array of contours, one for each threshold. The contours are MultiPolygons in GeoJSON format, that contain all the points with a value larger than the threshold. The value is indicated as _geometry_.value.
@@ -162,9 +165,14 @@ Returns a contour, as a MultiPolygon in GeoJSON format, containing all points wi
 
 Returns an iterable over the contours.
 
+[<img src="https://raw.githubusercontent.com/Fil/d3-geo-voronoi/master/img/geocontour-iterator.jpg" alt="geoContour iterator" width="320">](https://observablehq.com/@fil/spherical-contours-iterator)
+
+
 <a href="#isobands" name="isobands">#</a> _geocontour_.<b>isobands</b>(_data_)
 
 Returns an iterable over the isobands: contours between pairs of consecutive threshold values _v0_ (inclusive) and _v1_ (exclusive). _geometry_.value is equal to _v0_, _geometry_.valueMax to _v1_.
+
+[<img src="https://raw.githubusercontent.com/Fil/d3-geo-voronoi/master/img/geocontour-isobands.jpg" alt="geoContour isobands" width="320">](https://observablehq.com/@fil/spherical-isobands)
 
 <a href="#x" name="x">#</a> _geocontour_.<b>x</b>([_x_])
 
@@ -177,6 +185,11 @@ Sets the *y* (latitude) accessor. Defaults to \`d => d[1]\`. If _y_ is not given
 <a href="#value" name="value">#</a> _geocontour_.<b>value</b>([_value_])
 
 Sets the *value* accessor. Defaults to \`d => d[2]\`. Values must be defined and finite. If _value_ is not given, returns the current value accessor.
+
+[<img src="https://raw.githubusercontent.com/Fil/d3-geo-voronoi/master/img/geocontour-blurry.jpg" alt="Blurry geoContours" width="320">](https://observablehq.com/@fil/blurry-contours)
+
+[<img src="https://raw.githubusercontent.com/Fil/d3-geo-voronoi/master/img/geocontour-h3.jpg" alt="geoContour and H3" width="320">](https://observablehq.com/@fil/h3-hexagons-geocontours)
+
 
 <a href="#thresholds" name="thresholds">#</a>  _geocontour_.<b>thresholds</b>([_thresholds_])
 
