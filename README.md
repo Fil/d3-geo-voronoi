@@ -26,6 +26,8 @@ If you use NPM, `npm install d3-geo-voronoi`. Otherwise, download the [latest re
 
 ### Delaunay
 
+This API is a similar to [d3-delaunay](https://github.com/d3/d3-delaunay)’s API. It provides information on the Delaunay triangulation (edges, triangles, neighbors, Voronoi cells, etc) as indices in two arrays — the array of points, and the array of circumcenters. It facilitates topological computations. To draw the actual triangles, Voronoi cells etc, the [Voronoi](#Voronoi) API described in the next section will often be easier to use.
+
 <a href="#geo-delaunay" name="geo-delaunay">#</a> d3.<b>geoDelaunay</b>([data])
  · [Source](https://github.com/Fil/d3-geo-voronoi/blob/master/src/delaunay.js)
 
@@ -78,7 +80,7 @@ An array containing all the edges of the Voronoi polygons.
 
 ### Voronoi
 
-This API is a wrapper around <a href="#geo-delaunay">geoDelaunay</a>, with inputs and outputs in GeoJSON.
+This API is a wrapper around the <a href="#Delaunay">Delaunay</a> API, with inputs and outputs in GeoJSON, ready to draw on a map.
 
 <a href="#geo-voronoi" name="geo-voronoi">#</a> d3.<b>geoVoronoi</b>([data])
  · [Source](https://github.com/Fil/d3-geo-voronoi/blob/master/src/voronoi.js), [Examples](https://bl.ocks.org/Fil/74295d9ffe097ae4e3c93d7d00377d45)
