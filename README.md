@@ -36,30 +36,44 @@ Creates a new *spherical* Delaunay layout. _data_ must be passed as an array of 
 
 Returns the closest point to [lon, lat]; optionally starting the search at *node* to boost the performance.
 
-<a href="#geo_delaunay_find" name="geo_delaunay_find">#</a> <i>delaunay</i>.<b>urquhart</b>([*distances*])
+<a href="#geo_delaunay_urquhart" name="geo_delaunay_urquhart">#</a> <i>delaunay</i>.<b>urquhart</b>([*distances*])
 
 Given a vector of distances (in the same order as the <a href="#geo_delaunay_edges">edges</a> list), returns a vector of boolean values: true if the edge belongs to the Urquhart graph, false otherwise.
 
 [<img src="https://raw.githubusercontent.com/Fil/d3-geo-voronoi/master/img/geodelaunay-urquhart.png" alt="urquhart" width="320">](https://observablehq.com/@fil/world-cities-urquhart)
 
 
-- delaunay.hull(): list of indices of points on the hull (empty if the points cover more than a hemisphere).
+<a href="#geo_delaunay_hull" name="geo_delaunay_hull">#</a> <i>delaunay</i>.<b>hull</b>()
 
-- delaunay.edges: list of edges as indices of points [from, to] (might change to a typed in the future)
+Returns an array of indices of points on the hull. The array is empty if the points cover more than a hemisphere.
+
+<a href="#geo_delaunay_edges" name="geo_delaunay_edges">#</a> <i>delaunay</i>.<b>edges</b>
+
+An array of edges as indices of points [from, to].
 
 [<img src="https://raw.githubusercontent.com/Fil/d3-geo-voronoi/master/img/geodelaunay-edges.png" alt="edges" width="320">](https://observablehq.com/@manzt/world-airports-voronoi-in-vega-lite)
 
 
-- delaunay.triangles: list of edges as indices of points [a, b, c] (might change to a typed in the future)
+<a href="#geo_delaunay_triangles" name="geo_delaunay_triangles">#</a> <i>delaunay</i>.<b>triangles</b>
 
-- delaunay.centers: list of centers in spherical coordinates; the first *t* centers are the *t* triangles’s circumcenters. More centers might be listed in order to build the voronoi diagram for degenerate cases such as n=1,2,3 points.
+An array of the triangles, as indices of points [a, b, c]. The triangles are orientated in a clockwise manner, triangles that span more than the hemisphere are removed.
 
-- delaunay.neighbors, an array of neighbors indices for each vertex.
 
-- delaunay.polygons, an array of centers for each vertex, ordered in a clockwise manner.
+<a href="#geo_delaunay_centers" name="geo_delaunay_centers">#</a> <i>delaunay</i>.<b>centers</b>
 
-- delaunay.mesh, a list of all the edges of the voronoi polygons
+The array of centers in spherical coordinates; the first *t* centers are the *t* triangles’s circumcenters. More centers might be listed in order to build the Voronoi diagram for smaller number of points (n≤3).
 
+<a href="#geo_delaunay_neighbors" name="geo_delaunay_neighbors">#</a> <i>delaunay</i>.<b>neighbors</b>
+
+The array of neighbors indices for each vertex.
+
+<a href="#geo_delaunay_polygons" name="geo_delaunay_polygons">#</a> <i>delaunay</i>.<b>polygons</b>
+
+Array of Voronoi cells for each vertex. Each cell is an array of centers ordered in a clockwise manner.
+
+<a href="#geo_delaunay_mesh" name="geo_delaunay_mesh">#</a> <i>delaunay</i>.<b>mesh</b>
+
+An array containing all the edges of the Voronoi polygons.
 
 
 ### Voronoi
