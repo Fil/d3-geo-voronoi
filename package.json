@@ -30,7 +30,7 @@
     "postpublish": "zip -j dist/d3-geo-voronoi.zip -- LICENSE README.md dist/d3-geo-voronoi.js dist/d3-geo-voronoi.min.js"
   },
   "dependencies": {
-    "d3-array": "^2.0",
+    "d3-array": "1 - 2",
     "d3-delaunay": "5",
     "d3-geo": "^1.0",
     "d3-tricontour": "0.1.0"
