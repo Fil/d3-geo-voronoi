@@ -35,6 +35,7 @@
     "d3-geo": "^1.0",
     "d3-tricontour": "0.1.0"
   },
+  "sideEffects": false,
   "devDependencies": {
     "package-preamble": "0.1",
     "rollup": "0.49",
