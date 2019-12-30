@@ -9,25 +9,20 @@ tape("geoContour() returns a contour generator.", function(test) {
   test.end();
 });
 
-
-var sites = [[0,0,0], [10,0,1], [0,10,2], [30,90,3]];
-
 tape("geoContour() computes something.", function(test) {
+  var sites = [[0,0,0], [10,0,1], [0,10,2], [30,90,3]];
   var u = geoVoronoi.geoContour()(sites);
-  console.warn(u);
   test.ok(u);
   test.end();
 });
 
-sites = Array.from({ length: 500 }, () => [
-  360 * Math.random() - 180,
-  90 * (Math.random() - Math.random()),
-  Math.random()
-]);
-
 tape("geoContour() computes something 2.", function(test) {
+  var sites = Array.from({ length: 500 }, () => [
+    360 * Math.random() - 180,
+    90 * (Math.random() - Math.random()),
+    Math.random()
+  ]);
   var u = geoVoronoi.geoContour()(sites);
-  console.warn(u);
   test.ok(u);
   test.end();
 });
