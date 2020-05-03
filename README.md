@@ -69,6 +69,9 @@ The array of centers in spherical coordinates; the first *t* centers are the *t*
 
 The array of neighbors indices for each vertex.
 
+[<img src="https://raw.githubusercontent.com/Fil/d3-geo-voronoi/master/img/geodelaunay-neighbors.jpg" alt="edges" width="320">](https://observablehq.com/@mbostock/spherical-voronoi-coloring)
+
+
 <a href="#geo_delaunay_polygons" name="geo_delaunay_polygons">#</a> <i>delaunay</i>.<b>polygons</b>
 
 Array of Voronoi cells for each vertex. Each cell is an array of centers ordered in a clockwise manner.
