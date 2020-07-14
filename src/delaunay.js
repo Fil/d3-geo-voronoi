@@ -116,7 +116,9 @@ function geo_find(neighbors, points) {
 function geo_delaunay_from(points) {
   if (points.length < 2) return {};
 
-  // find a valid point to send to infinity
+  // Find a valid pivot point.
+  // The index of the first acceptable point in
+  // which the x or y component is not inifinty.
   let pivot = 0;
   while (isNaN(points[pivot][0]+points[pivot][1]) && pivot++ < points.length) {}
 
@@ -169,7 +171,7 @@ function geo_delaunay_from(points) {
       triangles[i] = pivot;
     }
   }
-  
+
   // there should always be 4 degenerate triangles
   // console.warn(degenerate);
   return delaunay;
