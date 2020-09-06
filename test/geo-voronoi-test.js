@@ -3,6 +3,8 @@ var path = require('path');
 var tape = require("tape");
 var geoVoronoi = require("../");
 
+var sites = [[0,0], [10,0], [0,10]];
+
 tape("geoVoronoi() returns a Diagram.", function(test) {
   test.equal(typeof geoVoronoi, 'object');
   test.equal(typeof geoVoronoi.geoVoronoi, 'function');
@@ -16,9 +18,6 @@ tape("geoVoronoi() returns a Diagram.", function(test) {
   test.equal(typeof geoVoronoi.geoVoronoi().triangles([]), 'object');
   test.end();
 });
-
-
-var sites = [[0,0], [10,0]];
 
 tape("geoVoronoi.polygons(sites) returns polygons.", function(test) {
   var u = geoVoronoi.geoVoronoi(sites).polygons()
@@ -50,8 +49,6 @@ tape("geoVoronoi.polygons([1 site]) returns a Sphere.", function(test) {
   test.equal(u.features[0].geometry.type, "Sphere");
   test.end();
 });
-
-var sites = [[0,0], [10,0], [0,10]];
 
 tape("geoVoronoi.links() returns urquhart.", function(test) {
   test.deepEqual(geoVoronoi.geoVoronoi().links(sites).features.map(function(d) { return d.properties.urquhart; }), [ false, true, true ]);
