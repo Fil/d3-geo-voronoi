@@ -384,23 +384,23 @@ function geo_urquhart(edges, triangles) {
 }
 
 function geo_hull(triangles, points) {
-  const _hull = {},
+  const _hull = new Set(),
     hull = [];
   triangles.map(tri => {
     if (excess(tri.map(i => points[i > points.length ? 0 : i])) < 0) return;
     for (let i = 0; i < 3; i++) {
       let e = [tri[i], tri[(i + 1) % 3]],
         code = `${e[1]}-${e[0]}`;
-      if (_hull[code]) delete _hull[code];
-      else _hull[e.join("-")] = true;
+      if (_hull.has(code))  _hull.delete(code);
+      else _hull.add(e.join("-"));
     }
   });
 
-  const _index = {};
+  const _index = new Map;
   let start;
-  Object.keys(_hull).forEach(e => {
+  _hull.forEach(e => {
     e = e.split("-").map(Number);
-    _index[e[0]] = e[1];
+    _index.set(e[0],e[1]);
     start = e[0];
   });
 
@@ -409,8 +409,8 @@ function geo_hull(triangles, points) {
   let next = start;
   do {
     hull.push(next);
-    let n = _index[next];
-    _index[next] = -1;
+    let n = _index.get(next);
+    _index.set(next, -1);
     next = n;
   } while (next > -1 && next !== start);
 
