@@ -358,12 +358,12 @@ function geo_mesh(polygons) {
 
 function geo_urquhart(edges, triangles) {
   return function(distances) {
-    const _lengths = {},
-      _urquhart = {};
+    const _lengths = new Map(),
+      _urquhart = new Map();
     edges.forEach((edge, i) => {
       const u = edge.join("-");
-      _lengths[u] = distances[i];
-      _urquhart[u] = true;
+      _lengths.set(u, distances[i]);
+      _urquhart.set(u, true);
     });
 
     triangles.forEach(tri => {
@@ -371,15 +371,15 @@ function geo_urquhart(edges, triangles) {
         remove = -1;
       for (var j = 0; j < 3; j++) {
         let u = extent([tri[j], tri[(j + 1) % 3]]).join("-");
-        if (_lengths[u] > l) {
-          l = _lengths[u];
+        if (_lengths.get(u) > l) {
+          l = _lengths.get(u);
           remove = u;
         }
       }
-      _urquhart[remove] = false;
+      _urquhart.set(remove,  false);
     });
 
-    return edges.map(edge => _urquhart[edge.join("-")]);
+    return edges.map(edge => _urquhart.get(edge.join("-")));
   };
 }
 
