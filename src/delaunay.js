@@ -176,17 +176,17 @@ function geo_delaunay_from(points) {
 }
 
 function geo_edges(triangles, points) {
-  const _index = {};
+  const _index = new Set;
   if (points.length === 2) return [[0, 1]];
   triangles.forEach(tri => {
     if (tri[0] === tri[1]) return;
     if (excess(tri.map(i => points[i])) < 0) return;
     for (let i = 0, j; i < 3; i++) {
       j = (i + 1) % 3;
-      _index[extent([tri[i], tri[j]]).join("-")] = true;
+      _index.add(extent([tri[i], tri[j]]).join("-"));
     }
   });
-  return Object.keys(_index).map(d => d.split("-").map(Number));
+  return Array.from(_index, d => d.split("-").map(Number));
 }
 
 function geo_triangles(delaunay) {
