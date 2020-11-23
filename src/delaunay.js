@@ -186,7 +186,7 @@ function geo_edges(triangles, points) {
       _index.add(extent([tri[i], tri[j]]).join("-"));
     }
   });
-  return Array.from(_index).map(d => d.split("-").map(Number));
+  return Array.from(_index, d => d.split("-").map(Number));
 }
 
 function geo_triangles(delaunay) {
