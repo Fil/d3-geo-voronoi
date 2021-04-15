@@ -39,7 +39,7 @@
             features: d3.range(100).map(function () {
                 return {
                     type: "Point",
-                    coordinates: [360 * Math.random(), 90 * (Math.random() - Math.random())]
+                    coordinates: [360 * Math.random(), 180 * Math.random() -90 ]
                 }
             })
         }
@@ -67,11 +67,14 @@
             .append('path')
             .attr('d', path);
         // gentle animation
-        d3.interval(function (elapsed) {
+        const step = function (elapsed) {
             projection.rotate([elapsed / 150, 0]);
             svg.selectAll('path')
                 .attr('d', path);
-        }, 50);
+            window.requestAnimationFrame(step);
+        }
+
+        window.requestAnimationFrame(step);
     </script>
 </body>
 
