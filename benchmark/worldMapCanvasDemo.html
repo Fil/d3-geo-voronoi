@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta charset="utf-8">
+
+<head>
+    <title>World Map - Canvas Demo</title>
+    <!-- Load d3.js -->
+    <script src="https://d3js.org/d3.v4.js"></script>
+    <script src="https://d3js.org/d3-geo-projection.v2.min.js"></script>
+</head>
+
+<body>
+    <noscript>
+        <p> Enable javascript to see the benchmark run.</p>
+    </noscript>
+    <p id="perf">Render Time :- </p>
+    <!-- Create an element where the map will take place -->
+    <canvas id="my_dataviz" width="440" height="320"></canvas>
+    <p>
+        source:
+    </p>
+    <a href="https://www.d3-graph-gallery.com/graph/backgroundmap_canvas_basic.html">
+        Most basic background map in d3.js and canvas
+    </a>
+
+    <script>
+
+        // select the canvas element created in the html.
+        var canvas = document.getElementById('my_dataviz');
+
+        // Actual width and height. No idea if clienWidth would be a better option..?
+        var width = canvas.offsetWidth
+        var height = canvas.offsetHeight
+
+        // Set a projection for the map. Projection = transform a lat/long on a position on the 2d map.
+        var projection = d3.geoNaturalEarth()
+            .scale(width / 1.3 / Math.PI)
+            .translate([width / 2, height / 2])
+
+        // Get the 'context'
+        var ctx = canvas.getContext('2d');
+
+        // geographic path generator for given projection and canvas context
+        const pathGenerator = d3.geoPath(projection, ctx);
+
+        // Draw a background
+        // ctx.fillStyle = '#ddd';
+        // ctx.fillRect(0, 0, width, height);
+
+        // Load external data and boot
+        d3.json("https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson", function (data) {
+            console.log("Data");
+            console.log(data);
+            const t0 = performance.now();
+
+            // initialize the path
+            ctx.beginPath();
+
+            // Got the positions of the path
+            pathGenerator(data);
+
+            // Fill the paths
+            ctx.fillStyle = "#999";
+            ctx.fill();
+
+            // Add stroke
+            ctx.strokeStyle = "#69b3a2";
+            ctx.stroke()
+            const t1 = performance.now();
+
+            elapsed = (t1 - t0).toPrecision(6);
+            document.getElementById("perf").innerHTML = `Render Time: ${elapsed} ms`;
+        })
+
+
+    </script>
+
+</body>
+
+</html>
