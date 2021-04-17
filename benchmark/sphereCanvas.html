@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Benchmark: Sphere</title>
+</head>
+
+<body>
+
+    <meta charset="utf-8">
+    <style>
+        .range-wrapper {
+            display: grid;
+            grid-template-columns: 10% 50% 10% 30%;
+        }
+    </style>
+
+    <h1>d3-geo-voronoi Benchmark: Sphere</h1>
+    <p> This benchmark renders to a CANVAS element.</p>
+    <p class="range-wrapper">
+        <span style="text-align:right">5</span>
+        <input id="size-range" width="80%" type="range" min="5" max="1000" step="5" onchange=gen_points()>
+        <span>1000</span>
+    </p>
+    <div style="font-weight: bold;">
+        <label id="size-label" for="size-range">The number of points on the sphere</label>
+        <p id="perf">Mean Render Time: ...Calculating</p>
+    </div>
+    <p> The mean render time and standard deviation are based on the last 200 frames. </p>
+
+    <canvas id="canvas" width="960" height="600"></canvas>
+
+    <h2> Suggestion: </h2>
+    <p> Enable the browsers FPS meter. </p>
+
+    <script src="https://unpkg.com/d3@6"></script>
+    <script src="../dist/d3-geo-voronoi.js"></script>
+
+    <script>
+        const size_range = document.getElementById("size-range");
+        const size_label = document.getElementById("size-label");
+        const perf = document.getElementById("perf");
+        const canvas = document.getElementById('canvas');
+        const projection = d3.geoOrthographic();
+        const path = d3.geoPath().projection(projection);
+        let context = canvas.getContext("2d");
+        const pathGenerator = d3.geoPath(projection, context);
+
+        let points;
+        let v;
+        // Holds elapsed samples (use to compute the standard deviation).
+        let elapsedArray;
+        // index into the elapsedArray 0..199
+        let index;
+
+        const gen_points = () => {
+            const n_points = size_range.value;
+            size_label.innerText = `The number of points on the sphere: ${n_points}`;
+            index = 0;
+            elapsedArray = [];
+            perf.innerHTML = "Render Time: ...Calculating"
+            points = {
+                type: "FeatureCollection",
+                features: d3.range(n_points).map(() => {
+                    return {
+                        type: "Point",
+                        coordinates: [360 * Math.random(), 180 * Math.random() - 90]
+                    }
+                })
+            };
+            v = d3.geoVoronoi()(points);
+
+        }
+
+        // Initial generation of points.
+        gen_points();
+
+        render = (elapsed) => {
+            context.clearRect(0, 0, 960, 600);
+            projection.rotate([elapsed / 150, 0]);
+            const pathGenerator = d3.geoPath(projection, context);
+
+            // render polygons
+            const t0 = performance.now();
+            context.strokeStyle = "#444"
+            for (const [key, value] of Object.entries(v.polygons().features)) {
+                context.beginPath();
+                pathGenerator(value);
+                context.fillStyle = d3.schemeCategory10[key % 10];
+                context.fill()
+                context.stroke();
+            }
+
+            // render points.
+            context.fillStyle = "white";
+            context.strokeStyle = "black";
+            for (const [key, value] of Object.entries(points.features)) {
+                context.beginPath();
+                pathGenerator(value);
+                context.fill();
+                context.stroke();
+            }
+            const t1 = performance.now();
+
+            
+            // Compute the mean elapsed time and compute the standard deviation based on the
+            // the last 200 samples.
+            elapsed = (t1 - t0);
+            index = (index + 1) % 200;
+            elapsedArray[index] = elapsed;
+            if (index == 199) {
+                const n = elapsedArray.length;
+                const mean = elapsedArray.reduce((a, b) => a + b, 0) / n;
+                const stdDev = Math.sqrt(elapsedArray.map(x => Math.pow(x - mean, 2)).reduce((a, b) => a + b) / n)
+                const meanString = mean.toPrecision(4);
+                const stdDevString = stdDev.toPrecision(4);
+                perf.innerHTML = `Mean Render Time: ${meanString} +/- ${stdDevString} ms`;
+            }
+
+            requestAnimationFrame(render)
+        }
+        render();
+    </script>
+</body>
+
+</html>
