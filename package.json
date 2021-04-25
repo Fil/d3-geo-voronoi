@@ -26,6 +26,7 @@
   "scripts": {
     "pretest": "rm -rf dist && mkdir dist && rollup --banner \"$(preamble)\" -g d3-array:d3,d3-geo:d3,d3-delaunay:d3,d3-tricontour:d3 -f umd -n d3 --extend d3 -o dist/d3-geo-voronoi.js -- index.js",
     "test": "tape 'test/**/*-test.js'",
+    "coverage": "nyc npm run test",
     "prepublishOnly": "npm run test && terser --preamble \"$(preamble)\" dist/d3-geo-voronoi.js -c passes=2 -c negate_iife=false -m -o dist/d3-geo-voronoi.min.js",
     "postpublish": "zip -j dist/d3-geo-voronoi.zip -- LICENSE README.md dist/d3-geo-voronoi.js dist/d3-geo-voronoi.min.js"
   },
@@ -37,6 +38,7 @@
   },
   "sideEffects": false,
   "devDependencies": {
+    "nyc": "^15.1.0",
     "package-preamble": "0.1",
     "rollup": "0.49",
     "tape": "4",
