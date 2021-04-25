@@ -230,8 +230,7 @@ function geo_neighbors(triangles, npoints) {
   triangles.forEach((tri, i) => {
     for (let j = 0; j < 3; j++) {
       const a = tri[j],
-        b = tri[(j + 1) % 3],
-        c = tri[(j + 2) % 3];
+        b = tri[(j + 1) % 3];
       neighbors[a] = neighbors[a] || [];
       neighbors[a].push(b);
     }
