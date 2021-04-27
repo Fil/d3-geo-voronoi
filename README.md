@@ -14,8 +14,22 @@ A lighter API is available with *d3.geoDelaunay()*. It offers the same contents,
 
 ## Installing
 
-If you use NPM, `npm install d3-geo-voronoi`. Otherwise, download the [latest release](https://unpkg.com/d3-geo-voronoi).
+If you use npm, `npm install d3-geo-voronoi`. You can also download the [latest release on GitHub](https://github.com/d3/d3-geo-voronoi/releases/latest). For vanilla HTML in modern browsers, import d3-geo-voronoi from Skypack:
 
+```html
+<script type="module">
+import {geoDelaunay} from "https://cdn.skypack.dev/d3-geo-voronoi@2";
+</script>
+```
+
+For legacy environments, you can load d3-geo-voronoi’s UMD bundle from an npm-based CDN such as jsDelivr; a `d3` global is exported:
+
+```html
+<script src="https://cdn.jsdelivr.net/npm/d3-geo-voronoi@2"></script>
+<script>
+d3.geoContour();
+</script>
+```
 
 ## API Reference
 

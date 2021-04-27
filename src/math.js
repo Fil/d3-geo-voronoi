@@ -1,32 +1,32 @@
-export var epsilon = 1e-6;
-export var epsilon2 = 1e-12;
-export var pi = Math.PI;
-export var halfPi = pi / 2;
-export var quarterPi = pi / 4;
-export var tau = pi * 2;
+export const epsilon = 1e-6;
+export const epsilon2 = 1e-12;
+export const pi = Math.PI;
+export const halfPi = pi / 2;
+export const quarterPi = pi / 4;
+export const tau = pi * 2;
 
-export var degrees = 180 / pi;
-export var radians = pi / 180;
+export const degrees = 180 / pi;
+export const radians = pi / 180;
 
-export var abs = Math.abs;
-export var atan = Math.atan;
-export var atan2 = Math.atan2;
-export var cos = Math.cos;
-export var ceil = Math.ceil;
-export var exp = Math.exp;
-export var floor = Math.floor;
-export var log = Math.log;
-export var max = Math.max;
-export var min = Math.min;
-export var pow = Math.pow;
-export var sin = Math.sin;
-export var sign =
+export const abs = Math.abs;
+export const atan = Math.atan;
+export const atan2 = Math.atan2;
+export const cos = Math.cos;
+export const ceil = Math.ceil;
+export const exp = Math.exp;
+export const floor = Math.floor;
+export const log = Math.log;
+export const max = Math.max;
+export const min = Math.min;
+export const pow = Math.pow;
+export const sin = Math.sin;
+export const sign =
   Math.sign ||
   function(x) {
     return x > 0 ? 1 : x < 0 ? -1 : 0;
   };
-export var sqrt = Math.sqrt;
-export var tan = Math.tan;
+export const sqrt = Math.sqrt;
+export const tan = Math.tan;
 
 export function acos(x) {
   return x > 1 ? 0 : x < -1 ? pi : Math.acos(x);

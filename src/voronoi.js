@@ -1,14 +1,5 @@
-//
-// (c) 2018 Philippe Riviere
-//
-// https://github.com/Fil/
-//
-// This software is distributed under the terms of the MIT License
-
-import { extent } from "d3-array";
 import { geoCentroid, geoDistance } from "d3-geo";
 import { geoDelaunay, excess } from "./delaunay.js";
-import { tau } from "./math.js";
 
 export function geoVoronoi(data) {
   const v = function(data) {
