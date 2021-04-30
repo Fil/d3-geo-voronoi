@@ -1,28 +1,17 @@
-//
-// (c) 2019 Philippe Riviere
-//
-// https://github.com/Fil/
-//
-// This software is distributed under the terms of the MIT License
-
 import { Delaunay } from "d3-delaunay";
 import { geoRotation, geoStereographic } from "d3-geo";
 import { extent } from "d3-array";
 import {
   asin,
-  atan,
   atan2,
   cos,
   degrees,
-  halfPi,
   max,
   min,
-  pi,
   radians,
   sign,
   sin,
-  sqrt,
-  tan
+  sqrt
 } from "./math.js";
 import {
   cartesianNormalize as normalize,
@@ -41,7 +30,7 @@ function spherical(cartesian) {
 
 // Converts spherical coordinates (degrees) to 3D Cartesian.
 function cartesian(coordinates) {
-  var lambda = coordinates[0] * radians,
+  const lambda = coordinates[0] * radians,
     phi = coordinates[1] * radians,
     cosphi = cos(phi);
   return [cosphi * cos(lambda), cosphi * sin(lambda), sin(phi)];
@@ -118,7 +107,7 @@ function geo_delaunay_from(points) {
 
   // find a valid point to send to infinity
   let pivot = 0;
-  while (isNaN(points[pivot][0]+points[pivot][1]) && pivot++ < points.length) {}
+  while (isNaN(points[pivot][0]+points[pivot][1]) && pivot++ < points.length);
 
   const r = geoRotation(points[pivot]),
     projection = geoStereographic()
@@ -227,7 +216,7 @@ function geo_circumcenters(triangles, points) {
 
 function geo_neighbors(triangles, npoints) {
   const neighbors = [];
-  triangles.forEach((tri, i) => {
+  triangles.forEach(tri => {
     for (let j = 0; j < 3; j++) {
       const a = tri[j],
         b = tri[(j + 1) % 3];
@@ -249,9 +238,6 @@ function geo_polygons(circumcenters, triangles, points) {
   const polygons = [];
 
   const centers = circumcenters.slice();
-
-  // supplementary centers for degenerate cases like n = 1,2,3
-  const supplements = [];
 
   if (triangles.length === 0) {
     if (points.length < 2) return { polygons, centers };
@@ -368,7 +354,7 @@ function geo_urquhart(edges, triangles) {
     triangles.forEach(tri => {
       let l = 0,
         remove = -1;
-      for (var j = 0; j < 3; j++) {
+      for (let j = 0; j < 3; j++) {
         let u = extent([tri[j], tri[(j + 1) % 3]]).join("-");
         if (_lengths.get(u) > l) {
           l = _lengths.get(u);
