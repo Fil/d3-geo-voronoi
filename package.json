@@ -19,6 +19,10 @@
     "url": "https://github.com/Fil"
   },
   "type": "module",
+  "files": [
+    "dist/**/*.js",
+    "src/**/*.js"
+  ],
   "module": "src/index.js",
   "main": "src/index.js",
   "jsdelivr": "dist/d3-geo-voronoi.min.js",
