@@ -33,10 +33,10 @@
   },
   "sideEffects": false,
   "dependencies": {
-    "d3-array": "1 - 2",
-    "d3-delaunay": "5",
-    "d3-geo": "^1.0",
-    "d3-tricontour": "0.1.0"
+    "d3-array": "3",
+    "d3-delaunay": "6",
+    "d3-geo": "3",
+    "d3-tricontour": "1"
   },
   "devDependencies": {
     "eslint": "7",
