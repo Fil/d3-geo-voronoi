@@ -1,10 +1,3 @@
-//
-// (c) 2019 Philippe Riviere
-//
-// https://github.com/Fil/
-//
-// This software is distributed under the terms of the MIT License
-
 import {geoDelaunay} from "./delaunay.js";
 import {geoInterpolate} from "d3-geo";
 import {tricontour} from "d3-tricontour";

@@ -2,44 +2,54 @@
   "name": "d3-geo-voronoi",
   "version": "1.6.0",
   "description": "Spherical Voronoi Diagram and Delaunay Triangulation",
+  "homepage": "https://github.com/Fil/d3-geo-voronoi",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Fil/d3-geo-voronoi.git"
+  },
   "keywords": [
     "d3",
     "d3-module",
     "d3-geo",
     "d3-delaunay"
   ],
-  "license": "MIT",
-  "main": "dist/d3-geo-voronoi.js",
-  "unpkg": "dist/d3-geo-voronoi.min.js",
-  "jsdelivr": "dist/d3-geo-voronoi.min.js",
-  "module": "index",
-  "jsnext:main": "index",
-  "homepage": "https://github.com/Fil/d3-geo-voronoi",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/Fil/d3-geo-voronoi.git"
-  },
+  "license": "ISC",
   "author": {
     "name": "Philippe Rivière",
     "url": "https://github.com/Fil"
   },
-  "scripts": {
-    "pretest": "rm -rf dist && mkdir dist && rollup --banner \"$(preamble)\" -g d3-array:d3,d3-geo:d3,d3-delaunay:d3,d3-tricontour:d3 -f umd -n d3 --extend d3 -o dist/d3-geo-voronoi.js -- index.js",
-    "test": "tape 'test/**/*-test.js'",
-    "prepublishOnly": "npm run test && terser --preamble \"$(preamble)\" dist/d3-geo-voronoi.js -c passes=2 -c negate_iife=false -m -o dist/d3-geo-voronoi.min.js",
-    "postpublish": "zip -j dist/d3-geo-voronoi.zip -- LICENSE README.md dist/d3-geo-voronoi.js dist/d3-geo-voronoi.min.js"
-  },
-  "dependencies": {
-    "d3-array": "1 - 2",
-    "d3-delaunay": "5",
-    "d3-geo": "^1.0",
-    "d3-tricontour": "0.1.0"
+  "type": "module",
+  "files": [
+    "dist/**/*.js",
+    "src/**/*.js"
+  ],
+  "module": "src/index.js",
+  "main": "src/index.js",
+  "jsdelivr": "dist/d3-geo-voronoi.min.js",
+  "unpkg": "dist/d3-geo-voronoi.min.js",
+  "exports": {
+    "umd": "./dist/d3-geo-voronoi.min.js",
+    "default": "./src/index.js"
   },
   "sideEffects": false,
+  "dependencies": {
+    "d3-array": "3",
+    "d3-delaunay": "6",
+    "d3-geo": "3",
+    "d3-tricontour": "1"
+  },
   "devDependencies": {
+    "eslint": "7",
+    "mocha": "8",
     "package-preamble": "0.1",
-    "rollup": "0.49",
-    "tape": "5.3.1",
-    "terser": "^3.8.2"
+    "rollup": "2",
+    "rollup-plugin-terser": "7"
+  },
+  "scripts": {
+    "test": "mocha 'test/**/*-test.js' && eslint src test",
+    "prepublishOnly": "rm -rf dist && yarn test && rollup -c"
+  },
+  "engines": {
+    "node": ">=12"
   }
 }
