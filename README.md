@@ -43,7 +43,7 @@ d3.geoContour();
 This API is a similar to [d3-delaunay](https://github.com/d3/d3-delaunay)’s API. It provides information on the Delaunay triangulation (edges, triangles, neighbors, Voronoi cells, etc) as indices in two arrays — the array of points, and the array of circumcenters. It facilitates topological computations. To draw the actual triangles, Voronoi cells etc, the [Voronoi](#Voronoi) API described in the next section will often be easier to use.
 
 <a href="#geo-delaunay" name="geo-delaunay">#</a> d3.<b>geoDelaunay</b>([data])
- · [Source](https://github.com/Fil/d3-geo-voronoi/blob/master/src/delaunay.js)
+ · [Source](https://github.com/Fil/d3-geo-voronoi/blob/main/src/delaunay.js)
 
 Creates a new *spherical* Delaunay layout. _data_ must be passed as an array of [lon, lat] coordinates.
 
@@ -56,7 +56,7 @@ Returns the closest point to [lon, lat]; optionally starting the search at *node
 
 Given a vector of distances (in the same order as the <a href="#geo_delaunay_edges">edges</a> list), returns a vector of boolean values: true if the edge belongs to the Urquhart graph, false otherwise.
 
-[<img src="https://raw.githubusercontent.com/Fil/d3-geo-voronoi/master/img/geodelaunay-urquhart.png" alt="urquhart" width="320">](https://observablehq.com/@fil/world-cities-urquhart)
+[<img src="https://raw.githubusercontent.com/Fil/d3-geo-voronoi/main/img/geodelaunay-urquhart.png" alt="urquhart" width="320">](https://observablehq.com/@fil/world-cities-urquhart)
 
 
 <a href="#geo_delaunay_hull" name="geo_delaunay_hull">#</a> <i>delaunay</i>.<b>hull</b>()
@@ -67,7 +67,7 @@ Returns an array of indices of points on the hull. The array is empty if the poi
 
 An array of edges as indices of points [from, to].
 
-[<img src="https://raw.githubusercontent.com/Fil/d3-geo-voronoi/master/img/geodelaunay-edges.png" alt="edges" width="320">](https://observablehq.com/@manzt/world-airports-voronoi-in-vega-lite)
+[<img src="https://raw.githubusercontent.com/Fil/d3-geo-voronoi/main/img/geodelaunay-edges.png" alt="edges" width="320">](https://observablehq.com/@manzt/world-airports-voronoi-in-vega-lite)
 
 
 <a href="#geo_delaunay_triangles" name="geo_delaunay_triangles">#</a> <i>delaunay</i>.<b>triangles</b>
@@ -83,7 +83,7 @@ The array of centers in spherical coordinates; the first *t* centers are the *t*
 
 The array of neighbors indices for each vertex.
 
-[<img src="https://raw.githubusercontent.com/Fil/d3-geo-voronoi/master/img/geodelaunay-neighbors.jpg" alt="edges" width="320">](https://observablehq.com/@mbostock/spherical-voronoi-coloring)
+[<img src="https://raw.githubusercontent.com/Fil/d3-geo-voronoi/main/img/geodelaunay-neighbors.jpg" alt="edges" width="320">](https://observablehq.com/@mbostock/spherical-voronoi-coloring)
 
 
 <a href="#geo_delaunay_polygons" name="geo_delaunay_polygons">#</a> <i>delaunay</i>.<b>polygons</b>
@@ -100,7 +100,7 @@ An array containing all the edges of the Voronoi polygons.
 This API is a wrapper around the <a href="#Delaunay">Delaunay</a> API, with inputs and outputs in GeoJSON, ready to draw on a map.
 
 <a href="#geo-voronoi" name="geo-voronoi">#</a> d3.<b>geoVoronoi</b>([data])
- · [Source](https://github.com/Fil/d3-geo-voronoi/blob/master/src/voronoi.js), [Examples](https://bl.ocks.org/Fil/74295d9ffe097ae4e3c93d7d00377d45)
+ · [Source](https://github.com/Fil/d3-geo-voronoi/blob/main/src/voronoi.js), [Examples](https://bl.ocks.org/Fil/74295d9ffe097ae4e3c93d7d00377d45)
 
 Creates a new *spherical* Voronoi layout. _data_ can be passed as an array of [lon, lat] coordinates, an array of GeoJSON features, or a GeoJSON FeatureCollection.
 
@@ -120,18 +120,18 @@ Sets or returns the _y_ accessor.
 
 [![](img/geoVoronoiXY.png)](https://bl.ocks.org/Fil/74295d9ffe097ae4e3c93d7d00377d45)
 
-<a href="#geo_voronoi_polygons" name="geo_voronoi_polygons">#</a> <i>voronoi</i>.<b>polygons</b>(<i>[data]</i>) · [Source](https://github.com/Fil/d3-geo-voronoi/blob/master/src/voronoi.js), [Examples](https://bl.ocks.org/Fil/a9ba8d0d023752aa580bd95480b7de60)
+<a href="#geo_voronoi_polygons" name="geo_voronoi_polygons">#</a> <i>voronoi</i>.<b>polygons</b>(<i>[data]</i>) · [Source](https://github.com/Fil/d3-geo-voronoi/blob/main/src/voronoi.js), [Examples](https://bl.ocks.org/Fil/a9ba8d0d023752aa580bd95480b7de60)
 
 
 Returns the Voronoi tessellation of the data as a GeoJSON collection of polygons. (If there is only one data point, returns the Sphere). Each polygon exposes its datum in its properties.
 
 [![](img/geoVoronoiPolygons.png)](https://bl.ocks.org/Fil/a9ba8d0d023752aa580bd95480b7de60)
 
-<a href="#geo_voronoi_cellMesh" name="geo_voronoi_cellMesh">#</a> <i>voronoi</i>.<b>cellMesh</b>(<i>[data]</i>) · [Source](https://github.com/Fil/d3-geo-voronoi/blob/master/src/voronoi.js)
+<a href="#geo_voronoi_cellMesh" name="geo_voronoi_cellMesh">#</a> <i>voronoi</i>.<b>cellMesh</b>(<i>[data]</i>) · [Source](https://github.com/Fil/d3-geo-voronoi/blob/main/src/voronoi.js)
 
 Returns the Voronoi tessellation as a GeoJSON mesh (MultiLineString).
 
-<a href="#geo_voronoi_triangles" name="geo_voronoi_triangles">#</a> <i>voronoi</i>.<b>triangles</b>(<i>[data]</i>) · [Source](https://github.com/Fil/d3-geo-voronoi/blob/master/src/voronoi.js), [Examples](https://bl.ocks.org/Fil/b1ef96e4bc991eb274f8d3a0a08932f9)
+<a href="#geo_voronoi_triangles" name="geo_voronoi_triangles">#</a> <i>voronoi</i>.<b>triangles</b>(<i>[data]</i>) · [Source](https://github.com/Fil/d3-geo-voronoi/blob/main/src/voronoi.js), [Examples](https://bl.ocks.org/Fil/b1ef96e4bc991eb274f8d3a0a08932f9)
 
 Returns the Voronoi tessellation of the data as a GeoJSON collection of polygons. Each triangle exposes in its properties the three sites, its spherical area (in steradians), and its circumcenter.
 
@@ -140,12 +140,12 @@ Returns the Voronoi tessellation of the data as a GeoJSON collection of polygons
 
 [![](img/geoVoronoiRadome.png)](https://bl.ocks.org/Fil/955da86d6a935b26d3599ca5e344fb38)
 
-<a href="#geo_voronoi_mesh" name="geo_voronoi_mesh">#</a> <i>voronoi</i>.<b>mesh</b>(<i>[data]</i>) · [Source](https://github.com/Fil/d3-geo-voronoi/blob/master/src/voronoi.js), [Examples](https://bl.ocks.org/Fil/fbaf391e1ae252461741ccf401af5a10)
+<a href="#geo_voronoi_mesh" name="geo_voronoi_mesh">#</a> <i>voronoi</i>.<b>mesh</b>(<i>[data]</i>) · [Source](https://github.com/Fil/d3-geo-voronoi/blob/main/src/voronoi.js), [Examples](https://bl.ocks.org/Fil/fbaf391e1ae252461741ccf401af5a10)
 
 Returns the Delaunay edges [as a GeoJSON mesh](https://bl.ocks.org/Fil/fbaf391e1ae252461741ccf401af5a10) (MultiLineString).
 
 
-<a href="#geo_voronoi_links" name="geo_voronoi_links">#</a> <i>voronoi</i>.<b>links</b>(<i>[data]</i>) · [Source](https://github.com/Fil/d3-geo-voronoi/blob/master/src/voronoi.js), [Examples](https://bl.ocks.org/Fil/1a78acf8b9b40fe8ecbae7b5035acf2b)
+<a href="#geo_voronoi_links" name="geo_voronoi_links">#</a> <i>voronoi</i>.<b>links</b>(<i>[data]</i>) · [Source](https://github.com/Fil/d3-geo-voronoi/blob/main/src/voronoi.js), [Examples](https://bl.ocks.org/Fil/1a78acf8b9b40fe8ecbae7b5035acf2b)
 
 Returns the Delaunay links of the data as a GeoJSON collection of lines. Each line exposes its source and target in its properties, but also its length (in radians), and a boolean flag for links that belong to the [Urquhart graph](https://en.wikipedia.org/wiki/Urquhart_graph).
 
@@ -163,14 +163,14 @@ Returns the Delaunay links of the data as a GeoJSON collection of lines. Each li
 Indeed, defining the “paper extent” of the geoVoronoi polygons can be quite tricky, [as this block demonstrates](https://bl.ocks.org/Fil/6128aae082c04eef06422f953d0f593f).
 
 
-<a name="geo_voronoi_find" href="#geo_voronoi_find">#</a> <i>voronoi</i>.<b>find</b>(<i>x,y,[angle]</i>) · [Source](https://github.com/Fil/d3-geo-voronoi/blob/master/src/voronoi.js), [Examples](https://bl.ocks.org/Fil/e94fc45f5ed4dbcc989be1e52b797fdd)
+<a name="geo_voronoi_find" href="#geo_voronoi_find">#</a> <i>voronoi</i>.<b>find</b>(<i>x,y,[angle]</i>) · [Source](https://github.com/Fil/d3-geo-voronoi/blob/main/src/voronoi.js), [Examples](https://bl.ocks.org/Fil/e94fc45f5ed4dbcc989be1e52b797fdd)
 
 Finds the closest site to point *x,y*, i.e. the Voronoi polygon that contains it. Optionally, return null if the distance between the point and the site is larger than *angle* degrees.
 
 [![](img/geoVoronoiFind.png)](https://bl.ocks.org/Fil/e94fc45f5ed4dbcc989be1e52b797fdd)
 
 
-<a name="geo_voronoi_hull" href="#geo_voronoi_hull">#</a> <i>voronoi</i>.<b>hull</b>(<i>data</i>) · [Source](https://github.com/Fil/d3-geo-voronoi/blob/master/src/voronoi.js), [Examples](https://bl.ocks.org/Fil/6a1ed09f6e5648a5451cb130f2b13d20)
+<a name="geo_voronoi_hull" href="#geo_voronoi_hull">#</a> <i>voronoi</i>.<b>hull</b>(<i>data</i>) · [Source](https://github.com/Fil/d3-geo-voronoi/blob/main/src/voronoi.js), [Examples](https://bl.ocks.org/Fil/6a1ed09f6e5648a5451cb130f2b13d20)
 
 Returns the spherical convex hull of the *data* array, as a GeoJSON polygon. Returns null if the dataset spans more than a hemisphere. Equivalent to:
 
@@ -189,11 +189,11 @@ Create *spherical* contours for non-gridded data.
 The API of geoContour is similar to that of [d3-contour](https://github.com/d3/d3-contour) and [d3-tricontour](https://github.com/Fil/d3-tricontour):
 
 <a href="#geocontour" name="geocontour">#</a> d3.<b>geoContour</b>()
- · [Source](https://github.com/Fil/d3-geo-voronoi/blob/master/src/contour.js), [Examples](https://observablehq.com/collection/@fil/tricontours)
+ · [Source](https://github.com/Fil/d3-geo-voronoi/blob/main/src/contour.js), [Examples](https://observablehq.com/collection/@fil/tricontours)
 
 Constructs a new geocontour generator with the default settings.
 
-[<img src="https://raw.githubusercontent.com/Fil/d3-geo-voronoi/master/img/geocontour.jpg" alt="geoContour" width="320">](https://observablehq.com/@fil/spherical-contours)
+[<img src="https://raw.githubusercontent.com/Fil/d3-geo-voronoi/main/img/geocontour.jpg" alt="geoContour" width="320">](https://observablehq.com/@fil/spherical-contours)
 
 
 <a href="#_geocontour" name="_geocontour">#</a> _geocontour_(_data_) · [Examples](https://observablehq.com/@fil/tricontours)
@@ -210,14 +210,14 @@ Returns a contour, as a MultiPolygon in GeoJSON format, containing all points wi
 
 Returns an iterable over the contours.
 
-[<img src="https://raw.githubusercontent.com/Fil/d3-geo-voronoi/master/img/geocontour-iterator.jpg" alt="geoContour iterator" width="320">](https://observablehq.com/@fil/spherical-contours-iterator)
+[<img src="https://raw.githubusercontent.com/Fil/d3-geo-voronoi/main/img/geocontour-iterator.jpg" alt="geoContour iterator" width="320">](https://observablehq.com/@fil/spherical-contours-iterator)
 
 
 <a href="#isobands" name="isobands">#</a> _geocontour_.<b>isobands</b>(_data_)
 
 Returns an iterable over the isobands: contours between pairs of consecutive threshold values _v0_ (inclusive) and _v1_ (exclusive). _geometry_.value is equal to _v0_, _geometry_.valueMax to _v1_.
 
-[<img src="https://raw.githubusercontent.com/Fil/d3-geo-voronoi/master/img/geocontour-isobands.jpg" alt="geoContour isobands" width="320">](https://observablehq.com/@fil/spherical-isobands)
+[<img src="https://raw.githubusercontent.com/Fil/d3-geo-voronoi/main/img/geocontour-isobands.jpg" alt="geoContour isobands" width="320">](https://observablehq.com/@fil/spherical-isobands)
 
 <a href="#x" name="x">#</a> _geocontour_.<b>x</b>([_x_])
 
@@ -231,9 +231,9 @@ Sets the *y* (latitude) accessor. Defaults to \`d => d[1]\`. If _y_ is not given
 
 Sets the *value* accessor. Defaults to \`d => d[2]\`. Values must be defined and finite. If _value_ is not given, returns the current value accessor.
 
-[<img src="https://raw.githubusercontent.com/Fil/d3-geo-voronoi/master/img/geocontour-blurry.jpg" alt="Blurry geoContours" width="320">](https://observablehq.com/@fil/blurry-contours)
+[<img src="https://raw.githubusercontent.com/Fil/d3-geo-voronoi/main/img/geocontour-blurry.jpg" alt="Blurry geoContours" width="320">](https://observablehq.com/@fil/blurry-contours)
 
-[<img src="https://raw.githubusercontent.com/Fil/d3-geo-voronoi/master/img/geocontour-h3.jpg" alt="geoContour and H3" width="320">](https://observablehq.com/@fil/h3-hexagons-geocontours)
+[<img src="https://raw.githubusercontent.com/Fil/d3-geo-voronoi/main/img/geocontour-h3.jpg" alt="geoContour and H3" width="320">](https://observablehq.com/@fil/h3-hexagons-geocontours)
 
 
 <a href="#thresholds" name="thresholds">#</a>  _geocontour_.<b>thresholds</b>([_thresholds_])
@@ -241,7 +241,7 @@ Sets the *value* accessor. Defaults to \`d => d[2]\`. Values must be defined and
 Sets the thresholds, either explicitly as an array of values, or as a count that will be passed to d3.ticks. If empty, returns the current thresholds.
 
 
-_Note:_ d3.geoContour uses the experimental API of d3-tricontour: [triangulate](https://github.com/Fil/d3-tricontour/blob/master/README.md#triangulate), [pointInterpolate](https://github.com/Fil/d3-tricontour/blob/master/README.md#pointInterpolate) and [ringsort](https://github.com/Fil/d3-tricontour/blob/master/README.md#ringsort).
+_Note:_ d3.geoContour uses the experimental API of d3-tricontour: [triangulate](https://github.com/Fil/d3-tricontour/blob/main/README.md#triangulate), [pointInterpolate](https://github.com/Fil/d3-tricontour/blob/main/README.md#pointInterpolate) and [ringsort](https://github.com/Fil/d3-tricontour/blob/main/README.md#ringsort).
 
 
 
