@@ -1,6 +1,6 @@
 {
   "name": "d3-geo-voronoi",
-  "version": "1.6.0",
+  "version": "2.0.0",
   "description": "Spherical Voronoi Diagram and Delaunay Triangulation",
   "homepage": "https://github.com/Fil/d3-geo-voronoi",
   "repository": {
