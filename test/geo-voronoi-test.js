@@ -1,4 +1,6 @@
 import assert from "assert";
+import {promises as fs} from "fs";
+import * as path from "path";
 import * as geoVoronoi from "../src/index.js";
 
 const sites = [[0,0], [10,0], [0,10]];
@@ -60,7 +62,7 @@ it("geoVoronoi.hull() computes the hull.", () => {
   const sites = [[10,0],[10,10],[3,5],[-2,5],[0,0]];
   assert.deepStrictEqual(
     geoVoronoi.geoVoronoi().hull(sites),
-    { type: 'Polygon', coordinates: [ [ [ 10, 10 ], [ 10, 0 ], [ 0, 0 ], [ -2, 5 ], [ 10, 10 ] ] ] }
+    { type: 'Polygon', coordinates: [ [[10,0],[0,0],[-2,5],[10,10],[10,0]] ] }
   );
 });
 
@@ -113,4 +115,11 @@ it("geoVoronoi.triangles(sites) returns circumcenters.", () => {
 it("geoVoronoi’s delaunay does not list fake points in its triangles", () => {
   const u = geoVoronoi.geoVoronoi()(sites);
   assert.strictEqual(Math.max(...u.delaunay.delaunay.triangles), sites.length - 1);
+});
+
+it("geoVoronoi.hull does not break on difficult polygons", async () => {
+  for (const t of ["poly1", "poly2", "poly3", "poly4", "poly5", "poly6", "poly7"]) {
+    const {points, hull} = JSON.parse(await fs.readFile(path.resolve("test/data", `${t}.json`), "utf8"));
+    assert.deepStrictEqual(hull, geoVoronoi.geoVoronoi(points).hull());
+  }
 });

@@ -372,12 +372,12 @@ function geo_hull(triangles, points) {
   const _hull = new Set(),
     hull = [];
   triangles.map(tri => {
-    if (excess(tri.map(i => points[i > points.length ? 0 : i])) < 0) return;
+    if (excess(tri.map(i => points[i > points.length ? 0 : i])) > 1e-12) return;
     for (let i = 0; i < 3; i++) {
       let e = [tri[i], tri[(i + 1) % 3]],
-        code = `${e[1]}-${e[0]}`;
-      if (_hull.has(code))  _hull.delete(code);
-      else _hull.add(e.join("-"));
+        code = `${e[0]}-${e[1]}`;
+      if (_hull.has(code)) _hull.delete(code);
+      else _hull.add(`${e[1]}-${e[0]}`);
     }
   });
 
