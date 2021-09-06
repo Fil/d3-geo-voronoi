@@ -5,7 +5,7 @@ export function spherical(cartesian) {
 }
 
 export function cartesian(spherical) {
-  var lambda = spherical[0],
+  const lambda = spherical[0],
     phi = spherical[1],
     cosPhi = cos(phi);
   return [cosPhi * cos(lambda), cosPhi * sin(lambda), sin(phi)];
