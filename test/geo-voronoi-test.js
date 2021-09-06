@@ -19,38 +19,36 @@ it("geoVoronoi() returns a Diagram.", () => {
 });
 
 it("geoVoronoi.polygons(sites) hemisphere test", () => {
-	const two_sites = [[-20, -20], [20, 20]];
-	const polygons = geoVoronoi.geoVoronoi(two_sites).polygons();
-	assert.deepStrictEqual(
-	  polygons.features[0].geometry,
-	  {
-		type: 'Polygon',
-		coordinates: [[
-		  [0, 0],
-		  [90, -43.21917889371418],
-		  [180, -0],
-		  [-90, 43.21917889371418],
-		  [0, 0]
-		]]
-	  }
-	);
+        const two_sites = [[-20, -20], [20, 20]];
+        const polygons = geoVoronoi.geoVoronoi(two_sites).polygons();
+        assert.deepStrictEqual(
+          polygons.features[0].geometry,
+          {
+            type: 'Polygon',
+            coordinates: [[
+              [0, 0],
+              [90, -43.21917889371418],
+              [180, -0],
+              [-90, 43.21917889371418],
+              [0, 0]
+            ]]
+          }
+        );
 
-	assert.deepStrictEqual(
-	  polygons.features[1].geometry,
-	  {
-		type: 'Polygon',
-		coordinates: [[
-		  [-90, 43.21917889371418],
-		  [180, -0],
-		  [90, -43.21917889371418],
-		  [0, 0],
-		  [-90, 43.21917889371418]
-
-		]]
-	  }
-	);
-
-  });
+        assert.deepStrictEqual(
+          polygons.features[1].geometry,
+          {
+            type: 'Polygon',
+            coordinates: [[
+              [-90, 43.21917889371418],
+              [180, -0],
+              [90, -43.21917889371418],
+              [0, 0],
+              [-90, 43.21917889371418]
+             ]]
+           }
+         );
+ });
 
 it("geoVoronoi.polygons(sites) returns polygons.", () => {
   const u = geoVoronoi.geoVoronoi(sites).polygons()
