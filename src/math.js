@@ -22,7 +22,7 @@ export const pow = Math.pow;
 export const sin = Math.sin;
 export const sign =
   Math.sign ||
-  function(x) {
+  function (x) {
     return x > 0 ? 1 : x < 0 ? -1 : 0;
   };
 export const sqrt = Math.sqrt;

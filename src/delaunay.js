@@ -11,20 +11,20 @@ import {
   radians,
   sign,
   sin,
-  sqrt
+  sqrt,
 } from "./math.js";
 import {
   cartesianNormalize as normalize,
   cartesianCross as cross,
   cartesianDot as dot,
-  cartesianAdd
+  cartesianAdd,
 } from "./cartesian.js";
 
 // Converts 3D Cartesian to spherical coordinates (degrees).
 function spherical(cartesian) {
   return [
     atan2(cartesian[1], cartesian[0]) * degrees,
-    asin(max(-1, min(1, cartesian[2]))) * degrees
+    asin(max(-1, min(1, cartesian[2]))) * degrees,
   ];
 }
 
@@ -38,7 +38,7 @@ function cartesian(coordinates) {
 
 // Spherical excess of a triangle (in spherical coordinates)
 export function excess(triangle) {
-  triangle = triangle.map(p => cartesian(p));
+  triangle = triangle.map((p) => cartesian(p));
   return dot(triangle[0], cross(triangle[2], triangle[1]));
 }
 
@@ -65,15 +65,15 @@ export function geoDelaunay(points) {
     mesh,
     hull,
     urquhart,
-    find
+    find,
   };
 }
 
 function geo_find(neighbors, points) {
-  function distance2(a,b) {
+  function distance2(a, b) {
     let x = a[0] - b[0],
-        y = a[1] - b[1],
-        z = a[2] - b[2];
+      y = a[1] - b[1],
+      z = a[2] - b[2];
     return x * x + y * y + z * z;
   }
 
@@ -87,7 +87,7 @@ function geo_find(neighbors, points) {
       cell = next;
       next = null;
       dist = distance2(xyz, cartesian(points[cell]));
-      neighbors[cell].forEach(i => {
+      neighbors[cell].forEach((i) => {
         let ndist = distance2(xyz, cartesian(points[i]));
         if (ndist < dist) {
           dist = ndist;
@@ -107,7 +107,7 @@ function geo_delaunay_from(points) {
 
   // find a valid point to send to infinity
   let pivot = 0;
-  while (isNaN(points[pivot][0]+points[pivot][1]) && pivot++ < points.length);
+  while (isNaN(points[pivot][0] + points[pivot][1]) && pivot++ < points.length);
 
   const r = geoRotation(points[pivot]),
     projection = geoStereographic()
@@ -126,19 +126,19 @@ function geo_delaunay_from(points) {
 
   const FAR = 1e6 * sqrt(max2);
 
-  zeros.forEach(i => (points[i] = [FAR, 0]));
+  zeros.forEach((i) => (points[i] = [FAR, 0]));
 
   // Add infinite horizon points
-  points.push([0,FAR]);
-  points.push([-FAR,0]);
-  points.push([0,-FAR]);
+  points.push([0, FAR]);
+  points.push([-FAR, 0]);
+  points.push([0, -FAR]);
 
   const delaunay = Delaunay.from(points);
 
   delaunay.projection = projection;
 
   // clean up the triangulation
-  const {triangles, halfedges, inedges} = delaunay;
+  const { triangles, halfedges, inedges } = delaunay;
   const degenerate = [];
   for (let i = 0, l = halfedges.length; i < l; i++) {
     if (halfedges[i] < 0) {
@@ -152,34 +152,34 @@ function geo_delaunay_from(points) {
       triangles[i] = triangles[j] = triangles[k] = pivot;
       inedges[triangles[a]] = a % 3 == 0 ? a + 2 : a - 1;
       inedges[triangles[b]] = b % 3 == 0 ? b + 2 : b - 1;
-      degenerate.push(Math.min(i,j,k));
-      i += 2 - i % 3;
+      degenerate.push(Math.min(i, j, k));
+      i += 2 - (i % 3);
     } else if (triangles[i] > points.length - 3 - 1) {
       triangles[i] = pivot;
     }
   }
-  
+
   // there should always be 4 degenerate triangles
   // console.warn(degenerate);
   return delaunay;
 }
 
 function geo_edges(triangles, points) {
-  const _index = new Set;
+  const _index = new Set();
   if (points.length === 2) return [[0, 1]];
-  triangles.forEach(tri => {
+  triangles.forEach((tri) => {
     if (tri[0] === tri[1]) return;
-    if (excess(tri.map(i => points[i])) < 0) return;
+    if (excess(tri.map((i) => points[i])) < 0) return;
     for (let i = 0, j; i < 3; i++) {
       j = (i + 1) % 3;
       _index.add(extent([tri[i], tri[j]]).join("-"));
     }
   });
-  return Array.from(_index, d => d.split("-").map(Number));
+  return Array.from(_index, (d) => d.split("-").map(Number));
 }
 
 function geo_triangles(delaunay) {
-  const {triangles} = delaunay;
+  const { triangles } = delaunay;
   if (!triangles) return [];
 
   const geo_triangles = [];
@@ -196,8 +196,8 @@ function geo_triangles(delaunay) {
 
 function geo_circumcenters(triangles, points) {
   // if (!use_centroids) {
-  return triangles.map(tri => {
-    const c = tri.map(i => points[i]).map(cartesian),
+  return triangles.map((tri) => {
+    const c = tri.map((i) => points[i]).map(cartesian),
       V = cartesianAdd(
         cartesianAdd(cross(c[1], c[0]), cross(c[2], c[1])),
         cross(c[0], c[2])
@@ -216,7 +216,7 @@ function geo_circumcenters(triangles, points) {
 
 function geo_neighbors(triangles, npoints) {
   const neighbors = [];
-  triangles.forEach(tri => {
+  triangles.forEach((tri) => {
     for (let j = 0; j < 3; j++) {
       const a = tri[j],
         b = tri[(j + 1) % 3];
@@ -252,7 +252,7 @@ function geo_polygons(circumcenters, triangles, points) {
         m,
         cross(m, c),
         cross(cross(m, c), c),
-        cross(cross(cross(m, c), c), c)
+        cross(cross(cross(m, c), c), c),
       ]
         .map(spherical)
         .map(supplement);
@@ -275,7 +275,7 @@ function geo_polygons(circumcenters, triangles, points) {
   });
 
   // reorder each polygon
-  const reordered = polygons.map(poly => {
+  const reordered = polygons.map((poly) => {
     const p = [poly[0][2]]; // t
     let k = poly[0][1]; // k = c
     for (let i = 1; i < poly.length; i++) {
@@ -325,12 +325,12 @@ function o_midpoint(a, b, c) {
   b = cartesian(b);
   c = cartesian(c);
   const s = sign(dot(cross(b, a), c));
-  return spherical(normalize(cartesianAdd(a, b)).map(d => s * d));
+  return spherical(normalize(cartesianAdd(a, b)).map((d) => s * d));
 }
 
 function geo_mesh(polygons) {
   const mesh = [];
-  polygons.forEach(poly => {
+  polygons.forEach((poly) => {
     if (!poly) return;
     let p = poly[poly.length - 1];
     for (let q of poly) {
@@ -342,7 +342,7 @@ function geo_mesh(polygons) {
 }
 
 function geo_urquhart(edges, triangles) {
-  return function(distances) {
+  return function (distances) {
     const _lengths = new Map(),
       _urquhart = new Map();
     edges.forEach((edge, i) => {
@@ -351,7 +351,7 @@ function geo_urquhart(edges, triangles) {
       _urquhart.set(u, true);
     });
 
-    triangles.forEach(tri => {
+    triangles.forEach((tri) => {
       let l = 0,
         remove = -1;
       for (let j = 0; j < 3; j++) {
@@ -361,18 +361,19 @@ function geo_urquhart(edges, triangles) {
           remove = u;
         }
       }
-      _urquhart.set(remove,  false);
+      _urquhart.set(remove, false);
     });
 
-    return edges.map(edge => _urquhart.get(edge.join("-")));
+    return edges.map((edge) => _urquhart.get(edge.join("-")));
   };
 }
 
 function geo_hull(triangles, points) {
   const _hull = new Set(),
     hull = [];
-  triangles.map(tri => {
-    if (excess(tri.map(i => points[i > points.length ? 0 : i])) > 1e-12) return;
+  triangles.map((tri) => {
+    if (excess(tri.map((i) => points[i > points.length ? 0 : i])) > 1e-12)
+      return;
     for (let i = 0; i < 3; i++) {
       let e = [tri[i], tri[(i + 1) % 3]],
         code = `${e[0]}-${e[1]}`;
@@ -381,11 +382,11 @@ function geo_hull(triangles, points) {
     }
   });
 
-  const _index = new Map;
+  const _index = new Map();
   let start;
-  _hull.forEach(e => {
+  _hull.forEach((e) => {
     e = e.split("-").map(Number);
-    _index.set(e[0],e[1]);
+    _index.set(e[0], e[1]);
     start = e[0];
   });
 
