@@ -1,25 +1,24 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-    <title>Benchmark: Sphere</title>
-</head>
-
-<body>
-
     <meta charset="utf-8">
+    <title>Benchmark: Sphere</title>
     <style>
         .range-wrapper {
             display: grid;
             grid-template-columns: 10% 50% 10% 30%;
         }
     </style>
+</head>
+
+<body>
 
     <h1>d3-geo-voronoi Benchmark: Sphere</h1>
     <p> This benchmark renders to a CANVAS element.</p>
     <p class="range-wrapper">
         <span style="text-align:right">5</span>
-        <input id="size-range" width="80%" type="range" min="5" max="1000" step="5" onchange=gen_points()>
+        <input id="size-range" type="range" min="5" max="1000" step="5" onchange=gen_points()>
         <span>1000</span>
     </p>
     <div style="font-weight: bold;">
@@ -34,7 +33,7 @@
     <p> Enable the browsers FPS meter. </p>
 
     <script src="https://unpkg.com/d3@6"></script>
-    <script src="../dist/d3-geo-voronoi.js"></script>
+    <script src="../dist/d3-geo-voronoi.min.js"></script>
 
     <script>
         const size_range = document.getElementById("size-range");
@@ -42,9 +41,7 @@
         const perf = document.getElementById("perf");
         const canvas = document.getElementById('canvas');
         const projection = d3.geoOrthographic();
-        const path = d3.geoPath().projection(projection);
         let context = canvas.getContext("2d");
-        const pathGenerator = d3.geoPath(projection, context);
 
         let points;
         let v;
@@ -77,11 +74,11 @@
 
         render = (elapsed) => {
             context.clearRect(0, 0, 960, 600);
+            const t0 = performance.now();
             projection.rotate([elapsed / 150, 0]);
             const pathGenerator = d3.geoPath(projection, context);
 
             // render polygons
-            const t0 = performance.now();
             context.strokeStyle = "#444"
             for (const [key, value] of Object.entries(v.polygons().features)) {
                 context.beginPath();
@@ -102,7 +99,7 @@
             }
             const t1 = performance.now();
 
-            
+
             // Compute the mean elapsed time and compute the standard deviation based on the
             // the last 200 samples.
             elapsed = (t1 - t0);
