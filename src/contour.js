@@ -6,7 +6,7 @@ export function geoContour() {
   let v;
   const contour = tricontour()
     .triangulate((data, x, y) => {
-      v = geoDelaunay(data.map((d) => [x(d), y(d)]));
+      v = geoDelaunay(data.map((d, i) => [x(d, i), y(d, i)]));
       return v.delaunay;
     })
     .pointInterpolate((i, j, a) => {
