@@ -189,14 +189,14 @@ Create *spherical* contours for non-gridded data.
 The API of geoContour is similar to that of [d3-contour](https://github.com/d3/d3-contour) and [d3-tricontour](https://github.com/Fil/d3-tricontour):
 
 <a href="#geocontour" name="geocontour">#</a> d3.<b>geoContour</b>()
- · [Source](https://github.com/Fil/d3-geo-voronoi/blob/main/src/contour.js), [Examples](https://observablehq.com/collection/@fil/tricontours)
+ · [Source](https://github.com/Fil/d3-geo-voronoi/blob/main/src/contour.js), [Examples](https://observablehq.com/@fil/spherical-contours)
 
 Constructs a new geocontour generator with the default settings.
 
 [<img src="https://raw.githubusercontent.com/Fil/d3-geo-voronoi/main/img/geocontour.jpg" alt="geoContour" width="320">](https://observablehq.com/@fil/spherical-contours)
 
 
-<a href="#_geocontour" name="_geocontour">#</a> _geocontour_(_data_) · [Examples](https://observablehq.com/@fil/tricontours)
+<a href="#_geocontour" name="_geocontour">#</a> _geocontour_(_data_) · [Examples](https://observablehq.com/@fil/spherical-contours)
 
 Returns an array of contours, one for each threshold. The contours are MultiPolygons in GeoJSON format, that contain all the points with a value larger than the threshold. The value is indicated as _geometry_.value.
 
